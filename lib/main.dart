@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
         Routes.homeScreen: (context) => const HomeScreen()
       },
       initialRoute: Routes.onboarding,
-      home: const Scaffold(),
     );
   }
 }
