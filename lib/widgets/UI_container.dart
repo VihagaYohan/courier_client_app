@@ -7,6 +7,6 @@ class UIContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: children);
+    return SafeArea(child: Scaffold(body: children));
   }
 }
