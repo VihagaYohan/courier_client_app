@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       routes: {
-        Routes.onboarding: (context) => OnBoardingScreen(),
+        Routes.onboarding: (context) => OnboardingScreen(),
         Routes.loginScreen: (context) => LoginScreen(),
         Routes.homeScreen: (context) => HomeScreen()
       },
