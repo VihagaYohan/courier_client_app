@@ -34,19 +34,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   int currentIndex = 0;
-  static dynamic currentPageValue = 0.0;
 
   final PageController _pageController = PageController(initialPage: 0);
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController.addListener(() {
-      setState(() {
-        currentPageValue = _pageController.page;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,13 +105,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(
             height: 10,
           ),
-          /*   UITextView(
-            text: item.title,
-            textStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                color: Colors.blue,
-                fontSize: 32.0,
-                fontWeight: FontWeight.w600),
-          ) */
         ],
       ),
     );
