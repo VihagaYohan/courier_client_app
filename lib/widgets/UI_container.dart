@@ -7,6 +7,11 @@ class UIContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(body: children));
+    return SafeArea(
+        child: Scaffold(
+            body: Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20.0),
+      child: children,
+    )));
   }
 }
