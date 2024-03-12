@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentIndex = 0;
   static dynamic currentPageValue = 0.0;
 
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
