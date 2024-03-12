@@ -1,3 +1,4 @@
+import 'package:courier_client_app/screens/authentication/login_screen.dart';
 import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -86,6 +87,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   _pageController.animateToPage(currentIndex,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn);
+                } else {
+                  // navigate to login screen
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LoginScreen()));
                 }
               })
         ],
