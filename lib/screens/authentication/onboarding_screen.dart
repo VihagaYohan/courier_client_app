@@ -1,8 +1,6 @@
 import 'package:courier_client_app/screens/authentication/login_screen.dart';
 import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'dart:ui';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 // widgets
