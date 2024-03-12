@@ -41,10 +41,12 @@ class UIElevatedButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Image(
-                  image: Svg('assets/images/icons/google.svg'),
-                  width: 20,
-                  height: 20),
+              showSuffixIcon == true
+                  ? const Image(
+                      image: Svg('assets/images/icons/google.svg'),
+                      width: 20,
+                      height: 20)
+                  : const SizedBox.shrink(),
               const SizedBox(
                 width: 10,
               ),

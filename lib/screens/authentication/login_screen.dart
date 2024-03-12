@@ -48,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
           isPrimary: false,
+          showSuffixIcon: true,
         )
       ],
     ));
