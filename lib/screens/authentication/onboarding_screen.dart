@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:ui';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 // widgets
 import 'package:courier_client_app/widgets/widgets.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 // models
 import 'package:courier_client_app/models/models.dart';
@@ -22,7 +22,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Onboarding(
         index: 0,
         imageUrl: 'assets/images/svgs/onboarding_1.svg',
-        title: 'Best package delivery\nfor you'),
+        title: 'Best package\ndelivery for you'),
     Onboarding(
         index: 1,
         imageUrl: 'assets/images/svgs/onboarding_2.svg',
@@ -63,14 +63,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           },
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return PageItem(onboardingItems[index]);
+            return pageItem(onboardingItems[index]);
           },
         ),
-        Positioned(
-          bottom: 10,
-          left: 0,
-          right: 0,
-          child: UIElevatedButton(
+        footer(context)
+      ],
+    ));
+  }
+
+  // contains the title and button
+  Positioned footer(BuildContext context) {
+    return Positioned(
+      bottom: 10,
+      left: 0,
+      right: 0,
+      child: Column(
+        children: [
+          UITextView(
+              text: onboardingItems[currentIndex].title,
+              textStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  color: AppColors.textPrimary,
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.w600)),
+          const SizedBox(height: 60),
+          UIElevatedButton(
               label: currentIndex != 2 ? 'Next' : 'Done',
               onPress: () {
                 if (currentIndex != 2) {
@@ -82,13 +98,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn);
                 }
-              }),
-        )
-      ],
-    ));
+              })
+        ],
+      ),
+    );
   }
 
-  Widget PageItem(Onboarding item) {
+  // single page view item
+  Widget pageItem(Onboarding item) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       alignment: Alignment.center,
@@ -99,12 +116,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            item.title,
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-          )
+          /*   UITextView(
+            text: item.title,
+            textStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                color: Colors.blue,
+                fontSize: 32.0,
+                fontWeight: FontWeight.w600),
+          ) */
         ],
       ),
     );
