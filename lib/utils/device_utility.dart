@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,16 +13,16 @@ class DeviceUtils {
         SystemUiOverlayStyle(statusBarColor: color));
   }
 
-  static double getScreenHeight() {
-    return MediaQuery.of(context as BuildContext).size.height;
+  static double getScreenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
   }
 
-  static double getScreenWidth() {
-    return MediaQuery.of(context as BuildContext).size.width;
+  static double getScreenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
   }
 
-  static Future<bool> isKeyboardVisible() async {
-    final viewInsets = MediaQuery.of(context as BuildContext).viewInsets;
+  static Future<bool> isKeyboardVisible(BuildContext context) async {
+    final viewInsets = MediaQuery.of(context).viewInsets;
     return viewInsets.bottom < 0;
   }
 
