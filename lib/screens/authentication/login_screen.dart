@@ -1,4 +1,5 @@
 import 'package:courier_client_app/screens/home/home_screen.dart';
+import 'package:courier_client_app/screens/profile/profile_screen.dart';
 import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -45,7 +46,7 @@ class LoginScreen extends StatelessWidget {
           onPress: () {
             // navigate to profile data screen
             Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const ProfileScreen()));
           },
           isPrimary: false,
           showSuffixIcon: true,
