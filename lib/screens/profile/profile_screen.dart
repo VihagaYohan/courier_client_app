@@ -97,7 +97,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             UIElevatedButton(
                 label: "Save",
                 onPress: () {
-                  if (formKey.currentState!.validate()) {
+                  /* if (formKey.currentState!.validate()) {
                     print('form values are below');
                     String name = nameController.text;
                     String address = addressController.text;
@@ -105,7 +105,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                     String email = emailController.text;
 
                     print('$name - $address - $phoneNumber - $email');
-                  }
+                  } */
+                  DeviceUtils.showAlertDialog(
+                      context,
+                      "Profile updated\nsuccessfully",
+                      "Your profile data have been update successfully",
+                      "Go To Home", () {
+                    Navigator.of(context).pop();
+                  }, Icons.check, iconSize: 30);
                 })
           ],
         ));

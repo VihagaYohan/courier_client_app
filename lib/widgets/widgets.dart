@@ -10,3 +10,6 @@ export 'text_field/UI_Textfield.dart';
 
 // icon
 export 'UI_Icon.dart';
+
+// alert
+export 'alert/UI_alert.dart';

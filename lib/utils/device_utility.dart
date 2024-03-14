@@ -1,7 +1,14 @@
 import 'dart:io';
 
+import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// widgets
+import 'package:courier_client_app/widgets/widgets.dart';
+
+// utils
+import 'package:courier_client_app/utils/utils.dart';
 
 class DeviceUtils {
   static void hideKeyboard(BuildContext context) {
@@ -41,5 +48,31 @@ class DeviceUtils {
 
   static bool isAndroid() {
     return Platform.isAndroid;
+  }
+
+  static Future<void> showAlertDialog(
+      BuildContext context, title, content, buttonTitle, buttonPress, icon,
+      {Color iconContainerColor = AppColors.primary,
+      Color iconColor = AppColors.white,
+      double iconSize = 25}) async {
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: AppColors.white,
+            icon: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: iconContainerColor),
+              child: Icon(icon, size: iconSize, color: iconColor),
+            ),
+            title: UITextView(text: title),
+            content: UITextView(text: content),
+            actions: <Widget>[
+              UIElevatedButton(label: buttonTitle, onPress: buttonPress)
+            ],
+          );
+        });
   }
 }
