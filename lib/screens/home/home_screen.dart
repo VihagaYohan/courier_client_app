@@ -20,6 +20,16 @@ class HomeScreen extends StatelessWidget {
             UIProfileBar(),
             trackCard(context),
             recentDelivery(context),
+            const SizedBox(height: Constants.mediumSpace),
+            UITextView(
+              text: "Our Services",
+              textAlign: TextAlign.left,
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: Constants.mediumSpace),
             servicesItem(context)
           ],
         ));
@@ -274,6 +284,8 @@ class HomeScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
             width: boxWidth,
@@ -286,13 +298,35 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   UIIcon(
-                    iconData: Icons.fire_truck,
+                    iconData: Icons.local_shipping,
                     iconColor: AppColors.primary,
                   ),
                   SizedBox(
                     height: Constants.mediumSpace,
                   ),
                   UITextView(text: "Courier")
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: boxWidth,
+            padding:
+                const EdgeInsets.symmetric(vertical: Constants.mediumSpace),
+            decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(Constants.smallSpace)),
+            child: const Center(
+              child: Column(
+                children: [
+                  UIIcon(
+                    iconData: Icons.location_on,
+                    iconColor: AppColors.primary,
+                  ),
+                  SizedBox(
+                    height: Constants.mediumSpace,
+                  ),
+                  UITextView(text: "Tracking")
                 ],
               ),
             ),
