@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -30,7 +31,7 @@ class _UIProfileBarState extends State<UIProfileBar> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: AppColors.primary.withOpacity(0.15)),
-              child: const UIIcon(iconData: Icons.location_pin),
+              child: const UIIcon(iconData: Icons.pin_drop_outlined),
             ),
             Container(
               margin: const EdgeInsets.only(left: Constants.mediumSpace),

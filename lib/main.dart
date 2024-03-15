@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         Routes.homeScreen: (context) => HomeScreen(),
         Routes.profileScreen: (context) => ProfileScreen()
       },
-      initialRoute: Routes.profileScreen,
+      initialRoute: Routes.homeScreen,
     );
   }
 }
