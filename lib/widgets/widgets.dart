@@ -13,3 +13,6 @@ export 'UI_Icon.dart';
 
 // alert
 export 'alert/UI_alert.dart';
+
+// profile bar (current location & profile image)
+export 'UI_profileBar.dart';
