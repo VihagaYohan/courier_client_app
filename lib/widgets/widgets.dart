@@ -2,6 +2,7 @@ export 'UI_container.dart';
 
 // buttons
 export 'buttons/UI_ElevatedButton.dart';
+export 'buttons/UI_TextButton.dart';
 
 export 'UI_TextView.dart';
 
