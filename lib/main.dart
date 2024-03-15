@@ -5,8 +5,14 @@ import 'package:courier_client_app/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:courier_client_app/utils/theme/theme.dart';
 import 'package:courier_client_app/routes/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -28,7 +34,7 @@ class MyApp extends StatelessWidget {
         Routes.homeScreen: (context) => HomeScreen(),
         Routes.profileScreen: (context) => ProfileScreen()
       },
-      initialRoute: Routes.profileScreen,
+      initialRoute: Routes.homeScreen,
     );
   }
 }

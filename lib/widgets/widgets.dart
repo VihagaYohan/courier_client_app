@@ -2,6 +2,7 @@ export 'UI_container.dart';
 
 // buttons
 export 'buttons/UI_ElevatedButton.dart';
+export 'buttons/UI_TextButton.dart';
 
 export 'UI_TextView.dart';
 
@@ -13,3 +14,6 @@ export 'UI_Icon.dart';
 
 // alert
 export 'alert/UI_alert.dart';
+
+// profile bar (current location & profile image)
+export 'UI_profileBar.dart';
