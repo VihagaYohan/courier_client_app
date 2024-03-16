@@ -1,3 +1,4 @@
+import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/authentication/login_screen.dart';
 import 'package:courier_client_app/screens/authentication/onboarding_screen.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
@@ -32,9 +33,10 @@ class MyApp extends StatelessWidget {
         Routes.onboarding: (context) => OnboardingScreen(),
         Routes.loginScreen: (context) => LoginScreen(),
         Routes.homeScreen: (context) => HomeScreen(),
-        Routes.profileScreen: (context) => ProfileScreen()
+        Routes.profileScreen: (context) => ProfileScreen(),
+        Routes.bottomNavigation: (context) => AppBottomNavigation()
       },
-      initialRoute: Routes.homeScreen,
+      initialRoute: Routes.bottomNavigation,
     );
   }
 }

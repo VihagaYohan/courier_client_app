@@ -45,7 +45,7 @@ class _UIProfileBarState extends State<UIProfileBar> {
                     textStyle: Theme.of(context)
                         .textTheme
                         .titleMedium!
-                        .copyWith(color: AppColors.black, fontSize: 18),
+                        .copyWith(fontSize: 18),
                   )
                 ],
               ),

@@ -17,3 +17,6 @@ export 'alert/UI_alert.dart';
 
 // profile bar (current location & profile image)
 export 'UI_profileBar.dart';
+
+// app bar
+export 'UI_appbar.dart';

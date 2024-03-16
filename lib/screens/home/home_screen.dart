@@ -1,4 +1,6 @@
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -17,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         paddingTop: Constants.mediumSpace,
         children: ListView(
           children: <Widget>[
-            UIProfileBar(),
+            const UIProfileBar(),
             trackCard(context),
             recentDelivery(context),
             const SizedBox(height: Constants.mediumSpace),
@@ -88,23 +90,11 @@ class HomeScreen extends StatelessWidget {
     return Row(
       children: <Widget>[
         Flexible(
-          child: TextField(
-            controller: trackingNumberController,
-            autocorrect: false,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: "Tracking number",
-                hintStyle: TextStyle(
-                    color: AppColors.darkGrey.withOpacity(0.5),
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12),
-                prefixIcon:
-                    const Icon(CupertinoIcons.cube_box, color: AppColors.black),
-                filled: true,
-                fillColor: AppColors.white),
-          ),
-        ),
+            child: UITextField(
+          controller: trackingNumberController,
+          labelText: 'Tracking number',
+          keyboardType: TextInputType.number,
+        )),
         Container(
           width: 50,
           height: 50,
@@ -127,6 +117,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget recentDelivery(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    Color containerColor =
+        brightness == Brightness.dark ? AppColors.dark : AppColors.softGrey;
+    Color borderColor =
+        brightness == Brightness.dark ? AppColors.primary : AppColors.white;
+    Color dividerColor =
+        brightness == Brightness.dark ? AppColors.white : AppColors.darkGrey;
+
     return Column(
       children: <Widget>[
         // recent delivery title and view all text button
@@ -150,8 +148,9 @@ class HomeScreen extends StatelessWidget {
               vertical: Constants.largeSpace,
               horizontal: Constants.mediumSpace),
           decoration: BoxDecoration(
-              color: AppColors.softGrey,
-              borderRadius: BorderRadius.circular(Constants.smallSpace)),
+              color: containerColor,
+              borderRadius: BorderRadius.circular(Constants.smallSpace),
+              border: Border.all(color: borderColor)),
           child: Column(
             children: <Widget>[
               Row(
@@ -161,11 +160,10 @@ class HomeScreen extends StatelessWidget {
                     height: 44,
                     margin: const EdgeInsets.only(right: Constants.mediumSpace),
                     decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: AppColors.primary.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(10)),
                     child: const UIIcon(
                       iconData: CupertinoIcons.cube_box,
-                      iconColor: AppColors.black,
                       size: 24,
                     ),
                   ),
@@ -179,9 +177,7 @@ class HomeScreen extends StatelessWidget {
                             .textTheme
                             .bodyLarge!
                             .copyWith(
-                                color: AppColors.textPrimary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14),
+                                fontWeight: FontWeight.w600, fontSize: 14),
                       ),
                       UITextView(
                         text: "Tracking ID: 374884",
@@ -189,9 +185,7 @@ class HomeScreen extends StatelessWidget {
                             .textTheme
                             .bodyMedium!
                             .copyWith(
-                                color: AppColors.textPrimary,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14),
+                                fontWeight: FontWeight.w300, fontSize: 14),
                       )
                     ],
                   )
@@ -200,8 +194,8 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 10),
               // horizontal line
-              const Divider(
-                color: AppColors.darkGrey,
+              Divider(
+                color: dividerColor,
                 thickness: 1,
               ),
 
@@ -218,17 +212,21 @@ class HomeScreen extends StatelessWidget {
 
   // source and destination
   Widget location(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    Color dividerColor =
+        brightness == Brightness.dark ? AppColors.white : AppColors.darkGrey;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         recentItemLocationRow(
             context, Icons.location_city, "From", "GenexT, Colombo"),
-        const SizedBox(
+        SizedBox(
           height: 50,
           child: VerticalDivider(
             thickness: 1.2,
             width: 10,
+            color: dividerColor,
           ),
         ),
         recentItemLocationRow(
@@ -287,25 +285,32 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: boxWidth,
-            padding:
-                const EdgeInsets.symmetric(vertical: Constants.mediumSpace),
-            decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(Constants.smallSpace)),
-            child: const Center(
-              child: Column(
-                children: [
-                  UIIcon(
-                    iconData: Icons.local_shipping,
-                    iconColor: AppColors.primary,
-                  ),
-                  SizedBox(
-                    height: Constants.mediumSpace,
-                  ),
-                  UITextView(text: "Courier")
-                ],
+          GestureDetector(
+            onTap: () {
+              // navigate to create order screen
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const CreateOrderScreen()));
+            },
+            child: Container(
+              width: boxWidth,
+              padding:
+                  const EdgeInsets.symmetric(vertical: Constants.mediumSpace),
+              decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(Constants.smallSpace)),
+              child: const Center(
+                child: Column(
+                  children: [
+                    UIIcon(
+                      iconData: Icons.local_shipping,
+                      iconColor: AppColors.primary,
+                    ),
+                    SizedBox(
+                      height: Constants.mediumSpace,
+                    ),
+                    UITextView(text: "Courier")
+                  ],
+                ),
               ),
             ),
           ),

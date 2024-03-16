@@ -44,18 +44,23 @@ class UITextField extends StatelessWidget {
       controller: controller,
       obscureText: isPassword,
       keyboardType: keyboardType,
+      showCursor: true,
+      cursorColor: AppColors.primary,
+      cursorWidth: 1,
+      focusNode: FocusNode(),
       decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
-          floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w500,
-              fontSize: 16),
-          prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
-          prefixIconColor: iconColor),
+        labelText: labelText,
+        labelStyle: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
+        floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: AppColors.primary,
+            fontWeight: FontWeight.w500,
+            fontSize: 16),
+        prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
+        prefixIconColor: iconColor,
+      ),
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
       validator: validator,
