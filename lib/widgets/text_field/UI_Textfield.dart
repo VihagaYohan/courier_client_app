@@ -21,6 +21,7 @@ class UITextField extends StatelessWidget {
   final bool? showIcon;
   final Widget? icon;
   final Color? iconColor;
+  final dynamic? borderColor;
 
   const UITextField(
       {super.key,
@@ -35,7 +36,8 @@ class UITextField extends StatelessWidget {
       this.validator,
       this.showIcon = false,
       this.icon,
-      this.iconColor = AppColors.primary})
+      this.iconColor = AppColors.primary,
+      this.borderColor = AppColors.grey})
       : super();
 
   @override
@@ -49,18 +51,20 @@ class UITextField extends StatelessWidget {
       cursorWidth: 1,
       focusNode: FocusNode(),
       decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: Theme.of(context)
-            .textTheme
-            .bodyMedium!
-            .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
-        floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w500,
-            fontSize: 16),
-        prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
-        prefixIconColor: iconColor,
-      ),
+          labelText: labelText,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
+          floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
+          prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
+          prefixIconColor: iconColor,
+          enabledBorder: const OutlineInputBorder()
+              .copyWith(borderSide: BorderSide(color: borderColor)),
+          contentPadding: const EdgeInsets.all(8)),
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
       validator: validator,
