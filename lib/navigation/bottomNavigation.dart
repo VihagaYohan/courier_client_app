@@ -1,3 +1,5 @@
+import 'package:courier_client_app/screens/order/order_list.dart';
+import 'package:courier_client_app/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -59,7 +61,11 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
               label: "Profile")
         ],
       ),
-      body: const [HomeScreen(), HomeScreen(), HomeScreen()][currentPageIndex],
+      body: const [
+        HomeScreen(),
+        OrderListScreen(),
+        ProfileScreen()
+      ][currentPageIndex],
     );
   }
 }
