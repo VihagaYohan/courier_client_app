@@ -1,4 +1,6 @@
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -283,25 +285,32 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            width: boxWidth,
-            padding:
-                const EdgeInsets.symmetric(vertical: Constants.mediumSpace),
-            decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(Constants.smallSpace)),
-            child: const Center(
-              child: Column(
-                children: [
-                  UIIcon(
-                    iconData: Icons.local_shipping,
-                    iconColor: AppColors.primary,
-                  ),
-                  SizedBox(
-                    height: Constants.mediumSpace,
-                  ),
-                  UITextView(text: "Courier")
-                ],
+          GestureDetector(
+            onTap: () {
+              // navigate to create order screen
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const CreateOrderScreen()));
+            },
+            child: Container(
+              width: boxWidth,
+              padding:
+                  const EdgeInsets.symmetric(vertical: Constants.mediumSpace),
+              decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(Constants.smallSpace)),
+              child: const Center(
+                child: Column(
+                  children: [
+                    UIIcon(
+                      iconData: Icons.local_shipping,
+                      iconColor: AppColors.primary,
+                    ),
+                    SizedBox(
+                      height: Constants.mediumSpace,
+                    ),
+                    UITextView(text: "Courier")
+                  ],
+                ),
               ),
             ),
           ),
