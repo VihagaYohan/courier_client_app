@@ -24,8 +24,7 @@ class UITextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {},
-      style: TextButton.styleFrom(
-          backgroundColor: buttonColor, foregroundColor: AppColors.primary),
+      style: TextButton.styleFrom(foregroundColor: AppColors.primary),
       child: UITextView(
         text: labelText,
         textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
