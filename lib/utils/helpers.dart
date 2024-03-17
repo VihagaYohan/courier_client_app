@@ -1,16 +1,24 @@
 import 'dart:convert';
 
 import 'package:courier_client_app/models/OrderTypes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // database
 import 'package:courier_client_app/database/courier_db.dart';
 
 class Helper {
-  void setData(String key, dynamic payload) async {
+  static showConsole(dynamic payload) {
+    if (kDebugMode) {
+      print(payload);
+    }
+  }
+
+  dynamic setData(String key, dynamic payload) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      await prefs.setString(key, payload);
+      dynamic response = await prefs.setString(key, payload);
+      return response;
     } catch (e) {
       print("Error at saving data to shared preferences: ${e.toString()}");
     }
@@ -19,7 +27,7 @@ class Helper {
   dynamic getData(String key) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      dynamic response = prefs.get(key);
+      dynamic response = prefs.getString(key);
       return response;
     } catch (e) {
       print("Error at getting data from shared preferences: ${e.toString()}");

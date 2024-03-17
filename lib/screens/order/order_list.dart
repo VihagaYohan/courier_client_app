@@ -1,3 +1,4 @@
+import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class OrderListScreen extends StatelessWidget {
@@ -5,6 +6,9 @@ class OrderListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return UIContainer(
+        children: Center(
+      child: UITextView(text: "Order list screen"),
+    ));
   }
 }
