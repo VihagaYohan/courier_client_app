@@ -7,6 +7,7 @@ import 'package:courier_client_app/widgets/widgets.dart';
 
 // utils
 import 'package:courier_client_app/utils/constants.dart';
+import 'package:flutter/widgets.dart';
 
 class UITextField extends StatelessWidget {
   final TextEditingController controller;
@@ -51,20 +52,21 @@ class UITextField extends StatelessWidget {
       cursorWidth: 1,
       focusNode: FocusNode(),
       decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
-          floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w500,
-              fontSize: 16),
-          prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
-          prefixIconColor: iconColor,
-          enabledBorder: const OutlineInputBorder()
-              .copyWith(borderSide: BorderSide(color: borderColor)),
-          contentPadding: const EdgeInsets.all(8)),
+        labelText: labelText,
+        labelStyle: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: AppColors.darkGrey, fontWeight: FontWeight.w300),
+        floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: AppColors.primary,
+            fontWeight: FontWeight.w500,
+            fontSize: 16),
+        prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
+        prefixIconColor: iconColor,
+        enabledBorder: const OutlineInputBorder()
+            .copyWith(borderSide: BorderSide(color: borderColor)),
+        contentPadding: const EdgeInsets.all(8),
+      ),
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
       validator: validator,

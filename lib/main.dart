@@ -2,7 +2,7 @@ import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/authentication/login_screen.dart';
 import 'package:courier_client_app/screens/authentication/onboarding_screen.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
-import 'package:courier_client_app/screens/profile/profile_screen.dart';
+import 'package:courier_client_app/screens/profile/contact_data_screen.dart';
 import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:courier_client_app/utils/theme/theme.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         Routes.bottomNavigation: (context) => AppBottomNavigation(),
         Routes.createOrder: (context) => CreateOrderScreen()
       },
-      initialRoute: Routes.loginScreen,
+      initialRoute: Routes.bottomNavigation,
     );
   }
 }
