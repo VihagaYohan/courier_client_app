@@ -7,6 +7,7 @@ import 'package:courier_client_app/widgets/widgets.dart';
 
 // utils
 import 'package:courier_client_app/utils/constants.dart';
+import 'package:flutter/widgets.dart';
 
 class UITextField extends StatelessWidget {
   final TextEditingController controller;
@@ -21,6 +22,7 @@ class UITextField extends StatelessWidget {
   final bool? showIcon;
   final Widget? icon;
   final Color? iconColor;
+  final dynamic? borderColor;
 
   const UITextField(
       {super.key,
@@ -35,7 +37,8 @@ class UITextField extends StatelessWidget {
       this.validator,
       this.showIcon = false,
       this.icon,
-      this.iconColor = AppColors.primary})
+      this.iconColor = AppColors.primary,
+      this.borderColor = AppColors.grey})
       : super();
 
   @override
@@ -60,6 +63,9 @@ class UITextField extends StatelessWidget {
             fontSize: 16),
         prefixIcon: showIcon == true ? icon : const SizedBox.shrink(),
         prefixIconColor: iconColor,
+        enabledBorder: const OutlineInputBorder()
+            .copyWith(borderSide: BorderSide(color: borderColor)),
+        contentPadding: const EdgeInsets.all(8),
       ),
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,

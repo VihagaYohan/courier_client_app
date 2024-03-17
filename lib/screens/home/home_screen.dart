@@ -94,6 +94,7 @@ class HomeScreen extends StatelessWidget {
           controller: trackingNumberController,
           labelText: 'Tracking number',
           keyboardType: TextInputType.number,
+          borderColor: AppColors.primary,
         )),
         Container(
           width: 50,
@@ -278,7 +279,6 @@ class HomeScreen extends StatelessWidget {
         40; // 40 is the default value for left and right padding in UIContainer widget
     double boxWidth = (width - 20) / 2;
 
-    print('width - ${width}');
     return Container(
       width: double.infinity,
       child: Row(

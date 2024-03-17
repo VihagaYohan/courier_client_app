@@ -16,6 +16,8 @@ class CreateOrderScreen extends StatelessWidget {
         appbar: const UIAppBar(
           title: "Send Package",
         ),
-        children: ListView());
+        children: ListView(
+          children: <Widget>[UIDropDown()],
+        ));
   }
 }

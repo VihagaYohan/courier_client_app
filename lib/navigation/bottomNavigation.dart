@@ -1,5 +1,5 @@
 import 'package:courier_client_app/screens/order/order_list.dart';
-import 'package:courier_client_app/screens/profile/profile_screen.dart';
+import 'package:courier_client_app/screens/profile/contact_data_screen.dart';
 import 'package:flutter/material.dart';
 
 // widgets
