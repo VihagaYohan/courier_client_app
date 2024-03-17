@@ -34,6 +34,8 @@ class CourierDB {
   Future<List<UserInfo>> getCurrentUser() async {
     final database = await DatabaseService().database;
     final userList = await database.rawQuery('''SELECT * from $tableName''');
+    print('from service');
+    print(userList);
     return userList.map((item) => UserInfo.fromSqlfliteDatabase(item)).toList();
   }
 

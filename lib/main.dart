@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         Routes.loginScreen: (context) => LoginScreen(),
         Routes.homeScreen: (context) => HomeScreen(),
         Routes.profileScreen: (context) => ProfileScreen(),
+        Routes.contactDataScreen: (context) => ContactDataScreen(),
         Routes.bottomNavigation: (context) => AppBottomNavigation(),
         Routes.createOrder: (context) => CreateOrderScreen()
       },

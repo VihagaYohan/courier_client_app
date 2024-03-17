@@ -8,6 +8,7 @@ class Routes {
   static const String loginScreen = '/loginScreen';
   static const String homeScreen = '/homeScreen';
   static const String profileScreen = '/profileScreen';
+  static const String contactDataScreen = '/contactDataScreen';
   static const String bottomNavigation = '/bottomNavigation';
   static const String createOrder = '/createOrder';
 }
