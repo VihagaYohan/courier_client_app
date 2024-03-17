@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '8746645603',
     projectId: 'courier-client-app',
     storageBucket: 'courier-client-app.appspot.com',
+    androidClientId: '8746645603-7qbdi63dcd1a3nh6qsllutcqdqmq4gcv.apps.googleusercontent.com',
+    iosClientId: '8746645603-gj0ro816o8orin4qirhr60k3ojbos7uj.apps.googleusercontent.com',
     iosBundleId: 'com.example.courierClientApp',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '8746645603',
     projectId: 'courier-client-app',
     storageBucket: 'courier-client-app.appspot.com',
+    androidClientId: '8746645603-7qbdi63dcd1a3nh6qsllutcqdqmq4gcv.apps.googleusercontent.com',
+    iosClientId: '8746645603-bfbn0sgptqs7f1f4rbjl1nrqqns6p4mu.apps.googleusercontent.com',
     iosBundleId: 'com.example.courierClientApp.RunnerTests',
   );
 }

@@ -1,3 +1,5 @@
+import 'package:courier_client_app/models/User.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -6,8 +8,15 @@ import 'package:courier_client_app/widgets/widgets.dart';
 // utils
 import 'package:courier_client_app/utils/utils.dart';
 
+// models
+import 'package:courier_client_app/models/models.dart';
+// ignore: library_prefixes
+import 'package:courier_client_app/models/User.dart' as UserInfoModel;
+
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final dynamic userData;
+
+  const ProfileScreen({super.key, this.userData});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,13 +26,44 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   final formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    AdditionalUserInfo additionalUserInfo = widget.userData.additionalUserInfo;
+    AuthCredential crdentialInfo = widget.userData.credential;
+    dynamic user = widget.userData.user;
+
+    UserInfoModel.UserInfo userInfo = UserInfoModel.UserInfo(
+        isNewUser: additionalUserInfo.isNewUser,
+        profile: additionalUserInfo.profile,
+        providerId: additionalUserInfo.providerId,
+        username: additionalUserInfo.username,
+        authorizationCode: additionalUserInfo.authorizationCode);
+
+    UserInfoModel.UserCredential userCredential = UserInfoModel.UserCredential(
+        providerId: crdentialInfo.providerId,
+        signInMethod: crdentialInfo.signInMethod,
+        token: crdentialInfo.token,
+        accessToken: crdentialInfo.accessToken);
+
+    UserInfoModel.UserProfile userProfile = UserInfoModel.UserProfile(
+        displayName: user.displayName,
+        email: user.email,
+        phoneNumber: user.phoneNumber);
+
+    UserInfoModel.User userPayload = UserInfoModel.User(
+        id: 'user',
+        userInfo: userInfo,
+        userCredential: userCredential,
+        user: userProfile);
+
+    final TextEditingController nameController =
+        TextEditingController(text: userPayload.user.displayName ?? "");
+    final TextEditingController addressController = TextEditingController();
+    final TextEditingController phoneNumberController = TextEditingController();
+    final TextEditingController emailController =
+        TextEditingController(text: userPayload.user.email ?? "");
+
     return UIContainer(
         paddingTop: Constants.largeSpace,
         paddingBottom: Constants.mediumSpace,
