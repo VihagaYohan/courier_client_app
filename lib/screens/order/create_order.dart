@@ -17,7 +17,23 @@ class CreateOrderScreen extends StatelessWidget {
           title: "Send Package",
         ),
         children: ListView(
-          children: <Widget>[UIDropDown()],
+          children: <Widget>[
+            UITextView(
+              text: 'Shipment type',
+              textAlign: TextAlign.left,
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 10),
+            const UIDropDown(),
+            const SizedBox(height: Constants.mediumSpace),
+            const UITextView(
+              text: "Sender Details",
+              textAlign: TextAlign.left,
+            )
+          ],
         ));
   }
 }
