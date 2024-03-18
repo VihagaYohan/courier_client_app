@@ -2,6 +2,7 @@ import 'package:courier_client_app/database/courier_db.dart';
 import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -54,11 +55,14 @@ class ContactDataScreenState extends State<ContactDataScreen> {
 
     // save user data into local db
     void saveData() async {
-      await localDB.create(
+      /* await localDB.create(
           name: nameController.text,
           address: addressController.text,
           phoneNumber: phoneNumberController.text,
-          email: emailController.text);
+          email: emailController.text); */
+
+      dynamic response = Helper().setData('user', userPayload);
+      Helper.showConsole(response);
     }
 
     // handle alert message and navigation

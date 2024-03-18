@@ -7,7 +7,9 @@ class TTextButtonTheme {
   TTextButtonTheme._();
 
   static final lightTextButtonTheme = TextButtonThemeData(
-      style: TextButton.styleFrom(backgroundColor: AppColors.white));
+      style: TextButton.styleFrom(
+    backgroundColor: AppColors.white,
+  ));
 
   static final darkTextButtonTheme = TextButtonThemeData(
       style: TextButton.styleFrom(backgroundColor: AppColors.dark));

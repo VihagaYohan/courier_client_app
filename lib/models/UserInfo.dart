@@ -1,5 +1,4 @@
 class UserInfo {
-  final int? id;
   final String name;
   final String? address;
   final String? phoneNumber;
@@ -7,7 +6,6 @@ class UserInfo {
   final String? photoUrl;
 
   UserInfo({
-    this.id,
     required this.name,
     this.address,
     this.phoneNumber,
@@ -15,8 +13,33 @@ class UserInfo {
     this.photoUrl,
   });
 
+  // convert UserInfo object to Map
+  /* Map<String, dynamic> toJson() => {
+        'name': name,
+        'address': address,
+        'phoneNumber': phoneNumber,
+        'email': email,
+        'photoUrl': photoUrl
+      }; */
+   Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'address': address,
+      'phoneNumber': phoneNumber,
+      'email': email,
+      'photoUrl': photoUrl
+    };
+  }
+
+  // deserialize UserInfo object from Map
+  factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
+      name: map['name'] ?? '',
+      address: map['address'] ?? '',
+      phoneNumber: map['phoneNumber'] ?? '',
+      email: map['email'] ?? '',
+      photoUrl: map['photoUrl'] ?? '');
+
   factory UserInfo.fromSqlfliteDatabase(Map<String, dynamic> map) => UserInfo(
-      id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       address: map['address'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',

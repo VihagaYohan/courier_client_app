@@ -1,6 +1,5 @@
 import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -8,7 +7,6 @@ import 'package:courier_client_app/widgets/widgets.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

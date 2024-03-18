@@ -1,10 +1,40 @@
+import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+// model
+import 'package:courier_client_app/models/models.dart';
+
+// utils
+import 'package:courier_client_app/utils/utils.dart';
+import 'package:flutter/widgets.dart';
+
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  // fetch profile data
+  Future<void> getCurrentUser() async {
+    try {
+      dynamic response = await Helper().getData('user');
+      print("response goes here");
+      Helper.showConsole(response);
+    } catch (e) {
+      print('Error occured at');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const UIContainer(children: UITextView(text: "Profile screen"));
   }
 }

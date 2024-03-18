@@ -10,29 +10,33 @@ import 'package:courier_client_app/utils/theme/custom_themes/text_field.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/text_selection_theme.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/text_theme.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/bottom_navigation_bar_theme.dart';
+import 'package:courier_client_app/utils/theme/custom_themes/date_picker_theme.dart';
+import 'package:courier_client_app/utils/theme/custom_themes/time_picker_theme.dart';
 import 'package:flutter/material.dart';
 
 class TAppTheme {
   TAppTheme();
 
   static ThemeData lightTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Poppins',
-    brightness: Brightness.light,
-    primaryColor: AppColors.primary,
-    scaffoldBackgroundColor: Colors.white,
-    textTheme: TTextTheme.lightTextTheme,
-    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
-    appBarTheme: TAppBarTheme.lightAppBarTheme,
-    bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
-    checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
-    chipTheme: TChipTheme.lightChipTheme,
-    outlinedButtonTheme: TOutlineButtonTheme.lightOutlinedButtonTheme,
-    inputDecorationTheme: TTextFieldTheme.lightInputDecorationTheme,
-    navigationBarTheme: TBottomNavigatorBarTheme.lightBottomNavigationBarTheme,
-    textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
-    textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
-  );
+      useMaterial3: true,
+      fontFamily: 'Poppins',
+      brightness: Brightness.light,
+      primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: Colors.white,
+      textTheme: TTextTheme.lightTextTheme,
+      elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
+      appBarTheme: TAppBarTheme.lightAppBarTheme,
+      bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
+      checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
+      chipTheme: TChipTheme.lightChipTheme,
+      outlinedButtonTheme: TOutlineButtonTheme.lightOutlinedButtonTheme,
+      inputDecorationTheme: TTextFieldTheme.lightInputDecorationTheme,
+      navigationBarTheme:
+          TBottomNavigatorBarTheme.lightBottomNavigationBarTheme,
+      textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
+      textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
+      datePickerTheme: TDatePickerTheme.lightDatePickerTheme,
+      timePickerTheme: TTimePickerTheme.lightTimePickerTheme);
 
   static ThemeData darkTheme = ThemeData(
       useMaterial3: true,
@@ -50,5 +54,7 @@ class TAppTheme {
       inputDecorationTheme: TTextFieldTheme.darkInputDecorationTheme,
       navigationBarTheme: TBottomNavigatorBarTheme.darkBottomNavigationBarTheme,
       textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
-      textSelectionTheme: TTextSelectionTheme.darkTextSelectionTheme);
+      textSelectionTheme: TTextSelectionTheme.darkTextSelectionTheme,
+      datePickerTheme: TDatePickerTheme.darkDatePickerTheme,
+      timePickerTheme: TTimePickerTheme.darkTimePickerTheme);
 }
