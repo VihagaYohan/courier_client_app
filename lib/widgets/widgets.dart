@@ -32,3 +32,6 @@ export 'UI_spacer.dart';
 
 // date picker
 export 'UI_datePicker.dart';
+
+// time picker
+export 'UI_timePicker.dart';

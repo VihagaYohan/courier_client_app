@@ -23,6 +23,7 @@ class _SenderFormState extends State<SenderForm> {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController datePickerController = TextEditingController();
     final TextEditingController timePickerController = TextEditingController();
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
 
     return Form(
         key: senderForm,
@@ -75,13 +76,25 @@ class _SenderFormState extends State<SenderForm> {
               onTap: () {
                 print('on trapping');
               },
+              showIcon: true,
+              suffixIcon: Icon(Icons.calendar_month),
+              suffixIconColor: brightness == Brightness.dark
+                  ? AppColors.white
+                  : AppColors.dark,
             ),
-            /* UIElevatedButton(
-                label: "Open date picker",
-                onPress: () {
-                  dynamic result = DeviceUtils.getDatePicker(context);
-                  print(result.toString());
-                }) */
+            const UISpacer(),
+            UITimePicker(
+              controll: timePickerController,
+              labelText: "Pickup Time",
+              onTap: () {
+                print('on tapping');
+              },
+              showIcon: true,
+              suffixIcon: const Icon(Icons.timer_outlined),
+              suffixIconColor: brightness == Brightness.dark
+                  ? AppColors.white
+                  : AppColors.dark,
+            )
           ],
         ));
   }

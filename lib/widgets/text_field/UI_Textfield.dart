@@ -22,6 +22,9 @@ class UITextField extends StatelessWidget {
   final bool? showIcon;
   final Widget? icon;
   final Color? iconColor;
+  final bool? showSuffixIcon;
+  final Widget? suffixIcon;
+  final Color? suffixIconColor;
   final dynamic? borderColor;
   final bool readOnly;
   final bool enabaled;
@@ -40,6 +43,9 @@ class UITextField extends StatelessWidget {
     this.showIcon = false,
     this.icon,
     this.iconColor = AppColors.primary,
+    this.showSuffixIcon = false,
+    this.suffixIcon,
+    this.suffixIconColor = AppColors.primary,
     this.borderColor = AppColors.grey,
     this.readOnly = false,
     this.enabaled = true,
@@ -67,6 +73,8 @@ class UITextField extends StatelessWidget {
             fontSize: 16),
         prefixIcon: showIcon == true ? icon : null,
         prefixIconColor: iconColor,
+        suffixIcon: showSuffixIcon == true ? this.suffixIcon : null,
+        suffixIconColor: this.suffixIconColor,
         enabledBorder: const OutlineInputBorder()
             .copyWith(borderSide: BorderSide(color: borderColor)),
         contentPadding: const EdgeInsets.all(8),

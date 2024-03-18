@@ -108,4 +108,34 @@ class DeviceUtils {
           );
         });
   }
+
+  static Future<TimeOfDay?> getTimePicker(BuildContext context) async {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+
+    return await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+            data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(
+                    primary: AppColors.primary,
+                    onPrimary: AppColors.white,
+                    onSurface: brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.dark),
+                textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.white))),
+            child: child!);
+
+        /* return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        ); */
+      },
+    );
+    ;
+  }
 }

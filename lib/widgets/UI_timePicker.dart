@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // utils
 import 'package:courier_client_app/utils/utils.dart';
 
-class UIDatePicker extends StatefulWidget {
+class UITimePicker extends StatefulWidget {
   final TextEditingController controll;
   final String labelText;
   final Function onTap;
@@ -13,7 +13,7 @@ class UIDatePicker extends StatefulWidget {
   final Icon? suffixIcon;
   final Color? suffixIconColor;
 
-  const UIDatePicker(
+  const UITimePicker(
       {super.key,
       required this.controll,
       required this.labelText,
@@ -24,10 +24,10 @@ class UIDatePicker extends StatefulWidget {
       this.suffixIconColor});
 
   @override
-  State<UIDatePicker> createState() => _UIDatePickerState();
+  State<UITimePicker> createState() => _UITimePickerState();
 }
 
-class _UIDatePickerState extends State<UIDatePicker> {
+class _UITimePickerState extends State<UITimePicker> {
   @override
   Widget build(BuildContext context) {
     Future<void> getDate() async {
@@ -38,7 +38,7 @@ class _UIDatePickerState extends State<UIDatePicker> {
     return GestureDetector(
       onTap: () {
         widget.onTap();
-        dynamic date = DeviceUtils.getDatePicker(context);
+        dynamic date = DeviceUtils.getTimePicker(context);
         print(date.toString());
       },
       child: UITextField(
