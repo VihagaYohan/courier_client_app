@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         Routes.bottomNavigation: (context) => AppBottomNavigation(),
         Routes.createOrder: (context) => CreateOrderScreen()
       },
-      initialRoute: Routes.createOrder,
+      initialRoute: Routes.bottomNavigation,
     );
   }
 }
