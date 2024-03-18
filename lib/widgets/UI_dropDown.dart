@@ -8,9 +8,11 @@ import 'package:flutter/widgets.dart';
 import 'package:courier_client_app/utils/utils.dart';
 
 class UIDropDown extends StatefulWidget {
-  final String? placeholderText;
+  final String placeholderText;
+  final List<String> optionList;
 
-  const UIDropDown({super.key, this.placeholderText});
+  const UIDropDown(
+      {super.key, required this.placeholderText, required this.optionList});
 
   @override
   State<UIDropDown> createState() => _UIDropDownState();
@@ -29,7 +31,7 @@ class _UIDropDownState extends State<UIDropDown> {
     return DropdownButtonFormField(
       value: dropdownValue,
       hint: UITextView(
-        text: "Select",
+        text: widget.placeholderText,
         textStyle:
             Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 12),
       ),
@@ -38,7 +40,7 @@ class _UIDropDownState extends State<UIDropDown> {
           dropdownValue = value!;
         });
       },
-      items: list.map<DropdownMenuItem<String>>((String value) {
+      items: widget.optionList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
             value: value,
             child: UITextView(

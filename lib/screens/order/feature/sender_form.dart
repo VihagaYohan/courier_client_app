@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // widget
@@ -23,7 +24,13 @@ class _SenderFormState extends State<SenderForm> {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController datePickerController = TextEditingController();
     final TextEditingController timePickerController = TextEditingController();
+
     Brightness brightness = MediaQuery.of(context).platformBrightness;
+    double boxWidth = (DeviceUtils.getScreenWidth(context) -
+            (Constants.mediumSpace * 2) -
+            50) /
+        3;
+    int index = 1;
 
     return Form(
         key: senderForm,
@@ -31,7 +38,10 @@ class _SenderFormState extends State<SenderForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const UIHeader(title: "Shipment Type"),
-            const UIDropDown(),
+            const UIDropDown(
+              placeholderText: 'Select type',
+              optionList: ['Standard', 'Express'],
+            ),
             const UIHeader(
               title: "Sender Details",
             ),
@@ -94,6 +104,178 @@ class _SenderFormState extends State<SenderForm> {
               suffixIconColor: brightness == Brightness.dark
                   ? AppColors.white
                   : AppColors.dark,
+            ),
+            const UIHeader(title: "Package Size"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // first box
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      index = 0;
+                    });
+                  },
+                  child: Container(
+                    width: boxWidth,
+                    height: boxWidth,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: index == 0
+                              ? AppColors.primary
+                              : AppColors.darkGrey, // Border color
+                          width: 1, // Border width
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(Constants.smallSpace)),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          UIIcon(
+                            iconData: CupertinoIcons.cube_box,
+                            size: 25,
+                            iconColor:
+                                index == 0 ? AppColors.primary : AppColors.dark,
+                          ),
+                          UITextView(
+                            text: "< 1 KG",
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    fontSize: 12,
+                                    color: index == 0
+                                        ? AppColors.primary
+                                        : AppColors.darkGrey),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+
+                // second box
+                ,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      index = 1;
+                    });
+                  },
+                  child: Container(
+                    width: boxWidth,
+                    height: boxWidth,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: index == 1
+                              ? AppColors.primary
+                              : AppColors.darkGrey, // Border color
+                          width: 1, // Border width
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(Constants.smallSpace)),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          UIIcon(
+                            iconData: CupertinoIcons.cube_box,
+                            size: 25,
+                            iconColor:
+                                index == 1 ? AppColors.primary : AppColors.dark,
+                          ),
+                          UITextView(
+                            text: "3 KG < 10 KG",
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    fontSize: 12,
+                                    color: index == 1
+                                        ? AppColors.primary
+                                        : AppColors.darkGrey),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // third box
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      index = 3;
+                    });
+                  },
+                  child: Container(
+                    width: boxWidth,
+                    height: boxWidth,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: index == 3
+                              ? AppColors.primary
+                              : AppColors.darkGrey, // Border color
+                          width: 1, // Border width
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(Constants.smallSpace)),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          UIIcon(
+                            iconData: CupertinoIcons.cube_box,
+                            size: 25,
+                            iconColor:
+                                index == 3 ? AppColors.primary : AppColors.dark,
+                          ),
+                          UITextView(
+                            text: "> 10 KG",
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(
+                                    fontSize: 12,
+                                    color: index == 3
+                                        ? AppColors.primary
+                                        : AppColors.darkGrey),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const UIHeader(title: "Courier Type"),
+            const UIDropDown(
+              placeholderText: 'Select courier type',
+              optionList: ['Documents', 'Electronics', 'Clothes', 'Other'],
+            ),
+            const SizedBox(height: Constants.mediumSpace),
+            Container(
+              width: double.infinity,
+              height: 200,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.smallSpace,
+                  vertical: Constants.smallSpace),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(Constants.smallSpace)),
+              child: UITextView(
+                text: "Notes",
+                textAlign: TextAlign.left,
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 12),
+              ),
             )
           ],
         ));
