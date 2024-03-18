@@ -32,6 +32,11 @@ class TAppTheme {
     navigationBarTheme: TBottomNavigatorBarTheme.lightBottomNavigationBarTheme,
     textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
     textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: AppColors.white,
+      surfaceTintColor: AppColors.primary,
+      dividerColor: AppColors.primary,
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -50,5 +55,10 @@ class TAppTheme {
       inputDecorationTheme: TTextFieldTheme.darkInputDecorationTheme,
       navigationBarTheme: TBottomNavigatorBarTheme.darkBottomNavigationBarTheme,
       textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
-      textSelectionTheme: TTextSelectionTheme.darkTextSelectionTheme);
+      textSelectionTheme: TTextSelectionTheme.darkTextSelectionTheme,
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: AppColors.dark,
+        surfaceTintColor: AppColors.primary,
+        dividerColor: AppColors.primary,
+      ));
 }

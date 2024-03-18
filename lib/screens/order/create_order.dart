@@ -6,6 +6,9 @@ import 'package:courier_client_app/widgets/widgets.dart';
 // utils
 import 'package:courier_client_app/utils/utils.dart';
 
+// feature
+import 'package:courier_client_app/screens/order/feature/feature.dart';
+
 class CreateOrderScreen extends StatelessWidget {
   const CreateOrderScreen({super.key});
 
@@ -17,23 +20,7 @@ class CreateOrderScreen extends StatelessWidget {
           title: "Send Package",
         ),
         children: ListView(
-          children: <Widget>[
-            UITextView(
-              text: 'Shipment type',
-              textAlign: TextAlign.left,
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 10),
-            const UIDropDown(),
-            const SizedBox(height: Constants.mediumSpace),
-            const UITextView(
-              text: "Sender Details",
-              textAlign: TextAlign.left,
-            )
-          ],
+          children: const <Widget>[SenderForm()],
         ));
   }
 }

@@ -75,4 +75,37 @@ class DeviceUtils {
           );
         });
   }
+
+  static Future<DateTime?> getDatePicker(BuildContext context) async {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+
+    final firstDate = DateTime(1990);
+    final lastDate = DateTime(2050);
+    return await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: firstDate,
+        lastDate: lastDate,
+        initialEntryMode: DatePickerEntryMode.calendarOnly,
+        helpText: 'Select a date',
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: AppColors.primary,
+                onPrimary: AppColors.white,
+                onSurface: brightness == Brightness.dark
+                    ? AppColors.white
+                    : AppColors.textPrimary,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.white),
+              ),
+            ),
+            child: child!,
+          );
+        });
+  }
 }

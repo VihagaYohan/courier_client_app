@@ -23,3 +23,12 @@ export 'UI_appbar.dart';
 
 // drop-down
 export 'UI_dropDown.dart';
+
+// header title
+export 'UI_headers.dart';
+
+// spacer
+export 'UI_spacer.dart';
+
+// date picker
+export 'UI_datePicker.dart';

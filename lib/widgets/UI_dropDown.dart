@@ -28,8 +28,10 @@ class _UIDropDownState extends State<UIDropDown> {
 
     return DropdownButtonFormField(
       value: dropdownValue,
-      hint: const UITextView(
+      hint: UITextView(
         text: "Select",
+        textStyle:
+            Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 12),
       ),
       onChanged: (String? value) {
         setState(() {
