@@ -1,4 +1,3 @@
-import 'package:courier_client_app/database/courier_db.dart';
 import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +28,6 @@ class ContactDataScreen extends StatefulWidget {
 
 class ContactDataScreenState extends State<ContactDataScreen> {
   final formKey = GlobalKey<FormState>();
-  final localDB = CourierDB();
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +58,6 @@ class ContactDataScreenState extends State<ContactDataScreen> {
           address: addressController.text,
           phoneNumber: phoneNumberController.text,
           email: emailController.text); */
-
-      dynamic response = Helper().setData('user', userPayload);
-      Helper.showConsole(response);
     }
 
     // handle alert message and navigation

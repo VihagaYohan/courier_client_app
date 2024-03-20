@@ -1,5 +1,3 @@
-import 'package:courier_client_app/screens/home/home_screen.dart';
-import 'package:courier_client_app/screens/profile/contact_data_screen.dart';
 import 'package:courier_client_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,6 +10,12 @@ import 'package:courier_client_app/widgets/widgets.dart';
 // services
 import 'package:courier_client_app/services/service.dart';
 
+// models
+import 'package:courier_client_app/models/UserInfo.dart' as UserInfoData;
+
+// utils
+import 'package:courier_client_app/utils/utils.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -21,10 +25,26 @@ class LoginScreen extends StatelessWidget {
       // await Authentication.signOut();
       UserCredential user = await Authentication.signInWithGoogle();
 
-      Navigator.of(context).push(MaterialPageRoute(
+      String name = user.additionalUserInfo?.profile!['name'] as String;
+      String email = user.additionalUserInfo?.profile!['email'] as String;
+      String photoUrl = user.additionalUserInfo?.profile!['picture'] as String;
+
+      UserInfoData.UserInfo userData =
+          UserInfoData.UserInfo(name: name, email: email, photoUrl: photoUrl);
+      print(userData.toJson());
+
+      // mark user already logged into to app in shared preferences
+      Helper.setData<bool>(Constants.isLoggedIn, true);
+
+      // save user data to shared preferences
+      Helper.setData<String>(Constants.user, userData.toJson().toString());
+
+      // UserInfo userData = UserInfo(name)
+
+      /* Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ContactDataScreen(
                 userData: user,
-              )));
+              ))); */
     } catch (e) {
       print('Error - ${e.toString()}');
     }
@@ -71,7 +91,7 @@ class LoginScreen extends StatelessWidget {
           },
           isPrimary: false,
           showSuffixIcon: true,
-        )
+        ),
       ],
     ));
   }

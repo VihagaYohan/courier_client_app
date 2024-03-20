@@ -23,18 +23,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // fetch profile data
-  Future<void> getCurrentUser() async {
-    try {
-      dynamic response = await Helper().getData('user');
-      print("response goes here");
-      Helper.showConsole(response);
-    } catch (e) {
-      print('Error occured at');
-    }
-  }
+  Future<void> getCurrentUser() async {}
 
   @override
   Widget build(BuildContext context) {
-    return const UIContainer(children: UITextView(text: "Profile screen"));
+    return const UIContainer(
+        children: Center(child: UITextView(text: "Profile screen")));
   }
 }

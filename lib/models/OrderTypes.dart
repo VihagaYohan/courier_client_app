@@ -1,7 +1,7 @@
 class OrderTypes {
-  int id;
-  String name;
-  double cost;
+  final int id;
+  final String name;
+  final double cost;
 
   OrderTypes({required this.id, required this.name, required this.cost});
 
