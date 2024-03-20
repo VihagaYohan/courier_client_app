@@ -54,11 +54,16 @@ class _UIProfileBarState extends State<UIProfileBar> {
         ),
 
         // profile image
-        Container(
+        /* Container(
           width: 42,
           height: 40,
           decoration:
               BoxDecoration(border: Border.all(color: AppColors.primary)),
+        ) */
+        const CircleAvatar(
+          radius: 20,
+          backgroundImage: NetworkImage(
+              'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
         )
       ],
     );
