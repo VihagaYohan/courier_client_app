@@ -21,7 +21,7 @@ class CreateOrderScreen extends StatelessWidget {
         ),
         children: ListView(
           children: <Widget>[
-            const SenderForm(),
+            SenderForm(),
             const SizedBox(height: Constants.mediumSpace),
             Positioned(
                 bottom: 10,

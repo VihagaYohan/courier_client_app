@@ -50,6 +50,15 @@ class DeviceUtils {
     return Platform.isAndroid;
   }
 
+  static bool isDarkmode(BuildContext context) {
+    Brightness brightness = MediaQuery.of(context).platformBrightness;
+    if (brightness == Brightness.dark) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static Future<void> showAlertDialog(
       BuildContext context, title, content, buttonTitle, buttonPress, icon,
       {Color iconContainerColor = AppColors.primary,
