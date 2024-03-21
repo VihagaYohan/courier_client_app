@@ -8,7 +8,8 @@ import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:courier_client_app/utils/utils.dart';
 
 class SenderForm extends StatefulWidget {
-  const SenderForm({super.key});
+  int? selectedPacakgeType = 1;
+  SenderForm({super.key});
 
   @override
   State<SenderForm> createState() => _SenderFormState();
@@ -26,11 +27,18 @@ class _SenderFormState extends State<SenderForm> {
     final TextEditingController timePickerController = TextEditingController();
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
-    double boxWidth = (DeviceUtils.getScreenWidth(context) -
-            (Constants.mediumSpace * 2) -
-            50) /
-        3;
-    int index = 1;
+
+    List<PackageSize> packageSize = [
+      PackageSize(
+          index: 1,
+          icon: smallPackageIcon(
+            context,
+          ),
+          text: "< 1 KG"),
+      PackageSize(
+          index: 2, icon: mediumPackageIcon(context), text: "3 KG - 10 KG"),
+      PackageSize(index: 3, icon: largePackageIcon(context), text: "> 10 KG")
+    ];
 
     return Form(
         key: senderForm,
@@ -110,147 +118,7 @@ class _SenderFormState extends State<SenderForm> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                // first box
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      index = 0;
-                    });
-                  },
-                  child: Container(
-                    width: boxWidth,
-                    height: boxWidth,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: index == 0
-                              ? AppColors.primary
-                              : AppColors.darkGrey, // Border color
-                          width: 1, // Border width
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(Constants.smallSpace)),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          UIIcon(
-                            iconData: CupertinoIcons.cube_box,
-                            size: 25,
-                            iconColor:
-                                index == 0 ? AppColors.primary : AppColors.dark,
-                          ),
-                          UITextView(
-                            text: "< 1 KG",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    fontSize: 12,
-                                    color: index == 0
-                                        ? AppColors.primary
-                                        : AppColors.darkGrey),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-
-                // second box
-                ,
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      index = 1;
-                    });
-                  },
-                  child: Container(
-                    width: boxWidth,
-                    height: boxWidth,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: index == 1
-                              ? AppColors.primary
-                              : AppColors.darkGrey, // Border color
-                          width: 1, // Border width
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(Constants.smallSpace)),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          UIIcon(
-                            iconData: CupertinoIcons.cube_box,
-                            size: 25,
-                            iconColor:
-                                index == 1 ? AppColors.primary : AppColors.dark,
-                          ),
-                          UITextView(
-                            text: "3 KG < 10 KG",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    fontSize: 12,
-                                    color: index == 1
-                                        ? AppColors.primary
-                                        : AppColors.darkGrey),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // third box
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      index = 3;
-                    });
-                  },
-                  child: Container(
-                    width: boxWidth,
-                    height: boxWidth,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: index == 3
-                              ? AppColors.primary
-                              : AppColors.darkGrey, // Border color
-                          width: 1, // Border width
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(Constants.smallSpace)),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          UIIcon(
-                            iconData: CupertinoIcons.cube_box,
-                            size: 25,
-                            iconColor:
-                                index == 3 ? AppColors.primary : AppColors.dark,
-                          ),
-                          UITextView(
-                            text: "> 10 KG",
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    fontSize: 12,
-                                    color: index == 3
-                                        ? AppColors.primary
-                                        : AppColors.darkGrey),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                for (var item in packageSize) packageSizeType(context, item)
               ],
             ),
             const UIHeader(title: "Courier Type"),
@@ -280,4 +148,99 @@ class _SenderFormState extends State<SenderForm> {
           ],
         ));
   }
+
+// package size item
+  Widget packageSizeType(BuildContext context, PackageSize item) {
+    bool isDarkmode = DeviceUtils.isDarkmode(context);
+    double boxWidth = (DeviceUtils.getScreenWidth(context) -
+            (Constants.mediumSpace * 2) -
+            50) /
+        3;
+    return GestureDetector(
+      onTap: () {
+        print(item.index);
+        setState(() {
+          widget.selectedPacakgeType = item.index;
+        });
+      },
+      child: Container(
+        width: boxWidth,
+        height: 100,
+        decoration: BoxDecoration(
+            border: Border.all(width: 1, color: AppColors.grey),
+            borderRadius: BorderRadius.circular(Constants.smallSpace),
+            color: isDarkmode == true ? AppColors.dark : null),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              item.icon,
+              const SizedBox(height: Constants.smallSpace / 2),
+              UITextView(
+                text: item.text,
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(fontSize: 12),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // cube icon widget
+  Widget packageSizeItemIcon(
+    BuildContext context,
+  ) {
+    Color iconColor =
+        widget.selectedPacakgeType == 2 ? AppColors.primary : AppColors.grey;
+    return UIIcon(iconData: CupertinoIcons.cube_box, iconColor: iconColor);
+  }
+
+  // small-icon
+  Widget smallPackageIcon(BuildContext context) {
+    return packageSizeItemIcon(context);
+  }
+
+  // medium-icon
+  Widget mediumPackageIcon(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        packageSizeItemIcon(context),
+        packageSizeItemIcon(context)
+      ],
+    );
+  }
+
+  // large-icon
+  Widget largePackageIcon(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        packageSizeItemIcon(context),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            packageSizeItemIcon(context),
+            packageSizeItemIcon(context)
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class PackageSize {
+  final int index;
+  final Widget icon;
+  final String text;
+
+  PackageSize({required this.index, required this.icon, required this.text});
 }
