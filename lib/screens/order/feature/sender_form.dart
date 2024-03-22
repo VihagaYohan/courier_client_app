@@ -7,6 +7,7 @@ import 'package:courier_client_app/widgets/widgets.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
+import 'package:flutter/widgets.dart';
 
 class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
@@ -26,6 +27,7 @@ class _SenderFormState extends State<SenderForm> {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController datePickerController = TextEditingController();
     final TextEditingController timePickerController = TextEditingController();
+    final TextEditingController senderNotesController = TextEditingController();
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
 
@@ -128,22 +130,13 @@ class _SenderFormState extends State<SenderForm> {
               optionList: ['Documents', 'Electronics', 'Clothes', 'Other'],
             ),
             const SizedBox(height: Constants.mediumSpace),
-            Container(
-              width: double.infinity,
+            SizedBox(
               height: 200,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.smallSpace,
-                  vertical: Constants.smallSpace),
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(Constants.smallSpace)),
-              child: UITextView(
-                text: "Notes",
-                textAlign: TextAlign.left,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontSize: 12),
+              child: UITextField(
+                controller: senderNotesController,
+                labelText: "Notes",
+                maxLines: null,
+                expands: false,
               ),
             )
           ],
@@ -167,7 +160,11 @@ class _SenderFormState extends State<SenderForm> {
         width: boxWidth,
         height: 100,
         decoration: BoxDecoration(
-            border: Border.all(width: 1, color: AppColors.grey),
+            border: Border.all(
+                width: 1,
+                color: widget.selectedPacakgeType == item.index
+                    ? AppColors.primary
+                    : AppColors.grey),
             borderRadius: BorderRadius.circular(Constants.smallSpace),
             color: isDarkmode == true ? AppColors.dark : null),
         child: Center(
