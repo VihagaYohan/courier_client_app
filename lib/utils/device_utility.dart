@@ -135,19 +135,13 @@ class DeviceUtils {
                         foregroundColor: AppColors.white))), */
             data: Theme.of(context).copyWith(
                 colorScheme: ColorScheme.light(
-                    primary: AppColors.primary,
-                    onPrimary: AppColors.white,
-                    onSurface: brightness == Brightness.dark
+                  primary: AppColors.primary,
+                  onPrimary: AppColors.white,
+                  /* onSurface: brightness == Brightness.dark
                         ? AppColors.warning
-                        : AppColors.primary),
-                textTheme: const TextTheme(
-                  headline4: TextStyle(
-                      fontSize: 22.0, fontWeight: FontWeight.bold), //3
-                  bodyText1: TextStyle(fontSize: 25.0), //year selection
-                  subtitle2: TextStyle(fontSize: 22.0), //2
-                  caption: TextStyle(fontSize: 24.0), //day selection
-                  overline: TextStyle(fontSize: 22.0),
-                )),
+                        : AppColors.primary */
+                ),
+                textTheme: const TextTheme()),
             child: child!);
 
         /* return Directionality(
