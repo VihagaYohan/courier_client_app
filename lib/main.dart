@@ -30,7 +30,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late bool userLoggedIn;
+  bool userLoggedIn = false;
 
   getLoggedInState() async {
     await Helper.getData<bool>(Constants.isLoggedIn).then((value) {

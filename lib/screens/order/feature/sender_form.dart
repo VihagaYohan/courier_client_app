@@ -1,3 +1,4 @@
+import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -158,7 +159,6 @@ class _SenderFormState extends State<SenderForm> {
         3;
     return GestureDetector(
       onTap: () {
-        print(item.index);
         setState(() {
           widget.selectedPacakgeType = item.index;
         });
@@ -179,10 +179,13 @@ class _SenderFormState extends State<SenderForm> {
               const SizedBox(height: Constants.smallSpace / 2),
               UITextView(
                 text: item.text,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontSize: 12),
+                textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 12,
+                    color: widget.selectedPacakgeType == item.index
+                        ? AppColors.primary
+                        : isDarkmode == true
+                            ? AppColors.grey
+                            : AppColors.dark),
               )
             ],
           ),
@@ -194,42 +197,50 @@ class _SenderFormState extends State<SenderForm> {
   // cube icon widget
   Widget packageSizeItemIcon(
     BuildContext context,
+    int option,
   ) {
-    Color iconColor =
-        widget.selectedPacakgeType == 2 ? AppColors.primary : AppColors.grey;
+    bool isDarkmode = DeviceUtils.isDarkmode(context);
+    Color iconColor = widget.selectedPacakgeType == option
+        ? AppColors.primary
+        : isDarkmode == true
+            ? AppColors.grey
+            : AppColors.dark;
     return UIIcon(iconData: CupertinoIcons.cube_box, iconColor: iconColor);
   }
 
   // small-icon
   Widget smallPackageIcon(BuildContext context) {
-    return packageSizeItemIcon(context);
+    int option = 1;
+    return packageSizeItemIcon(context, option);
   }
 
   // medium-icon
   Widget mediumPackageIcon(BuildContext context) {
+    int option = 2;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        packageSizeItemIcon(context),
-        packageSizeItemIcon(context)
+        packageSizeItemIcon(context, 2),
+        packageSizeItemIcon(context, 2)
       ],
     );
   }
 
   // large-icon
   Widget largePackageIcon(BuildContext context) {
+    int option = 3;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        packageSizeItemIcon(context),
+        packageSizeItemIcon(context, 3),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            packageSizeItemIcon(context),
-            packageSizeItemIcon(context)
+            packageSizeItemIcon(context, 3),
+            packageSizeItemIcon(context, 3)
           ],
         )
       ],
