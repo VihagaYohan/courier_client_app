@@ -96,23 +96,18 @@ class DeviceUtils {
         firstDate: firstDate,
         lastDate: lastDate,
         initialEntryMode: DatePickerEntryMode.calendarOnly,
-        helpText: 'Select a date',
+        helpText: 'Select a package pick-up date',
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(
-                primary: AppColors.primary,
-                onPrimary: AppColors.white,
-                onSurface: brightness == Brightness.dark
-                    ? AppColors.white
-                    : AppColors.textPrimary,
-              ),
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white),
-              ),
-            ),
+                colorScheme: ColorScheme.light(
+                    primary: AppColors.primary, // header background color
+                    onPrimary: AppColors.white,
+                    onSurface: brightness == Brightness.dark
+                        ? AppColors.white
+                        : AppColors.textPrimary // header text color
+                    ),
+                dividerTheme: const DividerThemeData(color: AppColors.primary)),
             child: child!,
           );
         });
@@ -124,19 +119,35 @@ class DeviceUtils {
     return await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      helpText: 'Select a package pick-up time',
       builder: (BuildContext context, Widget? child) {
         return Theme(
+            /* data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(
+                    primary: AppColors.primary,
+                    onPrimary: AppColors.white,
+                    onSurface: brightness == Brightness.dark
+                        ? AppColors.darkerGrey
+                        : AppColors.dark),
+                textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.white))), */
             data: Theme.of(context).copyWith(
                 colorScheme: ColorScheme.light(
                     primary: AppColors.primary,
                     onPrimary: AppColors.white,
                     onSurface: brightness == Brightness.dark
-                        ? AppColors.white
-                        : AppColors.dark),
-                textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.white))),
+                        ? AppColors.warning
+                        : AppColors.primary),
+                textTheme: const TextTheme(
+                  headline4: TextStyle(
+                      fontSize: 22.0, fontWeight: FontWeight.bold), //3
+                  bodyText1: TextStyle(fontSize: 25.0), //year selection
+                  subtitle2: TextStyle(fontSize: 22.0), //2
+                  caption: TextStyle(fontSize: 24.0), //day selection
+                  overline: TextStyle(fontSize: 22.0),
+                )),
             child: child!);
 
         /* return Directionality(
