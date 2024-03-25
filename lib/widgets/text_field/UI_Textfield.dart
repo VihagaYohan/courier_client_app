@@ -28,6 +28,8 @@ class UITextField extends StatelessWidget {
   final dynamic? borderColor;
   final bool readOnly;
   final bool enabaled;
+  final int? maxLines;
+  final bool expands;
 
   const UITextField({
     super.key,
@@ -49,6 +51,8 @@ class UITextField extends StatelessWidget {
     this.borderColor = AppColors.grey,
     this.readOnly = false,
     this.enabaled = true,
+    this.maxLines = 1,
+    this.expands = false,
   }) : super();
 
   @override
@@ -85,6 +89,8 @@ class UITextField extends StatelessWidget {
       textAlign: TextAlign.left,
       readOnly: readOnly,
       enabled: enabaled,
+      maxLines: maxLines,
+      expands: expands,
     );
   }
 }

@@ -1,3 +1,6 @@
+import 'package:courier_client_app/models/CourierType.dart';
+import 'package:courier_client_app/services/helper_service.dart';
+import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +9,16 @@ import 'package:courier_client_app/widgets/widgets.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
+import 'package:flutter/widgets.dart';
+
+// Getx state-mangement
+import 'package:courier_client_app/global_state/global_state.dart';
+import 'package:get/instance_manager.dart';
 
 class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
+  List<CourierType> courierTypes = [];
+
   SenderForm({super.key});
 
   @override
@@ -17,6 +27,24 @@ class SenderForm extends StatefulWidget {
 
 class _SenderFormState extends State<SenderForm> {
   final senderForm = GlobalKey<FormState>();
+  final GlobalState c = Get.put(GlobalState());
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCourierTypes();
+  }
+
+  void fetchCourierTypes() async {
+    try {
+      var res = await HelperService.getShipmentTypes();
+      setState(() {
+        widget.courierTypes = res;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +53,13 @@ class _SenderFormState extends State<SenderForm> {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController datePickerController = TextEditingController();
     final TextEditingController timePickerController = TextEditingController();
+    final TextEditingController senderNotesController = TextEditingController();
+    final TextEditingController shipmentTypeController =
+        TextEditingController();
 
     Brightness brightness = MediaQuery.of(context).platformBrightness;
 
+    // package size list
     List<PackageSize> packageSize = [
       PackageSize(
           index: 1,
@@ -46,10 +78,9 @@ class _SenderFormState extends State<SenderForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const UIHeader(title: "Shipment Type"),
-            const UIDropDown(
-              placeholderText: 'Select type',
-              optionList: ['Standard', 'Express'],
-            ),
+            UIDropDown(
+                placeholderText: 'Select type',
+                optionList: widget.courierTypes),
             const UIHeader(
               title: "Sender Details",
             ),
@@ -122,27 +153,18 @@ class _SenderFormState extends State<SenderForm> {
               ],
             ),
             const UIHeader(title: "Courier Type"),
-            const UIDropDown(
+            /*    const UIDropDown(
               placeholderText: 'Select courier type',
               optionList: ['Documents', 'Electronics', 'Clothes', 'Other'],
-            ),
+            ), */
             const SizedBox(height: Constants.mediumSpace),
-            Container(
-              width: double.infinity,
+            SizedBox(
               height: 200,
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.smallSpace,
-                  vertical: Constants.smallSpace),
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(Constants.smallSpace)),
-              child: UITextView(
-                text: "Notes",
-                textAlign: TextAlign.left,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontSize: 12),
+              child: UITextField(
+                controller: senderNotesController,
+                labelText: "Notes",
+                maxLines: null,
+                expands: false,
               ),
             )
           ],
@@ -158,7 +180,6 @@ class _SenderFormState extends State<SenderForm> {
         3;
     return GestureDetector(
       onTap: () {
-        print(item.index);
         setState(() {
           widget.selectedPacakgeType = item.index;
         });
@@ -167,7 +188,11 @@ class _SenderFormState extends State<SenderForm> {
         width: boxWidth,
         height: 100,
         decoration: BoxDecoration(
-            border: Border.all(width: 1, color: AppColors.grey),
+            border: Border.all(
+                width: 1,
+                color: widget.selectedPacakgeType == item.index
+                    ? AppColors.primary
+                    : AppColors.grey),
             borderRadius: BorderRadius.circular(Constants.smallSpace),
             color: isDarkmode == true ? AppColors.dark : null),
         child: Center(
@@ -179,10 +204,13 @@ class _SenderFormState extends State<SenderForm> {
               const SizedBox(height: Constants.smallSpace / 2),
               UITextView(
                 text: item.text,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontSize: 12),
+                textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: 12,
+                    color: widget.selectedPacakgeType == item.index
+                        ? AppColors.primary
+                        : isDarkmode == true
+                            ? AppColors.grey
+                            : AppColors.dark),
               )
             ],
           ),
@@ -194,42 +222,50 @@ class _SenderFormState extends State<SenderForm> {
   // cube icon widget
   Widget packageSizeItemIcon(
     BuildContext context,
+    int option,
   ) {
-    Color iconColor =
-        widget.selectedPacakgeType == 2 ? AppColors.primary : AppColors.grey;
+    bool isDarkmode = DeviceUtils.isDarkmode(context);
+    Color iconColor = widget.selectedPacakgeType == option
+        ? AppColors.primary
+        : isDarkmode == true
+            ? AppColors.grey
+            : AppColors.dark;
     return UIIcon(iconData: CupertinoIcons.cube_box, iconColor: iconColor);
   }
 
   // small-icon
   Widget smallPackageIcon(BuildContext context) {
-    return packageSizeItemIcon(context);
+    int option = 1;
+    return packageSizeItemIcon(context, option);
   }
 
   // medium-icon
   Widget mediumPackageIcon(BuildContext context) {
+    int option = 2;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        packageSizeItemIcon(context),
-        packageSizeItemIcon(context)
+        packageSizeItemIcon(context, 2),
+        packageSizeItemIcon(context, 2)
       ],
     );
   }
 
   // large-icon
   Widget largePackageIcon(BuildContext context) {
+    int option = 3;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        packageSizeItemIcon(context),
+        packageSizeItemIcon(context, 3),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            packageSizeItemIcon(context),
-            packageSizeItemIcon(context)
+            packageSizeItemIcon(context, 3),
+            packageSizeItemIcon(context, 3)
           ],
         )
       ],

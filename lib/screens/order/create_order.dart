@@ -23,10 +23,10 @@ class CreateOrderScreen extends StatelessWidget {
           children: <Widget>[
             SenderForm(),
             const SizedBox(height: Constants.mediumSpace),
-            Positioned(
+            /*  Positioned(
                 bottom: 10,
                 left: 20,
-                child: UIElevatedButton(label: "Next", onPress: () {}))
+                child: UIElevatedButton(label: "Next", onPress: () {})) */
           ],
         ));
   }
