@@ -4,12 +4,14 @@ import 'package:courier_client_app/screens/authentication/onboarding_screen.dart
 import 'package:courier_client_app/screens/home/home_screen.dart';
 import 'package:courier_client_app/screens/profile/contact_data_screen.dart';
 import 'package:courier_client_app/screens/screens.dart';
+import 'package:courier_client_app/services/endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:courier_client_app/utils/theme/theme.dart';
 import 'package:courier_client_app/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
 import 'firebase_options.dart';
+import 'package:get/get.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
@@ -19,7 +21,11 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  // setting-up environment
+  Endpoints.setEnvironment(Environment.development);
+
+  // runApp(const MyApp());
+  runApp(GetMaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {

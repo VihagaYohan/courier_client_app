@@ -9,7 +9,7 @@ import 'package:courier_client_app/utils/utils.dart';
 
 class UIDropDown extends StatefulWidget {
   final String placeholderText;
-  final List<String> optionList;
+  final List<dynamic> optionList;
 
   const UIDropDown(
       {super.key, required this.placeholderText, required this.optionList});
@@ -40,11 +40,22 @@ class _UIDropDownState extends State<UIDropDown> {
           dropdownValue = value!;
         });
       },
-      items: widget.optionList.map<DropdownMenuItem<String>>((String value) {
+      /* items: widget.optionList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
             value: value,
             child: UITextView(
               text: value,
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontSize: 12),
+            ));
+      }).toList(), */
+      items: widget.optionList.map<DropdownMenuItem<String>>((var item) {
+        return DropdownMenuItem<String>(
+            value: item.id,
+            child: UITextView(
+              text: item.name,
               textStyle: Theme.of(context)
                   .textTheme
                   .bodyMedium!
