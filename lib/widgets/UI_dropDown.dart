@@ -36,9 +36,10 @@ class _UIDropDownState extends State<UIDropDown> {
             Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 12),
       ),
       onChanged: (String? value) {
-        setState(() {
+        print(value);
+        /*  setState(() {
           dropdownValue = value!;
-        });
+        }); */
       },
       /* items: widget.optionList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(

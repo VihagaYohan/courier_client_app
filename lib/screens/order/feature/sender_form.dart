@@ -1,4 +1,5 @@
 import 'package:courier_client_app/models/CourierType.dart';
+import 'package:courier_client_app/models/PackageType.dart';
 import 'package:courier_client_app/services/helper_service.dart';
 import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,9 @@ import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:courier_client_app/utils/utils.dart';
 import 'package:flutter/widgets.dart';
 
+// models
+// import 'package:courier_client_app/models/models.dart';
+
 // Getx state-mangement
 import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
@@ -18,6 +22,7 @@ import 'package:get/instance_manager.dart';
 class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
   List<CourierType> courierTypes = [];
+  List<PackageType> packageTypes = [];
 
   SenderForm({super.key});
 
@@ -33,14 +38,29 @@ class _SenderFormState extends State<SenderForm> {
   void initState() {
     super.initState();
     fetchCourierTypes();
+    fetchPackageTypes();
   }
 
+  // fetch courier types / shipment types
   void fetchCourierTypes() async {
     try {
       var res = await HelperService.getShipmentTypes();
       setState(() {
         widget.courierTypes = res;
       });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // fetch all package types
+  void fetchPackageTypes() async {
+    try {
+      var res = await HelperService.getPackageTypes();
+      setState(() {
+        widget.packageTypes = res;
+      });
+      print('length ${widget.packageTypes.length}');
     } catch (e) {
       print(e);
     }
@@ -153,10 +173,10 @@ class _SenderFormState extends State<SenderForm> {
               ],
             ),
             const UIHeader(title: "Courier Type"),
-            /*    const UIDropDown(
+            UIDropDown(
               placeholderText: 'Select courier type',
-              optionList: ['Documents', 'Electronics', 'Clothes', 'Other'],
-            ), */
+              optionList: widget.packageTypes,
+            ),
             const SizedBox(height: Constants.mediumSpace),
             SizedBox(
               height: 200,
