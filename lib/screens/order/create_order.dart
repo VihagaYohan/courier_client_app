@@ -23,11 +23,6 @@ class CreateOrderScreen extends StatelessWidget {
         children: ListView(
           children: <Widget>[
             SenderForm(),
-            const SizedBox(height: Constants.mediumSpace),
-            Positioned(
-                bottom: 10,
-                left: 20,
-                child: UIElevatedButton(label: "Next", onPress: () {}))
           ],
         ));
   }

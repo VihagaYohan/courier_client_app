@@ -99,11 +99,19 @@ class _SenderFormState extends State<SenderForm> {
           children: <Widget>[
             const UIHeader(title: "Shipment Type"),
             UIDropDown(
-                placeholderText: 'Select type',
-                optionList: widget.courierTypes),
+              placeholderText: 'Select type',
+              optionList: widget.courierTypes,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select shipment type";
+                }
+                return null;
+              },
+            ),
             const UIHeader(
               title: "Sender Details",
             ),
+            // sender name
             UITextField(
               controller: nameController,
               labelText: "Enter name",
@@ -115,6 +123,7 @@ class _SenderFormState extends State<SenderForm> {
               },
             ),
             const UISpacer(),
+            // phone number
             UITextField(
               controller: phoneNumberController,
               labelText: "Enter mobile number",
@@ -127,6 +136,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.number,
             ),
             const UISpacer(),
+            // email
             UITextField(
               controller: emailController,
               labelText: "Email address",
@@ -139,6 +149,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.emailAddress,
             ),
             const UISpacer(),
+            // pick-up date
             UIDatePicker(
               controll: datePickerController,
               labelText: "Pickup Date",
@@ -150,20 +161,31 @@ class _SenderFormState extends State<SenderForm> {
               suffixIconColor: brightness == Brightness.dark
                   ? AppColors.white
                   : AppColors.dark,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select pick-up date";
+                }
+                return null;
+              },
             ),
             const UISpacer(),
+            // pick-up time
             UITimePicker(
-              controll: timePickerController,
-              labelText: "Pickup Time",
-              onTap: () {
-                print('on tapping');
-              },
-              showIcon: true,
-              suffixIcon: const Icon(Icons.timer_outlined),
-              suffixIconColor: brightness == Brightness.dark
-                  ? AppColors.white
-                  : AppColors.dark,
-            ),
+                controll: timePickerController,
+                labelText: "Pickup Time",
+                onTap: () {
+                  print('on tapping');
+                },
+                showIcon: true,
+                suffixIcon: const Icon(Icons.timer_outlined),
+                suffixIconColor: brightness == Brightness.dark
+                    ? AppColors.white
+                    : AppColors.dark,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please select pick-up time";
+                  }
+                }),
             const UIHeader(title: "Package Size"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,10 +198,16 @@ class _SenderFormState extends State<SenderForm> {
             UIDropDown(
               placeholderText: 'Select courier type',
               optionList: widget.packageTypes,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select courier type";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: Constants.mediumSpace),
             SizedBox(
-              height: 200,
+              // height: 200,
               child: UITextField(
                 controller: senderNotesController,
                 labelText: "Notes",
@@ -187,6 +215,13 @@ class _SenderFormState extends State<SenderForm> {
                 expands: false,
               ),
             ),
+            const SizedBox(height: Constants.mediumSpace),
+            UIElevatedButton(
+                label: "Next",
+                onPress: () {
+                  if (senderForm.currentState!.validate()) {
+                  } else {}
+                })
           ],
         ));
   }

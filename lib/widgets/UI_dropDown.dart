@@ -10,9 +10,13 @@ import 'package:courier_client_app/utils/utils.dart';
 class UIDropDown extends StatefulWidget {
   final String placeholderText;
   final List<dynamic> optionList;
+  final FormFieldValidator<String>? validator;
 
   const UIDropDown(
-      {super.key, required this.placeholderText, required this.optionList});
+      {super.key,
+      required this.placeholderText,
+      required this.optionList,
+      required this.validator});
 
   @override
   State<UIDropDown> createState() => _UIDropDownState();
@@ -59,6 +63,7 @@ class _UIDropDownState extends State<UIDropDown> {
       dropdownColor: backgroundColor,
       elevation: 1,
       padding: const EdgeInsets.symmetric(horizontal: 0),
+      validator: widget.validator,
     );
   }
 }
