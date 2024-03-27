@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
+import 'package:intl/intl.dart';
 
 class UIDatePicker extends StatefulWidget {
   final TextEditingController controll;
@@ -12,16 +13,18 @@ class UIDatePicker extends StatefulWidget {
   final bool? showIcon;
   final Icon? suffixIcon;
   final Color? suffixIconColor;
+  DateTime? picked = DateTime.now();
 
-  const UIDatePicker(
-      {super.key,
-      required this.controll,
-      required this.labelText,
-      required this.onTap,
-      this.validator,
-      this.showIcon = false,
-      this.suffixIcon,
-      this.suffixIconColor});
+  UIDatePicker({
+    super.key,
+    required this.controll,
+    required this.labelText,
+    required this.onTap,
+    this.validator,
+    this.showIcon = false,
+    this.suffixIcon,
+    this.suffixIconColor,
+  });
 
   @override
   State<UIDatePicker> createState() => _UIDatePickerState();
@@ -30,16 +33,15 @@ class UIDatePicker extends StatefulWidget {
 class _UIDatePickerState extends State<UIDatePicker> {
   @override
   Widget build(BuildContext context) {
-    Future<void> getDate() async {
-      dynamic picked = DeviceUtils.getDatePicker(context);
-      print(picked);
-    }
-
     return GestureDetector(
       onTap: () {
         widget.onTap();
-        dynamic date = DeviceUtils.getDatePicker(context);
-        print(date.toString());
+        DeviceUtils.getDatePicker(context).then((value) {
+          setState(() {
+            widget.picked = value!;
+            widget.controll.text = AppFormatter.formatDate(widget.picked!);
+          });
+        });
       },
       child: UITextField(
         controller: widget.controll,

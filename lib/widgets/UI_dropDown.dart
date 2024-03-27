@@ -41,17 +41,6 @@ class _UIDropDownState extends State<UIDropDown> {
           dropdownValue = value!;
         }); */
       },
-      /* items: widget.optionList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-            value: value,
-            child: UITextView(
-              text: value,
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(fontSize: 12),
-            ));
-      }).toList(), */
       items: widget.optionList.map<DropdownMenuItem<String>>((var item) {
         return DropdownMenuItem<String>(
             value: item.id,

@@ -1,3 +1,4 @@
+import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -23,10 +24,10 @@ class CreateOrderScreen extends StatelessWidget {
           children: <Widget>[
             SenderForm(),
             const SizedBox(height: Constants.mediumSpace),
-            /*  Positioned(
+            Positioned(
                 bottom: 10,
                 left: 20,
-                child: UIElevatedButton(label: "Next", onPress: () {})) */
+                child: UIElevatedButton(label: "Next", onPress: () {}))
           ],
         ));
   }

@@ -186,7 +186,7 @@ class _SenderFormState extends State<SenderForm> {
                 maxLines: null,
                 expands: false,
               ),
-            )
+            ),
           ],
         ));
   }
