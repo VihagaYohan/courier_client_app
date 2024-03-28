@@ -1,4 +1,6 @@
 import 'package:courier_client_app/models/CourierType.dart';
+import 'package:courier_client_app/models/PackageType.dart';
+import 'package:courier_client_app/screens/order/feature/receiver_form.dart';
 import 'package:courier_client_app/services/helper_service.dart';
 import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +13,9 @@ import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:courier_client_app/utils/utils.dart';
 import 'package:flutter/widgets.dart';
 
+// models
+// import 'package:courier_client_app/models/models.dart';
+
 // Getx state-mangement
 import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
@@ -18,6 +23,7 @@ import 'package:get/instance_manager.dart';
 class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
   List<CourierType> courierTypes = [];
+  List<PackageType> packageTypes = [];
 
   SenderForm({super.key});
 
@@ -33,14 +39,29 @@ class _SenderFormState extends State<SenderForm> {
   void initState() {
     super.initState();
     fetchCourierTypes();
+    fetchPackageTypes();
   }
 
+  // fetch courier types / shipment types
   void fetchCourierTypes() async {
     try {
       var res = await HelperService.getShipmentTypes();
       setState(() {
         widget.courierTypes = res;
       });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // fetch all package types
+  void fetchPackageTypes() async {
+    try {
+      var res = await HelperService.getPackageTypes();
+      setState(() {
+        widget.packageTypes = res;
+      });
+      print('length ${widget.packageTypes.length}');
     } catch (e) {
       print(e);
     }
@@ -79,11 +100,19 @@ class _SenderFormState extends State<SenderForm> {
           children: <Widget>[
             const UIHeader(title: "Shipment Type"),
             UIDropDown(
-                placeholderText: 'Select type',
-                optionList: widget.courierTypes),
+              placeholderText: 'Select type',
+              optionList: widget.courierTypes,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select shipment type";
+                }
+                return null;
+              },
+            ),
             const UIHeader(
               title: "Sender Details",
             ),
+            // sender name
             UITextField(
               controller: nameController,
               labelText: "Enter name",
@@ -95,6 +124,7 @@ class _SenderFormState extends State<SenderForm> {
               },
             ),
             const UISpacer(),
+            // phone number
             UITextField(
               controller: phoneNumberController,
               labelText: "Enter mobile number",
@@ -107,6 +137,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.number,
             ),
             const UISpacer(),
+            // email
             UITextField(
               controller: emailController,
               labelText: "Email address",
@@ -119,6 +150,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.emailAddress,
             ),
             const UISpacer(),
+            // pick-up date
             UIDatePicker(
               controll: datePickerController,
               labelText: "Pickup Date",
@@ -130,20 +162,31 @@ class _SenderFormState extends State<SenderForm> {
               suffixIconColor: brightness == Brightness.dark
                   ? AppColors.white
                   : AppColors.dark,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select pick-up date";
+                }
+                return null;
+              },
             ),
             const UISpacer(),
+            // pick-up time
             UITimePicker(
-              controll: timePickerController,
-              labelText: "Pickup Time",
-              onTap: () {
-                print('on tapping');
-              },
-              showIcon: true,
-              suffixIcon: const Icon(Icons.timer_outlined),
-              suffixIconColor: brightness == Brightness.dark
-                  ? AppColors.white
-                  : AppColors.dark,
-            ),
+                controll: timePickerController,
+                labelText: "Pickup Time",
+                onTap: () {
+                  print('on tapping');
+                },
+                showIcon: true,
+                suffixIcon: const Icon(Icons.timer_outlined),
+                suffixIconColor: brightness == Brightness.dark
+                    ? AppColors.white
+                    : AppColors.dark,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please select pick-up time";
+                  }
+                }),
             const UIHeader(title: "Package Size"),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,20 +196,36 @@ class _SenderFormState extends State<SenderForm> {
               ],
             ),
             const UIHeader(title: "Courier Type"),
-            /*    const UIDropDown(
+            UIDropDown(
               placeholderText: 'Select courier type',
-              optionList: ['Documents', 'Electronics', 'Clothes', 'Other'],
-            ), */
+              optionList: widget.packageTypes,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select courier type";
+                }
+                return null;
+              },
+            ),
             const SizedBox(height: Constants.mediumSpace),
             SizedBox(
-              height: 200,
+              // height: 200,
               child: UITextField(
                 controller: senderNotesController,
                 labelText: "Notes",
                 maxLines: null,
                 expands: false,
               ),
-            )
+            ),
+            const SizedBox(height: Constants.mediumSpace),
+            UIElevatedButton(
+                label: "Next",
+                onPress: () {
+                  if (senderForm.currentState!.validate()) {
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ReceiverForm()));
+                  }
+                })
           ],
         ));
   }

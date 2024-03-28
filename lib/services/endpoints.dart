@@ -22,4 +22,5 @@ class Endpoints {
 
   // static properties for endpoints
   static String get courierTypes => '$baseUrl/courierTypes';
+  static String get packageTypes => '$baseUrl/packageTypes';
 }

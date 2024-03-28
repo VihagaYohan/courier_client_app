@@ -12,8 +12,9 @@ class UITimePicker extends StatefulWidget {
   final bool? showIcon;
   final Icon? suffixIcon;
   final Color? suffixIconColor;
+  TimeOfDay? pickedTime = TimeOfDay.now();
 
-  const UITimePicker(
+  UITimePicker(
       {super.key,
       required this.controll,
       required this.labelText,
@@ -38,8 +39,13 @@ class _UITimePickerState extends State<UITimePicker> {
     return GestureDetector(
       onTap: () {
         widget.onTap();
-        dynamic date = DeviceUtils.getTimePicker(context);
-        print(date.toString());
+        DeviceUtils.getTimePicker(context).then((value) => {
+              setState(() {
+                widget.pickedTime = value!;
+                widget.controll.text = AppFormatter.formatTime(
+                    widget.pickedTime!); // widget.pickedTime.toString();
+              })
+            });
       },
       child: UITextField(
         controller: widget.controll,

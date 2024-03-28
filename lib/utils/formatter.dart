@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 class AppFormatter {
   static String formatPhoneNumber(String phoneNumber) {
     if (phoneNumber.length == 10) {
@@ -7,5 +10,14 @@ class AppFormatter {
     }
     // Add more custom phone number formatting logic for different formats if needed.
     return phoneNumber;
+  }
+
+  static String formatDate(DateTime date) {
+    return DateFormat.yMd().format(date);
+  }
+
+  static String formatTime(TimeOfDay time) {
+    return DateFormat('h:mm a')
+        .format(DateTime(0, 0, 0, time.hour, time.minute));
   }
 }
