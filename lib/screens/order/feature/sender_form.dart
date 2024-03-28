@@ -1,5 +1,6 @@
 import 'package:courier_client_app/models/CourierType.dart';
 import 'package:courier_client_app/models/PackageType.dart';
+import 'package:courier_client_app/screens/order/feature/receiver_form.dart';
 import 'package:courier_client_app/services/helper_service.dart';
 import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
@@ -220,7 +221,10 @@ class _SenderFormState extends State<SenderForm> {
                 label: "Next",
                 onPress: () {
                   if (senderForm.currentState!.validate()) {
-                  } else {}
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ReceiverForm()));
+                  }
                 })
           ],
         ));
