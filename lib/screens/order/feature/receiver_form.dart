@@ -13,6 +13,9 @@ import 'package:get/instance_manager.dart';
 // models
 import 'package:courier_client_app/models/models.dart';
 
+// service
+import 'package:courier_client_app/services/service.dart';
+
 class ReceiverForm extends StatefulWidget {
   final Order orderDetails;
 
@@ -25,6 +28,15 @@ class ReceiverForm extends StatefulWidget {
 class _ReceiverFormState extends State<ReceiverForm> {
   final receiverForm = GlobalKey<FormState>();
   final GlobalState globalState = Get.put(GlobalState());
+
+  // handle create order
+  void handleCreateOrder(Order payload) async {
+    try {
+      final response = await OrderService.createOrder(payload);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +121,19 @@ class _ReceiverFormState extends State<ReceiverForm> {
               label: 'Done',
               onPress: () {
                 if (receiverForm.currentState!.validate()) {
+                } else {
                   ReceiverDetails receiverDetails = ReceiverDetails(
-                      name: receiverNameController.text,
+                      name: 'John Doe',
+                      mobileNumber: '0122333213',
+                      address:
+                          'No. 51/2, Bodhirukkarama Road, Galboralla, Kelaniya',
+                      receiverNote: 'Receiver notes'
+
+                      /* name: receiverNameController.text,
                       mobileNumber: receiverMobileController.text,
                       address: receiverAddressController.text,
-                      receiverNote: receiverNoteController.text);
+                      receiverNote: receiverNoteController.text */
+                      );
 
                   Order orderPayload = Order(
                       statusId: widget.orderDetails.statusId,
@@ -124,6 +144,7 @@ class _ReceiverFormState extends State<ReceiverForm> {
                       receiverDetails: widget.orderDetails.receiverDetails,
                       orderTotal: 2000,
                       paymentType: '65e5a853d5b77f2f0280c434');
+                  handleCreateOrder(orderPayload);
                 }
               })
         ],

@@ -261,7 +261,7 @@ class _SenderFormState extends State<SenderForm> {
                         // mobileNumber: phoneNumberController.text,
                         mobileNumber: '0716995328',
                         address:
-                            'No.21/2 Bodhirukkarama Road, Galboralla, Kelaniay',
+                            'No.21/2 Bodhirukkarama Road, Galboralla, Kelaniya',
                         senderNotes: senderNotesController.text);
 
                     Order orderObj = Order(
