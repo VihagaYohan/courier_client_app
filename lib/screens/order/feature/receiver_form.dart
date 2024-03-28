@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +10,16 @@ import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
 
+// models
+import 'package:courier_client_app/models/models.dart';
+
+// service
+import 'package:courier_client_app/services/service.dart';
+
 class ReceiverForm extends StatefulWidget {
-  const ReceiverForm({super.key});
+  final Order orderDetails;
+
+  const ReceiverForm({super.key, required this.orderDetails});
 
   @override
   State<ReceiverForm> createState() => _ReceiverFormState();
@@ -19,8 +29,20 @@ class _ReceiverFormState extends State<ReceiverForm> {
   final receiverForm = GlobalKey<FormState>();
   final GlobalState globalState = Get.put(GlobalState());
 
+  // handle create order
+  void handleCreateOrder(Order payload) async {
+    try {
+      final response = await OrderService.createOrder(payload);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('order details goes here');
+    print(jsonEncode(widget.orderDetails));
+
     final TextEditingController receiverNameController =
         TextEditingController();
     final TextEditingController receiverMobileController =
@@ -95,7 +117,36 @@ class _ReceiverFormState extends State<ReceiverForm> {
                   )
                 ],
               )),
-          UIElevatedButton(label: 'Done', onPress: () {})
+          UIElevatedButton(
+              label: 'Done',
+              onPress: () {
+                if (receiverForm.currentState!.validate()) {
+                } else {
+                  ReceiverDetails receiverDetails = ReceiverDetails(
+                      name: 'John Doe',
+                      mobileNumber: '0122333213',
+                      address:
+                          'No. 51/2, Bodhirukkarama Road, Galboralla, Kelaniya',
+                      receiverNote: 'Receiver notes'
+
+                      /* name: receiverNameController.text,
+                      mobileNumber: receiverMobileController.text,
+                      address: receiverAddressController.text,
+                      receiverNote: receiverNoteController.text */
+                      );
+
+                  Order orderPayload = Order(
+                      statusId: widget.orderDetails.statusId,
+                      courierTypeId: widget.orderDetails.courierTypeId,
+                      packageTypeId: widget.orderDetails.packageTypeId,
+                      packageSize: widget.orderDetails.packageSize,
+                      senderDetails: widget.orderDetails.senderDetails,
+                      receiverDetails: widget.orderDetails.receiverDetails,
+                      orderTotal: 2000,
+                      paymentType: '65e5a853d5b77f2f0280c434');
+                  handleCreateOrder(orderPayload);
+                }
+              })
         ],
       ),
     );

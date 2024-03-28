@@ -41,7 +41,6 @@ class HelperService {
     try {
       List<PackageType> packageTypes = [];
       final response = await http.get(Uri.parse(Endpoints.packageTypes));
-      print(response.body);
 
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
