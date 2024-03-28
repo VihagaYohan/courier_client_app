@@ -9,7 +9,9 @@ import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
 
 class ReceiverForm extends StatefulWidget {
-  const ReceiverForm({super.key});
+  final dynamic senderDetails;
+
+  const ReceiverForm({super.key, required this.senderDetails});
 
   @override
   State<ReceiverForm> createState() => _ReceiverFormState();
@@ -95,7 +97,11 @@ class _ReceiverFormState extends State<ReceiverForm> {
                   )
                 ],
               )),
-          UIElevatedButton(label: 'Done', onPress: () {})
+          UIElevatedButton(
+              label: 'Done',
+              onPress: () {
+                if (receiverForm.currentState!.validate()) {}
+              })
         ],
       ),
     );

@@ -11,19 +11,20 @@ class UIDropDown extends StatefulWidget {
   final String placeholderText;
   final List<dynamic> optionList;
   final FormFieldValidator<String>? validator;
+  final ValueChanged? onChanged;
 
   const UIDropDown(
       {super.key,
       required this.placeholderText,
       required this.optionList,
-      required this.validator});
+      required this.validator,
+      this.onChanged});
 
   @override
   State<UIDropDown> createState() => _UIDropDownState();
 }
 
 class _UIDropDownState extends State<UIDropDown> {
-  static const List<String> list = <String>["Express", "Standard"];
   String? dropdownValue;
 
   @override
@@ -39,12 +40,12 @@ class _UIDropDownState extends State<UIDropDown> {
         textStyle:
             Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 12),
       ),
-      onChanged: (String? value) {
-        print(value);
-        /*  setState(() {
+      /*  onChanged: (String? value) {
+        setState(() {
           dropdownValue = value!;
-        }); */
-      },
+        });
+      }, */
+      onChanged: widget.onChanged,
       items: widget.optionList.map<DropdownMenuItem<String>>((var item) {
         return DropdownMenuItem<String>(
             value: item.id,

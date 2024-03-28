@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:courier_client_app/models/CourierType.dart';
 import 'package:courier_client_app/models/PackageType.dart';
 import 'package:courier_client_app/screens/order/feature/receiver_form.dart';
@@ -14,7 +17,7 @@ import 'package:courier_client_app/utils/utils.dart';
 import 'package:flutter/widgets.dart';
 
 // models
-// import 'package:courier_client_app/models/models.dart';
+import 'package:courier_client_app/models/models.dart';
 
 // Getx state-mangement
 import 'package:courier_client_app/global_state/global_state.dart';
@@ -24,8 +27,10 @@ class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
   List<CourierType> courierTypes = [];
   List<PackageType> packageTypes = [];
+  String? shipmentType;
+  String? packageType;
 
-  SenderForm({super.key});
+  SenderForm({super.key, this.shipmentType});
 
   @override
   State<SenderForm> createState() => _SenderFormState();
@@ -61,7 +66,6 @@ class _SenderFormState extends State<SenderForm> {
       setState(() {
         widget.packageTypes = res;
       });
-      print('length ${widget.packageTypes.length}');
     } catch (e) {
       print(e);
     }
@@ -99,6 +103,7 @@ class _SenderFormState extends State<SenderForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const UIHeader(title: "Shipment Type"),
+            // shipment type
             UIDropDown(
               placeholderText: 'Select type',
               optionList: widget.courierTypes,
@@ -108,10 +113,17 @@ class _SenderFormState extends State<SenderForm> {
                 }
                 return null;
               },
+              onChanged: (value) {
+                setState(() {
+                  widget.shipmentType = value;
+                });
+              },
             ),
+
             const UIHeader(
               title: "Sender Details",
             ),
+
             // sender name
             UITextField(
               controller: nameController,
@@ -124,6 +136,7 @@ class _SenderFormState extends State<SenderForm> {
               },
             ),
             const UISpacer(),
+
             // phone number
             UITextField(
               controller: phoneNumberController,
@@ -137,6 +150,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.number,
             ),
             const UISpacer(),
+
             // email
             UITextField(
               controller: emailController,
@@ -150,6 +164,7 @@ class _SenderFormState extends State<SenderForm> {
               keyboardType: TextInputType.emailAddress,
             ),
             const UISpacer(),
+
             // pick-up date
             UIDatePicker(
               controll: datePickerController,
@@ -170,6 +185,7 @@ class _SenderFormState extends State<SenderForm> {
               },
             ),
             const UISpacer(),
+
             // pick-up time
             UITimePicker(
                 controll: timePickerController,
@@ -188,6 +204,8 @@ class _SenderFormState extends State<SenderForm> {
                   }
                 }),
             const UIHeader(title: "Package Size"),
+
+            // package size
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,9 +213,11 @@ class _SenderFormState extends State<SenderForm> {
                 for (var item in packageSize) packageSizeType(context, item)
               ],
             ),
-            const UIHeader(title: "Courier Type"),
+            const UIHeader(title: "Package Type"),
+
+            // package type type
             UIDropDown(
-              placeholderText: 'Select courier type',
+              placeholderText: 'Select package type',
               optionList: widget.packageTypes,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -205,8 +225,16 @@ class _SenderFormState extends State<SenderForm> {
                 }
                 return null;
               },
+              onChanged: (value) {
+                setState(() {
+                  widget.packageType = value;
+                });
+              },
             ),
+
             const SizedBox(height: Constants.mediumSpace),
+
+            // sender notes
             SizedBox(
               // height: 200,
               child: UITextField(
@@ -222,8 +250,26 @@ class _SenderFormState extends State<SenderForm> {
                 onPress: () {
                   if (senderForm.currentState!.validate()) {
                   } else {
+                    SenderDetails senderDetails = SenderDetails(
+                        senderId: '65e2d6b2536f159e3b84f27a',
+                        name: senderNotesController.text,
+                        email: emailController.text,
+                        pickUpDate: datePickerController.text,
+                        pickUpTime: timePickerController.text,
+                        mobileNumber: phoneNumberController.text,
+                        address:
+                            'No.21/2 Bodhirukkarama Road, Galboralla, Kelaniay',
+                        senderNotes: senderNotesController.text);
+
+                    Order orderObj = Order(
+                        statusId: '65e33579c502128c30a094c1',
+                        courierTypeId: widget.shipmentType.toString(),
+                        packageTypeId: widget.packageType.toString(),
+                        packageSize: 'small',
+                        senderDetails: senderDetails);
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ReceiverForm()));
+                        builder: (context) => ReceiverForm(
+                            senderDetails: senderForm.currentState)));
                   }
                 })
           ],
