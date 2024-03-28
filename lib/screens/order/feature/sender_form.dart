@@ -252,24 +252,29 @@ class _SenderFormState extends State<SenderForm> {
                   } else {
                     SenderDetails senderDetails = SenderDetails(
                         senderId: '65e2d6b2536f159e3b84f27a',
-                        name: senderNotesController.text,
-                        email: emailController.text,
+                        // name: senderNotesController.text,
+                        // email: emailController.text,
+                        name: 'Vihanga Yohan',
+                        email: 'vihagayohan94@gmail.com',
                         pickUpDate: datePickerController.text,
                         pickUpTime: timePickerController.text,
-                        mobileNumber: phoneNumberController.text,
+                        // mobileNumber: phoneNumberController.text,
+                        mobileNumber: '0716995328',
                         address:
                             'No.21/2 Bodhirukkarama Road, Galboralla, Kelaniay',
                         senderNotes: senderNotesController.text);
 
                     Order orderObj = Order(
                         statusId: '65e33579c502128c30a094c1',
-                        courierTypeId: widget.shipmentType.toString(),
-                        packageTypeId: widget.packageType.toString(),
+                        // courierTypeId: widget.shipmentType.toString(),
+                        // packageTypeId: widget.packageType.toString(),
+                        courierTypeId: '65df3456d1bb363d65c35968',
+                        packageTypeId: '65df3495d1bb363d65c3596a',
                         packageSize: 'small',
                         senderDetails: senderDetails);
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ReceiverForm(
-                            senderDetails: senderForm.currentState)));
+                        builder: (context) =>
+                            ReceiverForm(orderDetails: orderObj)));
                   }
                 })
           ],

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +10,13 @@ import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
 
-class ReceiverForm extends StatefulWidget {
-  final dynamic senderDetails;
+// models
+import 'package:courier_client_app/models/models.dart';
 
-  const ReceiverForm({super.key, required this.senderDetails});
+class ReceiverForm extends StatefulWidget {
+  final Order orderDetails;
+
+  const ReceiverForm({super.key, required this.orderDetails});
 
   @override
   State<ReceiverForm> createState() => _ReceiverFormState();
@@ -23,6 +28,9 @@ class _ReceiverFormState extends State<ReceiverForm> {
 
   @override
   Widget build(BuildContext context) {
+    print('order details goes here');
+    print(jsonEncode(widget.orderDetails));
+
     final TextEditingController receiverNameController =
         TextEditingController();
     final TextEditingController receiverMobileController =
@@ -100,7 +108,23 @@ class _ReceiverFormState extends State<ReceiverForm> {
           UIElevatedButton(
               label: 'Done',
               onPress: () {
-                if (receiverForm.currentState!.validate()) {}
+                if (receiverForm.currentState!.validate()) {
+                  ReceiverDetails receiverDetails = ReceiverDetails(
+                      name: receiverNameController.text,
+                      mobileNumber: receiverMobileController.text,
+                      address: receiverAddressController.text,
+                      receiverNote: receiverNoteController.text);
+
+                  Order orderPayload = Order(
+                      statusId: widget.orderDetails.statusId,
+                      courierTypeId: widget.orderDetails.courierTypeId,
+                      packageTypeId: widget.orderDetails.packageTypeId,
+                      packageSize: widget.orderDetails.packageSize,
+                      senderDetails: widget.orderDetails.senderDetails,
+                      receiverDetails: widget.orderDetails.receiverDetails,
+                      orderTotal: 2000,
+                      paymentType: '65e5a853d5b77f2f0280c434');
+                }
               })
         ],
       ),
