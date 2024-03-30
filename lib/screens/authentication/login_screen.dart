@@ -1,4 +1,5 @@
 import 'package:courier_client_app/utils/colors.dart';
+import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -52,6 +53,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final loginForm = GlobalKey<FormState>();
+
     return UIContainer(
         children: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -71,27 +76,93 @@ class LoginScreen extends StatelessWidget {
               fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 20),
-        UITextView(
-          text:
-              "No need to fill forms, login with your google account and enjoy all the services.",
-          textAlign: TextAlign.left,
-          textStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: AppColors.textPrimary, fontSize: 14),
-        ),
-        const SizedBox(height: 50),
-        UIElevatedButton(
-          label: "Login With Google",
-          onPress: () {
-            handleAuthentication(context: context);
-            // navigate to profile data screen
-            /* Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfileScreen())); */
-          },
-          isPrimary: false,
-          showSuffixIcon: true,
-        ),
+        SingleChildScrollView(
+          child: Form(
+            key: loginForm,
+            child: Column(
+              children: <Widget>[
+                // email field
+                UITextField(
+                  controller: emailController,
+                  labelText: "Email",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter email";
+                    }
+                  },
+                ),
+                const UISpacer(
+                  space: Constants.smallSpace,
+                ),
+
+                // password
+                UITextField(
+                  controller: passwordController,
+                  labelText: "Password",
+                  obsecureText: true,
+                  isPassword: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your password";
+                    }
+                  },
+                ),
+
+                // reset password
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    UITextButton(
+                      onPress: () {},
+                      labelText: "Forgot password ?",
+                      textColor: DeviceUtils.isDarkmode(context) == false
+                          ? AppColors.primary
+                          : AppColors.white,
+                    ),
+                  ],
+                ),
+
+                const UISpacer(
+                  space: Constants.mediumSpace,
+                ),
+
+                UIElevatedButton(
+                  label: "Login",
+                  onPress: () {
+                    if (loginForm.currentState!.validate()) {}
+                  },
+                ),
+
+                const UISpacer(space: Constants.mediumSpace),
+
+                const UITextView(text: 'or'),
+
+                // register
+                GestureDetector(
+                  onTap: () {
+                    print("clicked on create an account");
+                  },
+                  child: RichText(
+                      text: TextSpan(
+                          text: "Don't have an account ?",
+                          style: TextStyle(
+                              color: DeviceUtils.isDarkmode(context) == true
+                                  ? AppColors.white
+                                  : AppColors.textPrimary),
+                          children: const <TextSpan>[
+                        TextSpan(text: " "),
+                        TextSpan(
+                            text: "Create an account",
+                            style: TextStyle(
+                              color: AppColors.primary,
+                            )),
+                      ])),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     ));
   }
