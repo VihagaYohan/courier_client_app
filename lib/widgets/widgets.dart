@@ -35,3 +35,6 @@ export 'UI_datePicker.dart';
 
 // time picker
 export 'UI_timePicker.dart';
+
+// progress indicator
+export 'UI_ProgressIndicator.dart';
