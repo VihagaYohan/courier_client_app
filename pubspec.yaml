@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.2
   http: ^1.2.1
   get: ^4.6.6
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

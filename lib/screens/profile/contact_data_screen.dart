@@ -31,7 +31,8 @@ class ContactDataScreenState extends State<ContactDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AdditionalUserInfo additionalUserInfo = widget.userData.additionalUserInfo;
+    return Placeholder();
+    /*   AdditionalUserInfo additionalUserInfo = widget.userData.additionalUserInfo;
     AuthCredential crdentialInfo = widget.userData.credential;
     dynamic user = widget.userData.user;
 
@@ -159,7 +160,7 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                   }, Icons.check, iconSize: 30); */
                 })
           ],
-        ));
+        )); */
   }
 
   // title widget
