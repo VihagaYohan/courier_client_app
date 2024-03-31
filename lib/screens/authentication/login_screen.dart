@@ -60,8 +60,8 @@ class LoginScreen extends StatelessWidget {
 
     return Consumer<AuthProvider>(builder: (context, auth, child) {
       if (auth.isLoading) {
-        return Center(
-          child: CircularProgressIndicator(),
+        return const UIProgressIndicator(
+          title: "Logging in...",
         );
       }
       return UIContainer(

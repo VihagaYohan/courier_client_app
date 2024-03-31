@@ -13,11 +13,12 @@ class UIProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(title);
     return Container(
       decoration: BoxDecoration(
           color: DeviceUtils.isDarkmode(context) == true
-              ? AppColors.white
-              : AppColors.dark),
+              ? AppColors.dark
+              : AppColors.white),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,6 +29,18 @@ class UIProgressIndicator extends StatelessWidget {
               backgroundColor: AppColors.primary.withOpacity(0.2),
               strokeCap: StrokeCap.round,
             ),
+            const UISpacer(
+              space: Constants.smallSpace,
+            ),
+            if (title != null)
+              UITextView(
+                text: title!,
+                textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 14,
+                    color: DeviceUtils.isDarkmode(context) == true
+                        ? AppColors.white
+                        : AppColors.textPrimary),
+              )
           ],
         ),
       ),
