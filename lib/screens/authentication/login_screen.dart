@@ -27,13 +27,18 @@ import 'package:provider/provider.dart';
 import 'package:courier_client_app/provider/providers.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final TextEditingController emailController =
+      TextEditingController(text: 'vihagayohan94@gmail.com');
+  final TextEditingController passwordController =
+      TextEditingController(text: 'asdfasdf');
+  final loginForm = GlobalKey<FormState>();
+  LoginScreen({super.key});
 
   // handle user google sign-in
   handleAuthentication(SignIn payload) async {
     try {
-      final response = await Authentication.signInUser(payload);
-      print(response['success']);
+      // final response = await Authentication.signInUser(payload);
+      // print(response['success']);
       /*   final userData = response['data']['user'];
       final tokenData = response['data']['token'];
 
@@ -45,6 +50,10 @@ class LoginScreen extends StatelessWidget {
               role: userData['role'],
               createdOn: userData['createdOn'],
               token: tokenData); */
+      UserInfo response = await AuthProvider().userSignIn(payload);
+      /*  print('response');
+      print(response.email); */
+      print(AuthProvider().messageTitle);
     } catch (e) {
       print("Error at logging $e");
     }
@@ -52,18 +61,23 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController =
-        TextEditingController(text: 'vihagayohan94@gmail.com');
-    final TextEditingController passwordController =
-        TextEditingController(text: 'asdfasdf');
-    final loginForm = GlobalKey<FormState>();
-
     return Consumer<AuthProvider>(builder: (context, auth, child) {
+      // login indicator
       if (auth.isLoading) {
+        print('loading');
         return const UIProgressIndicator(
           title: "Logging in...",
         );
       }
+      // show error message
+      if (auth.isError && auth.isLoading == false) {
+        print('error');
+        DeviceUtils.showAlertDialog(
+            context, "Login failed", "auth.messageTitle", "Close", () {
+          Navigator.of(context).pop();
+        }, Icons.warning);
+      }
+
       return UIContainer(
           children: Column(
         mainAxisAlignment: MainAxisAlignment.start,

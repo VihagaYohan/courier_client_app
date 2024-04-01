@@ -8,7 +8,7 @@ import 'package:courier_client_app/services/service.dart';
 
 class AuthProvider extends ChangeNotifier {
   Authentication authService = Authentication();
-  bool loading = true;
+  bool loading = false;
   bool error = false;
   String message = "";
   UserInfo? user;
@@ -27,9 +27,14 @@ class AuthProvider extends ChangeNotifier {
       final response = await Authentication.signInUser(payload);
       final statusCode = response['statusCode'];
 
-      if (statusCode == 200) {
+      print(statusCode);
+      if (statusCode != 200) {
         final userData = response['data']['user'];
         final tokenData = response['data']['token'];
+
+        loading = false;
+        error = false;
+        notifyListeners();
 
         user = UserInfo(
             id: userData['_id'],
@@ -39,18 +44,18 @@ class AuthProvider extends ChangeNotifier {
             role: userData['role'],
             createdOn: userData['createdOn'],
             token: tokenData);
-
-        loading = false;
-        error = false;
+        return user;
       } else {
         loading = false;
         error = true;
         message = "Invalid email or password";
+        notifyListeners();
       }
     } catch (e) {
       loading = false;
       error = true;
       message = "$e";
+      notifyListeners();
     }
   }
 }

@@ -87,8 +87,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.easeIn);
                 } else {
                   // navigate to login screen
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginScreen()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 }
               })
         ],

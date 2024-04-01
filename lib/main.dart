@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
             Routes.createOrder: (context) => CreateOrderScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          home: const LoginScreen()
+          home: LoginScreen()
           /* home: userLoggedIn == true
               ? const AppBottomNavigation()
               : const LoginScreen() */
