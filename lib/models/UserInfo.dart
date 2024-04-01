@@ -1,34 +1,49 @@
 class UserInfo {
+  final String id;
   final String name;
+  final String email;
+  final String phoneNumber;
   final String? address;
-  final String? phoneNumber;
-  final String? email;
+  final String role;
   final String? photoUrl;
+  final String createdOn;
+  final String token;
 
-  UserInfo({
-    required this.name,
-    this.address,
-    this.phoneNumber,
-    this.email,
-    this.photoUrl,
-  });
+  const UserInfo(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.phoneNumber,
+      this.address,
+      required this.role,
+      this.photoUrl,
+      required this.createdOn,
+      required this.token});
 
   // serilize UserInfo object to JSON
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
-      'address': address,
-      'phoneNumber': phoneNumber,
       'email': email,
-      'photoUrl': photoUrl
+      'phoneNumber': phoneNumber,
+      'address': address,
+      'role': role,
+      'photoUrl': photoUrl,
+      'createdOn': createdOn,
+      'token': token
     };
   }
 
   // deserialize UserInfo object from Map
   factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
+      id: map['_id'] ?? '',
       name: map['name'] ?? '',
-      address: map['address'] ?? '',
-      phoneNumber: map['phoneNumber'] ?? '',
       email: map['email'] ?? '',
-      photoUrl: map['photoUrl'] ?? '');
+      phoneNumber: map['phoneNumber'] ?? '',
+      address: map['address'] ?? '',
+      role: map['role'] ?? '',
+      photoUrl: map['photoUrl'] ?? '',
+      createdOn: map['createdOn'] ?? '',
+      token: map['token'] ?? '');
 }

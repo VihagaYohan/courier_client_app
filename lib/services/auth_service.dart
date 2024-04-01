@@ -1,26 +1,32 @@
+import 'dart:convert';
+
+import 'package:courier_client_app/services/endpoints.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+
+// constants
+import 'package:courier_client_app/utils/utils.dart';
+
+// models
+import 'package:courier_client_app/models/models.dart';
 
 class Authentication {
-  static Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  static Future<dynamic> signOut() async {
-    GoogleSignIn().signOut();
+  static signInUser(SignIn payload) async {
+    try {
+      final response = await http.post(Uri.parse(Endpoints.login),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: jsonEncode(<String, dynamic>{
+            "email": payload.email,
+            "password": payload.password
+          }));
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception('Login failed');
+      }
+    } catch (e) {
+      print("Error at login user $e");
+    }
   }
 }
