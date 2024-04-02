@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await Helper.setData<String>(Constants.user, jsonEncode(response));
         // navigate to contact details page
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ContactDataScreen()));
+            MaterialPageRoute(builder: (context) => ContactDataScreen()));
       }
     }
   }
@@ -181,18 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         password: passwordController.text),
                                     provider,
                                     context);
-                                /* DeviceUtils.showAlertDialog(
-                                    context,
-                                    "Error",
-                                    "${provider.errorMessage}\nPlease try again",
-                                    "Close", () {
-                                  () {
-                                    Navigator.pop(context);
-                                  };
-                                }, Icons.warning,
-                                    iconSize: 30,
-                                    iconColor: AppColors.white,
-                                    iconContainerColor: AppColors.error); */
                               }
                             },
                           ),
