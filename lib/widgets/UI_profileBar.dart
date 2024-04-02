@@ -60,9 +60,9 @@ class _UIProfileBarState extends State<UIProfileBar> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  UITextView(text: "Your location"),
+                  const UITextView(text: "Your location"),
                   UITextView(
-                    text: widget.cityName as String,
+                    text: widget.cityName,
                     textStyle: Theme.of(context)
                         .textTheme
                         .titleMedium!
