@@ -9,8 +9,18 @@ import 'package:courier_client_app/widgets/widgets.dart';
 // utils
 import 'package:courier_client_app/utils/utils.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         paddingTop: Constants.mediumSpace,
         children: ListView(
           children: <Widget>[
-            const UIProfileBar(),
+            UIProfileBar(),
             trackCard(context),
             recentDelivery(context),
             const SizedBox(height: Constants.mediumSpace),
@@ -271,8 +281,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   // services
-
-  // service item
   Widget servicesItem(BuildContext context) {
     double width = DeviceUtils.getScreenWidth(context) -
         40; // 40 is the default value for left and right padding in UIContainer widget

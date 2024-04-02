@@ -79,7 +79,12 @@ class DeviceUtils {
             title: UITextView(text: title),
             content: UITextView(text: content),
             actions: <Widget>[
-              UIElevatedButton(label: buttonTitle, onPress: buttonPress)
+              UIElevatedButton(
+                  label: buttonTitle,
+                  onPress: () {
+                    Navigator.of(context).pop();
+                    buttonPress();
+                  })
             ],
           );
         });

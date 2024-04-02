@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +13,16 @@ import 'package:courier_client_app/utils/utils.dart';
 
 // models
 import 'package:courier_client_app/models/models.dart';
-// ignore: library_prefixes
-import 'package:courier_client_app/models/UserInfo.dart' as UserInfoModel;
 
 class ContactDataScreen extends StatefulWidget {
   final dynamic userData;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController addressController = TextEditingController(
+      text: "No. 51/2, Bodhirukkarama Road, Galboralla, Kelaniya");
 
-  const ContactDataScreen({super.key, this.userData});
+  ContactDataScreen({super.key, this.userData});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,43 +34,77 @@ class ContactDataScreenState extends State<ContactDataScreen> {
   final formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
+  // fetch data from shared preferences
+  Future<UserInfo?> getUserInfo() async {
+    try {
+      final response = await Helper.getData<String>(Constants.user);
+      print(response);
+/*       print('contact form response');
+      print(response.toString());
+      print(jsonEncode(response)); */
+
+      if (response?.isEmpty == false) {
+        // UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+        // UserInfo userInfo = UserInfo.fromJson(jsonEncode(response));
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+/*         print('json map');
+        print(jsonMap); */
+
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+        print(userInfo.email);
+        widget.emailController.text = userInfo.email;
+        widget.nameController.text = userInfo.name;
+        widget.phoneNumberController.text = userInfo.phoneNumber;
+      }
+    } catch (e) {
+      print("Error at loading user details $e");
+    }
+  }
+
+  // save contact details
+  handleSaveContactDetails(context) async {
+    try {
+      final response = await Helper.getData<String>(Constants.user);
+      if (response?.isEmpty == false) {
+        // UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+/*         print('json map id');
+        print(jsonMap['id']); */
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+        print('address: ${widget.addressController.text}');
+        Map<String, dynamic> userInfoPayload = {
+          ...jsonMap,
+          'address': widget.addressController.text
+        };
+/*         print('user info payload');
+        print(userInfo.toString());
+        print(userInfoPayload); */
+
+        await Helper.setData<String>(
+            Constants.user, jsonEncode(userInfoPayload));
+
+        DeviceUtils.showAlertDialog(
+            context,
+            "Profile updated\nsuccessfully",
+            "Your profile data have been update successfully",
+            "Go To Home", () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        }, Icons.check, iconSize: 30);
+      }
+    } catch (e) {
+      print("Error at saving contact details $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Placeholder();
-    /*   AdditionalUserInfo additionalUserInfo = widget.userData.additionalUserInfo;
-    AuthCredential crdentialInfo = widget.userData.credential;
-    dynamic user = widget.userData.user;
-
-    print(user);
-
-    UserInfoModel.UserInfo userPayload = UserInfoModel.UserInfo(
-        name: user.displayName ?? "",
-        address: "",
-        phoneNumber: "",
-        email: user.phoneNumber,
-        photoUrl: user.photoURL);
-
-    final TextEditingController nameController =
-        TextEditingController(text: userPayload.name);
-    final TextEditingController addressController = TextEditingController();
-    final TextEditingController phoneNumberController = TextEditingController();
-    final TextEditingController emailController =
-        TextEditingController(text: user.email ?? "");
-
-    // save user data into local db
-    void saveData() async {
-      /* await localDB.create(
-          name: nameController.text,
-          address: addressController.text,
-          phoneNumber: phoneNumberController.text,
-          email: emailController.text); */
-    }
-
-    // handle alert message and navigation
-    void handleNavigation() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => AppBottomNavigation()));
-    }
-
     return UIContainer(
         paddingTop: Constants.largeSpace,
         paddingBottom: Constants.mediumSpace,
@@ -80,8 +118,10 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                 children: <Widget>[
                   formTitle(context),
                   const SizedBox(height: Constants.largeSpace),
+
+                  // name
                   UITextField(
-                    controller: nameController,
+                    controller: widget.nameController,
                     labelText: "Enter your name",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -93,8 +133,10 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                     icon: const UIIcon(iconData: Icons.person),
                   ),
                   const SizedBox(height: 20),
+
+                  // address
                   UITextField(
-                      controller: addressController,
+                      controller: widget.addressController,
                       labelText: "Enter your address",
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -105,8 +147,10 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                       showIcon: true,
                       icon: const UIIcon(iconData: Icons.pin_drop)),
                   const SizedBox(height: 20),
+
+                  // phone number
                   UITextField(
-                    controller: phoneNumberController,
+                    controller: widget.phoneNumberController,
                     labelText: "Enter your phone number",
                     keyboardType: TextInputType.phone,
                     showIcon: true,
@@ -121,8 +165,10 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                     },
                   ),
                   const SizedBox(height: 20),
+
+                  // email
                   UITextField(
-                    controller: emailController,
+                    controller: widget.emailController,
                     labelText: "Enter your email",
                     keyboardType: TextInputType.emailAddress,
                     showIcon: true,
@@ -141,26 +187,11 @@ class ContactDataScreenState extends State<ContactDataScreen> {
                 label: "Save",
                 onPress: () {
                   if (formKey.currentState!.validate()) {
-                    saveData();
-                    DeviceUtils.showAlertDialog(
-                        context,
-                        "Profile updated\nsuccessfully",
-                        "Your profile data have been update successfully",
-                        "Go To Home", () {
-                      Navigator.of(context).pop();
-                      handleNavigation();
-                    }, Icons.check, iconSize: 30);
+                    handleSaveContactDetails(context);
                   }
-                  /* DeviceUtils.showAlertDialog(
-                      context,
-                      "Profile updated\nsuccessfully",
-                      "Your profile data have been update successfully",
-                      "Go To Home", () {
-                    Navigator.of(context).pop();
-                  }, Icons.check, iconSize: 30); */
                 })
           ],
-        )); */
+        ));
   }
 
   // title widget
@@ -171,6 +202,4 @@ class ContactDataScreenState extends State<ContactDataScreen> {
       textAlign: TextAlign.right,
     );
   }
-
-  // field icon widget
 }

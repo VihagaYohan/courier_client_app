@@ -43,9 +43,9 @@ class _MyAppState extends State<MyApp> {
   bool userLoggedIn = false;
 
   getLoggedInState() async {
-    await Helper.getData<bool>(Constants.isLoggedIn).then((value) {
+    await Helper.getData<String>(Constants.user).then((value) {
       setState(() {
-        userLoggedIn = value!;
+        userLoggedIn = true;
       });
     });
   }
