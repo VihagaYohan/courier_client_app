@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:courier_client_app/models/SignInResponse.dart';
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:courier_client_app/utils/colors.dart';
 import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,14 +49,44 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // handle user google sign-in
-  handleAuthentication(SignIn payload, AuthProvider provider) async {
-    UserInfo response = await provider.userSignIn(payload);
+  handleAuthentication(
+      SignIn payload, AuthProvider provider, BuildContext context) async {
+    UserInfo? response = await provider.userSignIn(payload);
+    print(provider.errorMessage.isEmpty);
+    if (provider.errorMessage.isEmpty != true) {
+      DeviceUtils.showAlertDialog(context, "Error",
+          "${provider.errorMessage}\nPlease try again", "Close", () {
+        () {
+          Navigator.of(context).pop();
+        };
+      }, Icons.warning,
+          iconSize: 30,
+          iconColor: AppColors.white,
+          iconContainerColor: AppColors.error);
+    } else {
+      if (response?.token.isEmpty != true) {
+        // store data in shared preference
+        await Helper.setData<String>(Constants.user, jsonEncode(response));
+        // navigate to contact details page
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ContactDataScreen()));
+      }
+    }
+  }
+
+  // get items from shared prefrence
+  getUserFromSharedPreference(String key) async {
+    try {
+      final response = await Helper.getData<String>(key);
+      print(response);
+    } catch (e) {
+      print("Error at getting data ${e}");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AuthProvider>(context);
-    print('provider value ${provider.loading}');
 
     return provider.isLoading == true
         ? const UIProgressIndicator()
@@ -148,7 +179,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SignIn(
                                         email: emailController.text,
                                         password: passwordController.text),
-                                    provider);
+                                    provider,
+                                    context);
+                                /* DeviceUtils.showAlertDialog(
+                                    context,
+                                    "Error",
+                                    "${provider.errorMessage}\nPlease try again",
+                                    "Close", () {
+                                  () {
+                                    Navigator.pop(context);
+                                  };
+                                }, Icons.warning,
+                                    iconSize: 30,
+                                    iconColor: AppColors.white,
+                                    iconContainerColor: AppColors.error); */
                               }
                             },
                           ),
@@ -162,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // register
                           GestureDetector(
                             onTap: () {
-                              print("clicked on create an account");
+                              getUserFromSharedPreference(Constants.user);
                             },
                             child: RichText(
                                 text: TextSpan(
