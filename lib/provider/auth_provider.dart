@@ -53,6 +53,7 @@ class AuthProvider extends ChangeNotifier {
             role: userData['role'],
             createdOn: userData['createdOn'],
             token: tokenData);
+
         return user;
       } else {
         setError("Invalid email or password");
@@ -62,59 +63,4 @@ class AuthProvider extends ChangeNotifier {
     }
     setLoading(false);
   }
-
-/*   bool loading = false;
-  bool error = false;
-  String message = "";
-  UserInfo? user;
-
-  // getter
-  bool get isLoading => loading;
-  bool get isError => error;
-  String get messageTitle => message;
-
-  // user login
-  userSignIn(SignIn payload) async {
-    try {
-      loading = true;
-      notifyListeners();
-
-      final response = await Authentication.signInUser(payload);
-      final statusCode = response['statusCode'];
-
-      print(statusCode);
-      if (statusCode == 200) {
-        final userData = response['data']['user'];
-        final tokenData = response['data']['token'];
-
-        /*  loading = false;
-        error = false;
-        notifyListeners(); */
-
-        user = UserInfo(
-            id: userData['_id'],
-            name: userData['name'],
-            email: userData['email'],
-            phoneNumber: userData['phoneNumber'],
-            role: userData['role'],
-            createdOn: userData['createdOn'],
-            token: tokenData);
-        return user;
-      } else {
-        loading = false;
-        error = true;
-        message = "Invalid email or password";
-        notifyListeners();
-      }
-    } catch (e) {
-      loading = false;
-      error = true;
-      message = "$e";
-      notifyListeners();
-    }
-    loading = false;
-    error = false;
-    message = "";
-    notifyListeners();
-  } */
 }

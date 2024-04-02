@@ -19,7 +19,8 @@ class ContactDataScreen extends StatefulWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController(
+      text: "No. 51/2, Bodhirukkarama Road, Galboralla, Kelaniya");
 
   ContactDataScreen({super.key, this.userData});
 
@@ -42,8 +43,20 @@ class ContactDataScreenState extends State<ContactDataScreen> {
   Future<UserInfo?> getUserInfo() async {
     try {
       final response = await Helper.getData<String>(Constants.user);
+      print(response);
+/*       print('contact form response');
+      print(response.toString());
+      print(jsonEncode(response)); */
+
       if (response?.isEmpty == false) {
-        UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+        // UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+        // UserInfo userInfo = UserInfo.fromJson(jsonEncode(response));
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+/*         print('json map');
+        print(jsonMap); */
+
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+        print(userInfo.email);
         widget.emailController.text = userInfo.email;
         widget.nameController.text = userInfo.name;
         widget.phoneNumberController.text = userInfo.phoneNumber;
@@ -58,13 +71,23 @@ class ContactDataScreenState extends State<ContactDataScreen> {
     try {
       final response = await Helper.getData<String>(Constants.user);
       if (response?.isEmpty == false) {
-        UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+        // UserInfo userInfo = UserInfo.fromJson(jsonDecode(response!));
+
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+/*         print('json map id');
+        print(jsonMap['id']); */
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+        print('address: ${widget.addressController.text}');
         Map<String, dynamic> userInfoPayload = {
-          ...userInfo.toJson(),
+          ...jsonMap,
           'address': widget.addressController.text
         };
+/*         print('user info payload');
+        print(userInfo.toString());
+        print(userInfoPayload); */
+
         await Helper.setData<String>(
-            Constants.user, userInfoPayload.toString());
+            Constants.user, jsonEncode(userInfoPayload));
 
         DeviceUtils.showAlertDialog(
             context,

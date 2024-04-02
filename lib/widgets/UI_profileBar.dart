@@ -9,13 +9,34 @@ import './widgets.dart';
 import '../utils/utils.dart';
 
 class UIProfileBar extends StatefulWidget {
-  const UIProfileBar({super.key});
+  UIProfileBar({super.key});
+  String cityName = "";
 
   @override
   State<UIProfileBar> createState() => _UIProfileBarState();
 }
 
 class _UIProfileBarState extends State<UIProfileBar> {
+  @override
+  void initState() {
+    super.initState();
+    fetchUserLocation();
+  }
+
+  // fetch user profile
+  fetchUserLocation() async {
+    try {
+      final response = await Helper.getCityName();
+      if (response?.isEmpty == false) {
+        setState(() {
+          widget.cityName = response ?? "Sri, Lanka";
+        });
+      }
+    } catch (e) {
+      print("Error at fetching location, $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -41,7 +62,7 @@ class _UIProfileBarState extends State<UIProfileBar> {
                 children: <Widget>[
                   UITextView(text: "Your location"),
                   UITextView(
-                    text: "Kelaniya",
+                    text: widget.cityName as String,
                     textStyle: Theme.of(context)
                         .textTheme
                         .titleMedium!
