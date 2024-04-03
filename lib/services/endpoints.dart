@@ -24,5 +24,6 @@ class Endpoints {
   static String get login => '${baseUrl}/auth/login';
   static String get courierTypes => '$baseUrl/courierTypes';
   static String get packageTypes => '$baseUrl/packageTypes';
+  static String get paymentTypes => '$baseUrl/paymentTypes';
   static String get order => '$baseUrl/orders';
 }
