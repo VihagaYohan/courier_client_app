@@ -1,5 +1,6 @@
 // import 'dart:js_interop';
 
+import 'package:courier_client_app/models/models.dart';
 import 'package:http/http.dart' as http;
 // model
 import 'dart:convert';
@@ -57,6 +58,27 @@ class HelperService {
       }
     } catch (e) {
       throw Exception('Failed to load package types $e');
+    }
+  }
+
+  // get all payment methods
+  static getPaymentTypes() async {
+    try {
+      List<PaymentTypes> paymentTypes = [];
+      final response = await http.get(Uri.parse(Endpoints.paymentTypes));
+      print(response);
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        for (var item in jsonData['data']) {
+          final paymentType = PaymentTypes(id: item['_id'], name: item['name']);
+          paymentTypes.add(paymentType);
+        }
+        return paymentTypes;
+      } else {
+        throw Exception("Failed to load payment types");
+      }
+    } catch (e) {
+      throw Exception("Failed to load payment types $e");
     }
   }
 }

@@ -28,8 +28,7 @@ Future<void> main() async {
   // setting-up environment
   Endpoints.setEnvironment(Environment.development);
 
-  // runApp(const MyApp());
-  runApp(GetMaterialApp(home: MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -78,13 +77,11 @@ class _MyAppState extends State<MyApp> {
             Routes.createOrder: (context) => CreateOrderScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          home: LoginScreen()
+          home: AppBottomNavigation()
           /* home: userLoggedIn == true
               ? const AppBottomNavigation()
               : const LoginScreen() */
           ),
     );
-
-    // home: const LoginScreen());
   }
 }

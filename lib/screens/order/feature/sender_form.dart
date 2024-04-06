@@ -27,8 +27,10 @@ class SenderForm extends StatefulWidget {
   int? selectedPacakgeType = 1;
   List<CourierType> courierTypes = [];
   List<PackageType> packageTypes = [];
+  List<PaymentTypes> paymentTypes = [];
   String? shipmentType;
   String? packageType;
+  String? paymentType;
 
   SenderForm({super.key, this.shipmentType});
 
@@ -45,6 +47,7 @@ class _SenderFormState extends State<SenderForm> {
     super.initState();
     fetchCourierTypes();
     fetchPackageTypes();
+    fetchPaymentTypes();
   }
 
   // fetch courier types / shipment types
@@ -65,6 +68,18 @@ class _SenderFormState extends State<SenderForm> {
       var res = await HelperService.getPackageTypes();
       setState(() {
         widget.packageTypes = res;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // fetch all payment types
+  void fetchPaymentTypes() async {
+    try {
+      var res = await HelperService.getPaymentTypes();
+      setState(() {
+        widget.paymentTypes = res;
       });
     } catch (e) {
       print(e);
@@ -232,6 +247,28 @@ class _SenderFormState extends State<SenderForm> {
               },
             ),
 
+            const UISpacer(),
+
+            // payment type
+            const UIHeader(title: "Payment type"),
+
+            // payment type drop down
+            UIDropDown(
+              placeholderText: "Select a payment method",
+              optionList: widget.paymentTypes,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please select a payment type";
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  widget.paymentType = value;
+                });
+              },
+            ),
+
             const SizedBox(height: Constants.mediumSpace),
 
             // sender notes
@@ -239,12 +276,14 @@ class _SenderFormState extends State<SenderForm> {
               // height: 200,
               child: UITextField(
                 controller: senderNotesController,
-                labelText: "Notes",
+                labelText: "Notes from sender",
                 maxLines: null,
                 expands: false,
               ),
             ),
             const SizedBox(height: Constants.mediumSpace),
+
+            // next button
             UIElevatedButton(
                 label: "Next",
                 onPress: () {

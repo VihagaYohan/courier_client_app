@@ -15,7 +15,7 @@ class OrderService {
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode(payload.toJson()));
 
-      print(response);
+      return response;
     } catch (e) {
       print('Error at creating new order $e');
     }
