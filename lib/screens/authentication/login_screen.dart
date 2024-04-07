@@ -194,7 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           // register
                           GestureDetector(
                             onTap: () {
-                              getUserFromSharedPreference(Constants.user);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterScreen()));
                             },
                             child: RichText(
                                 text: TextSpan(
