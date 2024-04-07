@@ -1,77 +1,49 @@
-import 'dart:convert';
-
-import 'package:courier_client_app/models/SignInResponse.dart';
-import 'package:courier_client_app/screens/screens.dart';
-import 'package:courier_client_app/utils/colors.dart';
-import 'package:courier_client_app/utils/device_utility.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:courier_client_app/models/UserRegister.dart';
+import 'package:courier_client_app/routes/routes.dart';
+import 'package:courier_client_app/screens/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
 // widgets
 import 'package:courier_client_app/widgets/widgets.dart';
 
-// services
+// service
 import 'package:courier_client_app/services/service.dart';
 
 // models
 import 'package:courier_client_app/models/models.dart';
-import 'package:courier_client_app/models/UserInfo.dart';
+
+// provider
+import 'package:courier_client_app/provider/providers.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
-import 'package:provider/provider.dart';
 
-// providers
-import 'package:courier_client_app/provider/providers.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController =
-      TextEditingController(text: 'vihagayohan94@gmail.com');
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
-  final TextEditingController passwordController =
-      TextEditingController(text: 'asdfasdf');
-
-  final loginForm = GlobalKey<FormState>();
+  final registerForm = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
   }
 
-  // handle user sign-in
-  handleAuthentication(
-      SignIn payload, AuthProvider provider, BuildContext context) async {
-    UserInfo? response = await provider.userSignIn(payload);
-    if (provider.errorMessage.isEmpty != true) {
-      // show alert box
-      DeviceUtils.showAlertDialog(context, "Error",
-          "${provider.errorMessage}\nPlease try again", "Close", () {
-        () {
-          Navigator.of(context).pop();
-        };
-      }, Icons.warning,
-          iconSize: 30,
-          iconColor: AppColors.white,
-          iconContainerColor: AppColors.error);
-    } else {
-      if (response?.token.isEmpty != true) {
-        // store data in shared preference
-        await Helper.setData<String>(Constants.user, jsonEncode(response));
-        // navigate to contact details page
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ContactDataScreen()));
-      }
-    }
+  // handle user registration
+  handleUserRegistration(
+      UserRegister payload, AuthProvider provider, BuildContext context) {
+    return;
   }
 
   // get items from shared prefrence
@@ -95,8 +67,6 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              if (provider.isLoading == true) const UIProgressIndicator(),
-
               const SizedBox(height: 50),
 
               // logo
@@ -108,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // sub-title
               UITextView(
-                text: "Let's get you login !",
+                text: "Let's create an account !",
                 textStyle: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -121,9 +91,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ListView(
                   children: <Widget>[
                     Form(
-                      key: loginForm,
+                      key: registerForm,
                       child: Column(
                         children: <Widget>[
+                          const UISpacer(
+                            space: Constants.mediumSpace,
+                          ),
+
+                          // name field
+                          UITextField(
+                            controller: nameController,
+                            labelText: "Name",
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter name";
+                              }
+                            },
+                          ),
+                          const UISpacer(space: Constants.smallSpace),
+
                           // email field
                           UITextField(
                             controller: emailController,
@@ -152,19 +139,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
 
-                          // reset password
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              UITextButton(
-                                onPress: () {},
-                                labelText: "Forgot password ?",
-                                textColor:
-                                    DeviceUtils.isDarkmode(context) == false
-                                        ? AppColors.primary
-                                        : AppColors.white,
-                              ),
-                            ],
+                          const UISpacer(
+                            space: Constants.smallSpace,
+                          ),
+
+                          // phone number field
+                          UITextField(
+                            controller: phoneNumberController,
+                            labelText: "Phone number",
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter phone number";
+                              }
+                            },
+                          ),
+
+                          const UISpacer(
+                            space: Constants.smallSpace,
                           ),
 
                           const UISpacer(
@@ -172,13 +164,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
 
                           UIElevatedButton(
-                            label: "Login",
+                            label: "Register",
                             onPress: () {
-                              if (loginForm.currentState!.validate()) {
-                                handleAuthentication(
-                                    SignIn(
+                              if (registerForm.currentState!.validate()) {
+                                handleUserRegistration(
+                                    UserRegister(
+                                        name: nameController.text,
                                         email: emailController.text,
-                                        password: passwordController.text),
+                                        password: passwordController.text,
+                                        phoneNumber:
+                                            phoneNumberController.text),
                                     provider,
                                     context);
                               }
@@ -194,11 +189,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           // register
                           GestureDetector(
                             onTap: () {
-                              getUserFromSharedPreference(Constants.user);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
                             },
                             child: RichText(
                                 text: TextSpan(
-                                    text: "Don't have an account ?",
+                                    text: "Already have an account ?",
                                     style: TextStyle(
                                         color:
                                             DeviceUtils.isDarkmode(context) ==
@@ -208,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     children: const <TextSpan>[
                                   TextSpan(text: " "),
                                   TextSpan(
-                                      text: "Create an account",
+                                      text: "Login",
                                       style: TextStyle(
                                           color: AppColors.primary,
                                           fontWeight: FontWeight.bold)),
@@ -221,8 +220,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ],
-
-            // loadin
           ));
   }
 }

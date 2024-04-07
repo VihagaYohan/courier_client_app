@@ -12,6 +12,21 @@ import 'package:courier_client_app/utils/utils.dart';
 import 'package:courier_client_app/models/models.dart';
 
 class Authentication {
+  static registerUser(UserRegister payload) async {
+    try {
+      final response = await http.post(Uri.parse(Endpoints.register),
+          headers: <String, String>{'Content-Type': 'application/json'},
+          body: payload.toJson());
+      if (response.statusCode == 201) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception("User registration failed");
+      }
+    } catch (e) {
+      throw Exception("Error occured at registering user $e");
+    }
+  }
+
   static signInUser(SignIn payload) async {
     try {
       final response = await http.post(Uri.parse(Endpoints.login),
