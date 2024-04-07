@@ -48,15 +48,10 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  // handle user google sign-in
+  // handle user sign-in
   handleAuthentication(
       SignIn payload, AuthProvider provider, BuildContext context) async {
     UserInfo? response = await provider.userSignIn(payload);
-
-    /* print('login screen');
-    print(response.toString());
-    print(jsonEncode(response)); */
-
     if (provider.errorMessage.isEmpty != true) {
       // show alert box
       DeviceUtils.showAlertDialog(context, "Error",
