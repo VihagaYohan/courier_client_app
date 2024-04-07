@@ -24,6 +24,13 @@ import 'package:courier_client_app/global_state/global_state.dart';
 import 'package:get/instance_manager.dart';
 
 class SenderForm extends StatefulWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController datePickerController = TextEditingController();
+  final TextEditingController timePickerController = TextEditingController();
+  final TextEditingController senderNotesController = TextEditingController();
+  final TextEditingController shipmentTypeController = TextEditingController();
   int? selectedPacakgeType = 1;
   List<CourierType> courierTypes = [];
   List<PackageType> packageTypes = [];
@@ -31,6 +38,8 @@ class SenderForm extends StatefulWidget {
   String? shipmentType;
   String? packageType;
   String? paymentType;
+  String? senderAddress;
+  String? currentUserId;
 
   SenderForm({super.key, this.shipmentType});
 
@@ -48,6 +57,7 @@ class _SenderFormState extends State<SenderForm> {
     fetchCourierTypes();
     fetchPackageTypes();
     fetchPaymentTypes();
+    getUserInfo();
   }
 
   // fetch courier types / shipment types
@@ -86,17 +96,32 @@ class _SenderFormState extends State<SenderForm> {
     }
   }
 
+  // fetch data from shared preferences
+  Future<UserInfo?> getUserInfo() async {
+    try {
+      final response = await Helper.getData<String>(Constants.user);
+      print(response);
+      if (response?.isEmpty == false) {
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+
+        widget.emailController.text = userInfo.email;
+        widget.nameController.text = userInfo.name;
+        widget.phoneNumberController.text = userInfo.phoneNumber;
+        setState(() {
+          widget.senderAddress = userInfo.address;
+          widget.currentUserId = userInfo.id;
+        });
+        print('current user id ${userInfo.toJson()}');
+        print(widget.currentUserId);
+      }
+    } catch (e) {
+      print("Error at loading user details $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneNumberController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController datePickerController = TextEditingController();
-    final TextEditingController timePickerController = TextEditingController();
-    final TextEditingController senderNotesController = TextEditingController();
-    final TextEditingController shipmentTypeController =
-        TextEditingController();
-
     Brightness brightness = MediaQuery.of(context).platformBrightness;
 
     // package size list
@@ -131,6 +156,7 @@ class _SenderFormState extends State<SenderForm> {
               onChanged: (value) {
                 setState(() {
                   widget.shipmentType = value;
+                  widget.shipmentTypeController.text = value;
                 });
               },
             ),
@@ -141,7 +167,7 @@ class _SenderFormState extends State<SenderForm> {
 
             // sender name
             UITextField(
-              controller: nameController,
+              controller: widget.nameController,
               labelText: "Enter name",
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -154,7 +180,7 @@ class _SenderFormState extends State<SenderForm> {
 
             // phone number
             UITextField(
-              controller: phoneNumberController,
+              controller: widget.phoneNumberController,
               labelText: "Enter mobile number",
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -168,7 +194,7 @@ class _SenderFormState extends State<SenderForm> {
 
             // email
             UITextField(
-              controller: emailController,
+              controller: widget.emailController,
               labelText: "Email address",
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -182,7 +208,7 @@ class _SenderFormState extends State<SenderForm> {
 
             // pick-up date
             UIDatePicker(
-              controll: datePickerController,
+              controll: widget.datePickerController,
               labelText: "Pickup Date",
               onTap: () {
                 print('on trapping');
@@ -203,7 +229,7 @@ class _SenderFormState extends State<SenderForm> {
 
             // pick-up time
             UITimePicker(
-                controll: timePickerController,
+                controll: widget.timePickerController,
                 labelText: "Pickup Time",
                 onTap: () {
                   print('on tapping');
@@ -275,12 +301,13 @@ class _SenderFormState extends State<SenderForm> {
             SizedBox(
               // height: 200,
               child: UITextField(
-                controller: senderNotesController,
+                controller: widget.senderNotesController,
                 labelText: "Notes from sender",
                 maxLines: null,
                 expands: false,
               ),
             ),
+
             const SizedBox(height: Constants.mediumSpace),
 
             // next button
@@ -288,29 +315,27 @@ class _SenderFormState extends State<SenderForm> {
                 label: "Next",
                 onPress: () {
                   if (senderForm.currentState!.validate()) {
-                  } else {
                     SenderDetails senderDetails = SenderDetails(
-                        senderId: '65e2d6b2536f159e3b84f27a',
-                        // name: senderNotesController.text,
-                        // email: emailController.text,
-                        name: 'Vihanga Yohan',
-                        email: 'vihagayohan94@gmail.com',
-                        pickUpDate: datePickerController.text,
-                        pickUpTime: timePickerController.text,
-                        // mobileNumber: phoneNumberController.text,
-                        mobileNumber: '0716995328',
-                        address:
-                            'No.21/2 Bodhirukkarama Road, Galboralla, Kelaniya',
-                        senderNotes: senderNotesController.text);
+                        senderId: widget.currentUserId ?? "",
+                        name: widget.nameController.text,
+                        email: widget.emailController.text,
+                        pickUpDate: widget.datePickerController.text,
+                        pickUpTime: widget.timePickerController.text,
+                        mobileNumber: widget.phoneNumberController.text,
+                        address: widget.senderAddress ?? "",
+                        senderNotes: widget.senderNotesController.text);
 
                     Order orderObj = Order(
-                        statusId: '65e33579c502128c30a094c1',
-                        // courierTypeId: widget.shipmentType.toString(),
-                        // packageTypeId: widget.packageType.toString(),
-                        courierTypeId: '65df3456d1bb363d65c35968',
-                        packageTypeId: '65df3495d1bb363d65c3596a',
-                        packageSize: 'small',
-                        senderDetails: senderDetails);
+                        courierTypeId: widget.shipmentTypeController.text,
+                        packageTypeId: widget.packageType ?? "",
+                        packageSize: widget.selectedPacakgeType == 1
+                            ? 'small'
+                            : widget.selectedPacakgeType == 2
+                                ? 'medium'
+                                : 'large',
+                        senderDetails: senderDetails,
+                        paymentType: widget.paymentType);
+
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             ReceiverForm(orderDetails: orderObj)));
