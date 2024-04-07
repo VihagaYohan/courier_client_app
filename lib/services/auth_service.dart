@@ -16,7 +16,7 @@ class Authentication {
     try {
       final response = await http.post(Uri.parse(Endpoints.register),
           headers: <String, String>{'Content-Type': 'application/json'},
-          body: payload.toJson());
+          body: jsonEncode(payload));
       if (response.statusCode == 201) {
         return jsonDecode(response.body);
       } else {

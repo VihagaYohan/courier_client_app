@@ -71,11 +71,10 @@ class _MyAppState extends State<MyApp> {
             Routes.createOrder: (context) => const CreateOrderScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          home: const RegisterScreen()
-          /* home: userLoggedIn == true
+          // home: const LoginScreen()
+          home: userLoggedIn == true
               ? const AppBottomNavigation()
-              : const LoginScreen() */
-          ),
+              : const LoginScreen()),
     );
   }
 }

@@ -60,6 +60,7 @@ class AuthProvider extends ChangeNotifier {
         setError("User registration failure");
       }
     } catch (e) {
+      print(e);
       setError("Error occured while user registration");
     }
     setLoading(false);
