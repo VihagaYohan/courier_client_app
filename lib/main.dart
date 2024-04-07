@@ -1,18 +1,12 @@
 import 'package:courier_client_app/navigation/bottomNavigation.dart';
-import 'package:courier_client_app/screens/authentication/login_screen.dart';
-import 'package:courier_client_app/screens/authentication/onboarding_screen.dart';
-import 'package:courier_client_app/screens/home/home_screen.dart';
-import 'package:courier_client_app/screens/profile/contact_data_screen.dart';
 import 'package:courier_client_app/screens/screens.dart';
 import 'package:courier_client_app/services/endpoints.dart';
 import 'package:flutter/material.dart';
-import 'package:courier_client_app/utils/theme/theme.dart';
 import 'package:courier_client_app/routes/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'package:get/get.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
@@ -68,16 +62,16 @@ class _MyAppState extends State<MyApp> {
           theme: TAppTheme.lightTheme,
           darkTheme: TAppTheme.darkTheme,
           routes: {
-            Routes.onboarding: (context) => OnboardingScreen(),
-            Routes.loginScreen: (context) => LoginScreen(),
-            Routes.homeScreen: (context) => HomeScreen(),
-            Routes.profileScreen: (context) => ProfileScreen(),
+            Routes.onboarding: (context) => const OnboardingScreen(),
+            Routes.loginScreen: (context) => const LoginScreen(),
+            Routes.homeScreen: (context) => const HomeScreen(),
+            Routes.profileScreen: (context) => const ProfileScreen(),
             Routes.contactDataScreen: (context) => ContactDataScreen(),
-            Routes.bottomNavigation: (context) => AppBottomNavigation(),
-            Routes.createOrder: (context) => CreateOrderScreen()
+            Routes.bottomNavigation: (context) => const AppBottomNavigation(),
+            Routes.createOrder: (context) => const CreateOrderScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          home: AppBottomNavigation()
+          home: const RegisterScreen()
           /* home: userLoggedIn == true
               ? const AppBottomNavigation()
               : const LoginScreen() */

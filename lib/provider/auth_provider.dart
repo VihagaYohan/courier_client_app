@@ -32,6 +32,40 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // user register
+  userRegister(UserRegister payload) async {
+    try {
+      setLoading(true);
+
+      final response = await Authentication.registerUser(payload);
+      final statusCode = response['statusCode'];
+
+      if (statusCode == 201) {
+        final userData = response['data']['user'];
+        final tokenData = response['data']['token'];
+
+        onSuccess();
+
+        user = UserInfo(
+            id: userData['_id'],
+            name: userData['name'],
+            email: userData['email'],
+            phoneNumber: userData['phoneNumber'],
+            role: userData['role'],
+            createdOn: userData['createdOn'],
+            token: tokenData);
+
+        return user;
+      } else {
+        setError("User registration failure");
+      }
+    } catch (e) {
+      setError("Error occured while user registration");
+    }
+    setLoading(false);
+  }
+
+  // user sign
   userSignIn(SignIn payload) async {
     try {
       setLoading(true);

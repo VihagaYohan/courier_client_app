@@ -22,6 +22,7 @@ class Endpoints {
 
   // static properties for endpoints
   static String get login => '${baseUrl}/auth/login';
+  static String get register => '${baseUrl}/auth/register';
   static String get courierTypes => '$baseUrl/courierTypes';
   static String get packageTypes => '$baseUrl/packageTypes';
   static String get paymentTypes => '$baseUrl/paymentTypes';
