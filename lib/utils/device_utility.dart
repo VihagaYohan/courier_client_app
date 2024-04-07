@@ -68,7 +68,8 @@ class DeviceUtils {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: AppColors.white,
+            backgroundColor:
+                isDarkmode(context) == true ? AppColors.dark : AppColors.white,
             icon: Container(
               width: 60,
               height: 60,

@@ -31,6 +31,11 @@ class _UIProfileBarState extends State<UIProfileBar> {
         setState(() {
           widget.cityName = response ?? "Sri, Lanka";
         });
+        print(response);
+      } else {
+        setState(() {
+          widget.cityName = "Sri, Lanka";
+        });
       }
     } catch (e) {
       print("Error at fetching location, $e");

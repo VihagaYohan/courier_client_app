@@ -37,7 +37,7 @@ class UserInfo {
 
   // deserialize UserInfo object from Map
   factory UserInfo.fromJson(Map<String, dynamic> map) => UserInfo(
-      id: map['_id'] ?? '',
+      id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',

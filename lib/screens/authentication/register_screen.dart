@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:courier_client_app/models/UserRegister.dart';
 import 'package:courier_client_app/routes/routes.dart';
 import 'package:courier_client_app/screens/authentication/login_screen.dart';
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -28,10 +31,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController nameController =
+      TextEditingController(text: 'John Wick');
+  final TextEditingController emailController =
+      TextEditingController(text: 'johnwick@gmail.com');
+  final TextEditingController passwordController =
+      TextEditingController(text: 'asdf');
+  final TextEditingController phoneNumberController =
+      TextEditingController(text: '0716995328');
 
   final registerForm = GlobalKey<FormState>();
 
@@ -42,8 +49,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // handle user registration
   handleUserRegistration(
-      UserRegister payload, AuthProvider provider, BuildContext context) {
-    return;
+      UserRegister payload, AuthProvider provider, BuildContext context) async {
+    UserInfo? response = await provider.userRegister(payload);
+
+    if (provider.errorMessage.isEmpty != true) {
+      // show alert box
+      DeviceUtils.showAlertDialog(context, "Error",
+          "${provider.errorMessage}\nPlease try again.", "Close", () {
+        Navigator.of(context).pop();
+      }, Icons.warning,
+          iconSize: 30,
+          iconColor: AppColors.white,
+          iconContainerColor: AppColors.error);
+    } else {
+      if (response?.token.isEmpty != true) {
+        // store data in shared preference
+        await Helper.setData<String>(Constants.user, jsonEncode(response));
+        // navigate to contact details page
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ContactDataScreen()));
+      }
+    }
   }
 
   // get items from shared prefrence
