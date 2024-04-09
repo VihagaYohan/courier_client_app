@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class OrderProvider extends ChangeNotifier {
   bool loading = false;
   String error = "";
-  Order? order;
+  OrderRequest? order;
 
   bool get isLoading => loading;
   String get errorMessage => error;
@@ -33,7 +33,7 @@ class OrderProvider extends ChangeNotifier {
   }
 
   // create order
-  createOrder(Order payload) async {
+  createOrder(OrderRequest payload) async {
     try {
       setLoading(true);
       final response = await OrderService.createOrder(payload);

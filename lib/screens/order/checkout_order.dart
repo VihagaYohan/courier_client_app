@@ -19,7 +19,7 @@ import 'package:courier_client_app/provider/providers.dart';
 import 'package:courier_client_app/utils/utils.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final Order orderDetails;
+  final OrderRequest orderDetails;
 
   const CheckoutScreen({super.key, required this.orderDetails});
 
@@ -29,8 +29,8 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   // handle create order
-  void handleCreateOrder(
-      Order payload, OrderProvider provider, BuildContext context) async {
+  void handleCreateOrder(OrderRequest payload, OrderProvider provider,
+      BuildContext context) async {
     try {
       bool response = await provider.createOrder(payload);
 

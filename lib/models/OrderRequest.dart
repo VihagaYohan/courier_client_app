@@ -1,7 +1,7 @@
 import 'package:courier_client_app/models/ReceiverDetails.dart';
 import 'package:courier_client_app/models/SenderDetails.dart';
 
-class Order {
+class OrderRequest {
   final String? statusId;
   final String courierTypeId;
   final String packageTypeId;
@@ -11,7 +11,7 @@ class Order {
   final double? orderTotal;
   final String? paymentType;
 
-  Order(
+  OrderRequest(
       {this.statusId,
       required this.courierTypeId,
       required this.packageTypeId,

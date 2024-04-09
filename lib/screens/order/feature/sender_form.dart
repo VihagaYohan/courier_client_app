@@ -151,7 +151,7 @@ class _SenderFormState extends State<SenderForm> {
         address: widget.senderAddress ?? "",
         senderNotes: widget.senderNotesController.text);
 
-    Order orderObj = Order(
+    OrderRequest orderObj = OrderRequest(
         courierTypeId: widget.shipmentTypeController.text,
         packageTypeId: widget.packageType ?? "",
         packageSize: widget.selectedPacakgeType == 1

@@ -26,7 +26,7 @@ import 'package:courier_client_app/services/service.dart';
 import 'package:courier_client_app/provider/order_provider.dart';
 
 class ReceiverForm extends StatefulWidget {
-  final Order orderDetails;
+  final OrderRequest orderDetails;
 
   const ReceiverForm({super.key, required this.orderDetails});
 
@@ -129,7 +129,7 @@ class _ReceiverFormState extends State<ReceiverForm> {
                             address: receiverAddressController.text,
                             receiverNote: receiverNoteController.text);
 
-                        Order orderPayload = Order(
+                        OrderRequest orderPayload = OrderRequest(
                             courierTypeId: widget.orderDetails.courierTypeId,
                             packageTypeId: widget.orderDetails.packageTypeId,
                             packageSize: widget.orderDetails.packageSize,
