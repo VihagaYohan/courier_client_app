@@ -7,3 +7,4 @@ export 'SignInRequest.dart';
 export 'UserRegister.dart';
 export 'PaymentTypes.dart';
 export 'OrderStatus.dart';
+export 'Location.dart';
