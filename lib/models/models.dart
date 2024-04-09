@@ -8,3 +8,4 @@ export 'UserRegister.dart';
 export 'PaymentTypes.dart';
 export 'OrderStatus.dart';
 export 'Location.dart';
+export 'SenderDetailsResponse.dart';
