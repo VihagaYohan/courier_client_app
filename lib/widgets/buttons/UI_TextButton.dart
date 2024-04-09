@@ -1,4 +1,5 @@
 import 'package:courier_client_app/utils/colors.dart';
+import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/material.dart';
 
 // widgets
@@ -17,14 +18,17 @@ class UITextButton extends StatelessWidget {
       {super.key,
       required this.onPress,
       required this.labelText,
-      this.textColor = AppColors.primary,
-      this.buttonColor = AppColors.white});
+      this.buttonColor = AppColors.white,
+      this.textColor = AppColors.primary});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(foregroundColor: textColor),
+      onPressed: () {
+        onPress();
+      },
+      style: TextButton.styleFrom(
+          foregroundColor: textColor, backgroundColor: buttonColor),
       child: UITextView(
         text: labelText,
         textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(

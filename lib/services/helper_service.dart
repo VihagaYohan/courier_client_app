@@ -66,7 +66,6 @@ class HelperService {
     try {
       List<PaymentTypes> paymentTypes = [];
       final response = await http.get(Uri.parse(Endpoints.paymentTypes));
-      print(response);
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         for (var item in jsonData['data']) {
@@ -79,6 +78,46 @@ class HelperService {
       }
     } catch (e) {
       throw Exception("Failed to load payment types $e");
+    }
+  }
+
+  // get shipment type by id
+  static getShipmentTypeById(String typeId) async {
+    try {
+      final response =
+          await http.get(Uri.parse(Endpoints(id: typeId).courierTypeById));
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        var item = jsonData['data'];
+        CourierType courierItem = CourierType(
+            id: item['_id'], name: item['name'], createdAt: item['createdAt']);
+        return courierItem;
+      } else {
+        throw Exception("Courier type not found");
+      }
+    } catch (e) {
+      throw Exception("Failed at fetching shipment type $e");
+    }
+  }
+
+  // get package type by id
+  static getPackageTypeById(String typeId) async {
+    try {
+      final response =
+          await http.get(Uri.parse(Endpoints(id: typeId).packageTypeById));
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        var item = jsonData['data'];
+        PackageType packageType = PackageType(
+            id: item['_id'], name: item['name'], createdAt: item['createdAt']);
+        return packageType;
+      } else {
+        throw Exception("Package type not found");
+      }
+    } catch (e) {
+      throw Exception("Failed at fetching package type $e");
     }
   }
 }

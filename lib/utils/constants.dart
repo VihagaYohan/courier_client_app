@@ -9,16 +9,21 @@ class Constants {
   static const String isLoggedIn = 'IsLoggedIn';
 
   // courier types
-  static const String express = "Express";
-  static const String standard = "Standard";
-  static const String custom = "Custom";
+  static const String express = "express";
+  static const String standard = "standard";
+  static const String custom = "custom";
 
-  // courier package types
+  // courier package size
   static const String smallPackage = "small";
   static const String mediumPackage = "medium";
   static const String largePackage = "large";
 
+  // courier package type
+  static const String document = "document";
+  static const String electronics = "electronics";
+  static const String fragile = "fragile";
+
   // baseURLs
-  static const String development_URL = "http://192.168.1.3:8000/api/v1";
-  static const String production_URL = "http://192.168.1.3:8000/api/v1";
+  static const String development_URL = "http://192.168.1.4:8000/api/v1";
+  static const String production_URL = "http://192.168.1.4:8000/api/v1";
 }
