@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,35 +37,6 @@ class ReceiverForm extends StatefulWidget {
 class _ReceiverFormState extends State<ReceiverForm> {
   final receiverForm = GlobalKey<FormState>();
   final GlobalState globalState = Get.put(GlobalState());
-
-  // handle create order
-  void handleCreateOrder(
-      Order payload, OrderProvider provider, BuildContext context) async {
-    try {
-      bool response = await provider.createOrder(payload);
-
-      if (provider.errorMessage.isEmpty != true) {
-        // show alert box
-        DeviceUtils.showAlertDialog(
-            context, "Error", provider.errorMessage, "Close", () {
-          Navigator.of(context).pop();
-        }, Icons.warning,
-            iconSize: 30,
-            iconColor: AppColors.white,
-            iconContainerColor: AppColors.error);
-      } else {
-        if (response) {
-          // navigate to home screen
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AppBottomNavigation()));
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +138,10 @@ class _ReceiverFormState extends State<ReceiverForm> {
                             orderTotal: widget.orderDetails.orderTotal,
                             paymentType: widget.orderDetails.paymentType);
 
-                        handleCreateOrder(orderPayload, provider, context);
+                        // handleCreateOrder(orderPayload, provider, context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                CheckoutScreen(orderDetails: orderPayload)));
                       }
                     })
               ],

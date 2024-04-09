@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 // widgets
 import './widgets.dart';
 
 // utils
 import '../utils/utils.dart';
+
+// models
+import 'package:courier_client_app/models/models.dart';
 
 class UIProfileBar extends StatefulWidget {
   UIProfileBar({super.key});
@@ -26,7 +31,25 @@ class _UIProfileBarState extends State<UIProfileBar> {
   // fetch user profile
   fetchUserLocation() async {
     try {
-      final response = await Helper.getCityName();
+      final response = await Helper.getData<String>(Constants.user);
+      if (response?.isEmpty == false) {
+        Map<String, dynamic> jsonMap = json.decode(response.toString());
+        UserInfo userInfo = UserInfo.fromJson(jsonMap);
+        String address = userInfo.address!;
+
+        final userCity = Helper.getCityName(address);
+        if (userCity.isEmpty == false) {
+          setState(() {
+            widget.cityName = userCity;
+          });
+        } else {
+          setState(() {
+            widget.cityName = "Sri, Lanka";
+          });
+        }
+      }
+
+      /* final response =  Helper.getCityName();
       if (response?.isEmpty == false) {
         setState(() {
           widget.cityName = response ?? "Sri, Lanka";
@@ -36,7 +59,7 @@ class _UIProfileBarState extends State<UIProfileBar> {
         setState(() {
           widget.cityName = "Sri, Lanka";
         });
-      }
+      } */
     } catch (e) {
       print("Error at fetching location, $e");
     }

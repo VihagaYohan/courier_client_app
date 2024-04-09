@@ -56,35 +56,37 @@ class Helper {
   }
 
   // get city name from address
-  static Future<String?> getCityName() async {
+  static String getCityName(String address) {
     try {
-      final response = await getData<String>(Constants.user);
+      /* final response = await getData<String>(Constants.user);
       if (response?.isEmpty == false) {
         Map<String, dynamic> jsonMap = json.decode(response.toString());
         UserInfo userInfo = UserInfo.fromJson(jsonMap);
-        String address = userInfo.address!;
+        String address = userInfo.address!; */
 
-        List<String> parts = address.split(',');
+      List<String> parts = address.split(',');
+
+      // get the last part as city name
+      String cityName = parts.last.trim();
+
+      // if the last part is the same as the address, meaning there's no comma
+      if (cityName == address) {
+        // split the address by space
+        parts = address.split(' ');
 
         // get the last part as city name
-        String cityName = parts.last.trim();
-
-        // if the last part is the same as the address, meaning there's no comma
-        if (cityName == address) {
-          // split the address by space
-          parts = address.split(' ');
-
-          // get the last part as city name
-          cityName = parts.last.trim();
-        }
-
-        return cityName;
-      } else {
-        throw Exception("Unable to fetch city");
+        cityName = parts.last.trim();
       }
+
+      return cityName;
+      /*   } else {
+        throw Exception("Unable to fetch city");
+      } */
     } catch (e) {
       print("Error at getting user's city name $e");
     }
+
+    throw Exception("Unable to get address");
   }
 
   // convert to currency format

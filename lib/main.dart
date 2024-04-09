@@ -71,10 +71,11 @@ class _MyAppState extends State<MyApp> {
             Routes.profileScreen: (context) => const ProfileScreen(),
             Routes.contactDataScreen: (context) => ContactDataScreen(),
             Routes.bottomNavigation: (context) => const AppBottomNavigation(),
-            Routes.createOrder: (context) => const CreateOrderScreen()
+            Routes.createOrder: (context) => const CreateOrderScreen(),
+            // Routes.checkoutScreen: (context) =>  CheckoutScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          // home: const LoginScreen()
+          // home: const CheckoutScreen()
           home: userLoggedIn == true
               ? const AppBottomNavigation()
               : const LoginScreen()),
