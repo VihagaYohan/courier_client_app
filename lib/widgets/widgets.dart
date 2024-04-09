@@ -38,3 +38,6 @@ export 'UI_timePicker.dart';
 
 // progress indicator
 export 'UI_ProgressIndicator.dart';
+
+// horizontal divider
+export 'UI_Divider.dart';
