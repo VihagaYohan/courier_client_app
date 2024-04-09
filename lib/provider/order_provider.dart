@@ -1,4 +1,6 @@
 // models
+import 'dart:convert';
+
 import 'package:courier_client_app/models/models.dart';
 
 // services
@@ -34,11 +36,14 @@ class OrderProvider extends ChangeNotifier {
   createOrder(Order payload) async {
     try {
       setLoading(true);
-
       final response = await OrderService.createOrder(payload);
-      final statusCode = response['statusCode'];
-
-      onSuccess();
+      if (response == 200) {
+        onSuccess();
+        return true;
+      } else {
+        setError("Unable to create courier order");
+        return false;
+      }
     } catch (e) {
       setError("Error occured while creating the order");
     }
