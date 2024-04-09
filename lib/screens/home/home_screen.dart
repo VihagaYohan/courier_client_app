@@ -148,7 +148,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   .titleMedium!
                   .copyWith(fontSize: 14, fontWeight: FontWeight.w600),
             ),
-            UITextButton(onPress: () {}, labelText: "View All")
+            UITextButton(
+              onPress: () {},
+              labelText: "View All",
+              buttonColor: DeviceUtils.isDarkmode(context) == true
+                  ? AppColors.dark
+                  : AppColors.white,
+            )
           ],
         ),
 
