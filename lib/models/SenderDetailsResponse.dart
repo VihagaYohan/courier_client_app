@@ -54,6 +54,6 @@ class SenderDetailsResponse {
         pickUpTime: json['pickUpTime'],
         address: json['address'],
         senderNotes: json['senderNotes'],
-        id: json['id']);
+        id: json['_id']);
   }
 }
