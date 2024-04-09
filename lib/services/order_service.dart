@@ -9,7 +9,7 @@ import 'package:courier_client_app/services/endpoints.dart';
 
 class OrderService {
   // create new courier order
-  static createOrder(Order payload) async {
+  static createOrder(OrderRequest payload) async {
     try {
       final response = await http.post(Uri.parse(Endpoints.order),
           headers: <String, String>{'Content-Type': 'application/json'},
