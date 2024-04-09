@@ -59,12 +59,20 @@ class DeviceUtils {
     }
   }
 
-  static Future<void> showAlertDialog(
-      BuildContext context, title, content, buttonTitle, buttonPress, icon,
-      {Color iconContainerColor = AppColors.primary,
-      Color iconColor = AppColors.white,
-      double iconSize = 25}) async {
-    return showDialog<void>(
+  static Future<T?> showAlertDialog<T>(
+    BuildContext context,
+    title,
+    content,
+    buttonTitle,
+    buttonPress,
+    icon, {
+    Color iconContainerColor = AppColors.primary,
+    Color iconColor = AppColors.white,
+    double iconSize = 25,
+    bool showCancelButton = false,
+    String cancelButtonTitle = "Cancel",
+  }) async {
+    return showDialog<T>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -80,12 +88,26 @@ class DeviceUtils {
             title: UITextView(text: title),
             content: UITextView(text: content),
             actions: <Widget>[
-              UIElevatedButton(
-                  label: buttonTitle,
+              if (showCancelButton)
+                UITextButton(
                   onPress: () {
                     Navigator.of(context).pop();
-                    buttonPress();
-                  })
+                  },
+                  labelText: "Cancel",
+                  textColor: AppColors.primary,
+                  buttonColor: DeviceUtils.isDarkmode(context) == false
+                      ? AppColors.white
+                      : AppColors.dark,
+                ),
+              UITextButton(
+                onPress: () {
+                  Navigator.of(context).pop();
+                  buttonPress();
+                },
+                labelText: buttonTitle,
+                textColor: AppColors.white,
+                buttonColor: AppColors.primary,
+              )
             ],
           );
         });
