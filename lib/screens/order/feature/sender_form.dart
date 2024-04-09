@@ -140,7 +140,7 @@ class _SenderFormState extends State<SenderForm> {
   }
 
   // handle navigation
-  void handleNavigation() {
+  void handleNavigation(double amount) {
     SenderDetails senderDetails = SenderDetails(
         senderId: widget.currentUserId ?? "",
         name: widget.nameController.text,
@@ -160,6 +160,7 @@ class _SenderFormState extends State<SenderForm> {
                 ? 'medium'
                 : 'large',
         senderDetails: senderDetails,
+        orderTotal: amount,
         paymentType: widget.paymentType);
 
     Navigator.of(context).push(MaterialPageRoute(
@@ -368,7 +369,7 @@ class _SenderFormState extends State<SenderForm> {
                         "Estimated Cost",
                         "Courier estimated cost is $totalAmount\nDo you wish to proceed?",
                         "Yes", () {
-                      handleNavigation();
+                      handleNavigation(totalAmount);
                     }, Icons.info,
                         iconSize: 30,
                         iconContainerColor: AppColors.error,

@@ -14,10 +14,9 @@ class OrderService {
       final response = await http.post(Uri.parse(Endpoints.order),
           headers: <String, String>{'Content-Type': 'application/json'},
           body: jsonEncode(payload.toJson()));
-
-      return response;
+      return response.statusCode;
     } catch (e) {
-      print('Error at creating new order $e');
+      throw Exception('Error at creating new order $e');
     }
   }
 }

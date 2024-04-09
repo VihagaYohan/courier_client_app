@@ -54,7 +54,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider())
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Courier App",
@@ -68,10 +71,11 @@ class _MyAppState extends State<MyApp> {
             Routes.profileScreen: (context) => const ProfileScreen(),
             Routes.contactDataScreen: (context) => ContactDataScreen(),
             Routes.bottomNavigation: (context) => const AppBottomNavigation(),
-            Routes.createOrder: (context) => const CreateOrderScreen()
+            Routes.createOrder: (context) => const CreateOrderScreen(),
+            // Routes.checkoutScreen: (context) =>  CheckoutScreen()
           },
           //initialRoute: Routes.bottomNavigation,
-          // home: const LoginScreen()
+          // home: const CheckoutScreen()
           home: userLoggedIn == true
               ? const AppBottomNavigation()
               : const LoginScreen()),
