@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:courier_client_app/navigation/bottomNavigation.dart';
 import 'package:courier_client_app/screens/home/home_screen.dart';
 import 'package:courier_client_app/utils/courier_service.dart';
 import 'package:courier_client_app/utils/utils.dart';
 import 'package:courier_client_app/widgets/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // components
 import 'package:courier_client_app/widgets/widgets.dart';
@@ -54,8 +55,10 @@ class _ReceiverFormState extends State<ReceiverForm> {
       } else {
         if (response) {
           // navigate to home screen
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AppBottomNavigation()));
         }
       }
     } catch (e) {
