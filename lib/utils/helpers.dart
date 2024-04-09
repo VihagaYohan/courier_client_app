@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:courier_client_app/models/UserInfo.dart';
 import 'package:flutter/foundation.dart';
@@ -84,5 +85,16 @@ class Helper {
     } catch (e) {
       print("Error at getting user's city name $e");
     }
+  }
+
+  // convert to currency format
+  static String currencyFormat(double amount) {
+    try {
+      final formatter = NumberFormat.currency(locale: 'si_LK', symbol: 'Rs');
+      return formatter.format(amount);
+    } catch (e) {
+      print("Unable to convert to currency format $e");
+    }
+    throw Exception("Unable to convert to currency format");
   }
 }

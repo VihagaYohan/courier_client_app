@@ -4,6 +4,9 @@ enum Environment { development, production }
 
 class Endpoints {
   static Environment currentEnvionment = Environment.development;
+  final String? id;
+
+  Endpoints({this.id});
 
   static void setEnvironment(Environment env) {
     currentEnvionment = env;
@@ -24,7 +27,9 @@ class Endpoints {
   static String get login => '${baseUrl}/auth/login';
   static String get register => '${baseUrl}/auth/register';
   static String get courierTypes => '$baseUrl/courierTypes';
+  String get courierTypeById => '$baseUrl/courierTypes/$id';
   static String get packageTypes => '$baseUrl/packageTypes';
+  String get packageTypeById => '$baseUrl/packageTypes/$id';
   static String get paymentTypes => '$baseUrl/paymentTypes';
   static String get orderStatus => '$baseUrl/courierStates';
   static String get order => '$baseUrl/orders';

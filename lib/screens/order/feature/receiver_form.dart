@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:courier_client_app/utils/courier_service.dart';
 import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -121,30 +122,33 @@ class _ReceiverFormState extends State<ReceiverForm> {
               label: 'Done',
               onPress: () {
                 if (receiverForm.currentState!.validate()) {
-                } else {
-                  ReceiverDetails receiverDetails = ReceiverDetails(
-                      name: 'John Doe',
-                      mobileNumber: '0122333213',
-                      address:
-                          'No. 51/2, Bodhirukkarama Road, Galboralla, Kelaniya',
-                      receiverNote: 'Receiver notes'
+                  // calculate total cost
+                  Future<double> total = CourierService.calculateCourierCharge(
+                      //  "Express",
+                      // "Document",
+                      'small',
+                      widget.orderDetails.courierTypeId,
+                      widget.orderDetails.packageTypeId);
 
-                      /* name: receiverNameController.text,
+                  print('order total $total');
+
+                  ReceiverDetails receiverDetails = ReceiverDetails(
+                      name: receiverNameController.text,
                       mobileNumber: receiverMobileController.text,
                       address: receiverAddressController.text,
-                      receiverNote: receiverNoteController.text */
-                      );
+                      receiverNote: receiverNoteController.text);
 
                   Order orderPayload = Order(
-                      statusId: widget.orderDetails.statusId,
                       courierTypeId: widget.orderDetails.courierTypeId,
                       packageTypeId: widget.orderDetails.packageTypeId,
                       packageSize: widget.orderDetails.packageSize,
                       senderDetails: widget.orderDetails.senderDetails,
                       receiverDetails: widget.orderDetails.receiverDetails,
                       orderTotal: 2000,
-                      paymentType: '65e5a853d5b77f2f0280c434');
-                  handleCreateOrder(orderPayload);
+                      paymentType: widget.orderDetails.paymentType);
+                  // handleCreateOrder(orderPayload);
+                  print('order details');
+                  print(orderPayload.toJson());
                 }
               })
         ],

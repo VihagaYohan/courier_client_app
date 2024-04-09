@@ -1,15 +1,35 @@
 // constants
+import 'package:courier_client_app/models/CourierType.dart';
+import 'package:courier_client_app/models/PackageType.dart';
+import 'package:courier_client_app/services/helper_service.dart';
+import 'package:courier_client_app/utils/utils.dart';
+
+// services
 import 'package:courier_client_app/utils/utils.dart';
 
 class CourierService {
-  static double calculateCourierCharge(
-      String courierType, String packageType, String packageSize) {
+  static Future<double> calculateCourierCharge(
+      // String courierType,
+      // String packageType,
+      String packageSize,
+      String shipmentTypeId,
+      String packageTypeId) async {
     double baseCharge = 100;
     double sizeMultiplier = 1.0;
     double typeMultiplier = 1.0;
 
+    // get shipment type
+    CourierType courierType =
+        await HelperService.getShipmentTypeById(shipmentTypeId);
+    print(courierType.name);
+
+    // package type
+    PackageType packageType =
+        await HelperService.getPackageTypeById(packageTypeId);
+    print(packageType.name);
+
     // base charges
-    switch (courierType) {
+    switch (courierType.name.toLowerCase()) {
       case Constants.express:
         baseCharge = 200;
         break;
@@ -38,14 +58,14 @@ class CourierService {
     }
 
     // package type
-    switch (packageType) {
-      case Constants.smallPackage:
+    switch (packageType.name.toLowerCase()) {
+      case Constants.document:
         typeMultiplier = 1.0;
         break;
-      case Constants.mediumPackage:
+      case Constants.electronics:
         typeMultiplier = 2.0;
         break;
-      case Constants.largePackage:
+      case Constants.fragile:
         typeMultiplier = 3.0;
         break;
     }

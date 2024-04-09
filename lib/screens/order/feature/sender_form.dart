@@ -5,6 +5,7 @@ import 'package:courier_client_app/models/CourierType.dart';
 import 'package:courier_client_app/models/PackageType.dart';
 import 'package:courier_client_app/screens/order/feature/receiver_form.dart';
 import 'package:courier_client_app/services/helper_service.dart';
+import 'package:courier_client_app/utils/courier_service.dart';
 import 'package:courier_client_app/utils/device_utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ import 'package:courier_client_app/models/models.dart';
 
 // Getx state-mangement
 import 'package:courier_client_app/global_state/global_state.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/instance_manager.dart';
 
 class SenderForm extends StatefulWidget {
@@ -58,6 +60,9 @@ class _SenderFormState extends State<SenderForm> {
     fetchPackageTypes();
     fetchPaymentTypes();
     getUserInfo();
+
+    // calculate total
+    // getTotalCharge();
   }
 
   // fetch courier types / shipment types
@@ -112,12 +117,53 @@ class _SenderFormState extends State<SenderForm> {
           widget.senderAddress = userInfo.address;
           widget.currentUserId = userInfo.id;
         });
-        print('current user id ${userInfo.toJson()}');
-        print(widget.currentUserId);
       }
     } catch (e) {
       print("Error at loading user details $e");
     }
+  }
+
+  // calculate total order amount
+  getTotalCharge() async {
+    try {
+      double totalAmount = await CourierService.calculateCourierCharge(
+          // "Express",
+          // "documents",
+          "small",
+          "65df3456d1bb363d65c35968",
+          "65df3495d1bb363d65c3596a");
+      print('total $totalAmount');
+      return totalAmount;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // handle navigation
+  void handleNavigation() {
+    SenderDetails senderDetails = SenderDetails(
+        senderId: widget.currentUserId ?? "",
+        name: widget.nameController.text,
+        email: widget.emailController.text,
+        pickUpDate: widget.datePickerController.text,
+        pickUpTime: widget.timePickerController.text,
+        mobileNumber: widget.phoneNumberController.text,
+        address: widget.senderAddress ?? "",
+        senderNotes: widget.senderNotesController.text);
+
+    Order orderObj = Order(
+        courierTypeId: widget.shipmentTypeController.text,
+        packageTypeId: widget.packageType ?? "",
+        packageSize: widget.selectedPacakgeType == 1
+            ? 'small'
+            : widget.selectedPacakgeType == 2
+                ? 'medium'
+                : 'large',
+        senderDetails: senderDetails,
+        paymentType: widget.paymentType);
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ReceiverForm(orderDetails: orderObj)));
   }
 
   @override
@@ -313,32 +359,21 @@ class _SenderFormState extends State<SenderForm> {
             // next button
             UIElevatedButton(
                 label: "Next",
-                onPress: () {
+                onPress: () async {
                   if (senderForm.currentState!.validate()) {
-                    SenderDetails senderDetails = SenderDetails(
-                        senderId: widget.currentUserId ?? "",
-                        name: widget.nameController.text,
-                        email: widget.emailController.text,
-                        pickUpDate: widget.datePickerController.text,
-                        pickUpTime: widget.timePickerController.text,
-                        mobileNumber: widget.phoneNumberController.text,
-                        address: widget.senderAddress ?? "",
-                        senderNotes: widget.senderNotesController.text);
+                    double totalAmount = await getTotalCharge();
 
-                    Order orderObj = Order(
-                        courierTypeId: widget.shipmentTypeController.text,
-                        packageTypeId: widget.packageType ?? "",
-                        packageSize: widget.selectedPacakgeType == 1
-                            ? 'small'
-                            : widget.selectedPacakgeType == 2
-                                ? 'medium'
-                                : 'large',
-                        senderDetails: senderDetails,
-                        paymentType: widget.paymentType);
-
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ReceiverForm(orderDetails: orderObj)));
+                    DeviceUtils.showAlertDialog(
+                        context,
+                        "Estimated Cost",
+                        "Courier estimated cost is $totalAmount\nDo you wish to proceed?",
+                        "Yes", () {
+                      handleNavigation();
+                    }, Icons.info,
+                        iconSize: 30,
+                        iconContainerColor: AppColors.error,
+                        iconColor: AppColors.white,
+                        showCancelButton: true);
                   }
                 })
           ],
