@@ -9,3 +9,5 @@ export 'PaymentTypes.dart';
 export 'OrderStatus.dart';
 export 'Location.dart';
 export 'SenderDetailsResponse.dart';
+export 'ReceiverDetailsResponse.dart';
+export 'OrderResponse.dart';
