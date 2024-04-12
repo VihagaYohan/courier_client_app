@@ -45,7 +45,7 @@ class SenderDetailsResponse {
   // create sender details response object from JSON
   factory SenderDetailsResponse.fromJson(Map<String, dynamic> json) {
     return SenderDetailsResponse(
-        location: json['location'],
+        location: Location.fromJson(json['location']),
         senderId: json['senderId'],
         name: json['name'],
         mobileNumber: json['mobileNumber'],

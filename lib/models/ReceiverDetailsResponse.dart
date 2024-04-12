@@ -30,7 +30,7 @@ class ReceiverDetailsResponse {
   // create receiver details response object from JSON
   factory ReceiverDetailsResponse.fromJson(Map<String, dynamic> json) {
     return ReceiverDetailsResponse(
-        location: json['location'],
+        location: Location.fromJson(json['location']),
         name: json['name'],
         mobileNumber: json['mobileNumber'],
         address: json['address'],

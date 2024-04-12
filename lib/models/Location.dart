@@ -1,6 +1,6 @@
 class Location {
   String type;
-  List<double> coordinates;
+  List<dynamic> coordinates;
   String formatedAddress;
   String street;
   String city;
