@@ -1,11 +1,15 @@
 // models
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
+// models
 import 'package:courier_client_app/models/models.dart';
 
 // services
 import 'package:courier_client_app/services/service.dart';
-import 'package:flutter/material.dart';
+
+// utils
+import 'package:courier_client_app/utils/utils.dart';
 
 class OrderProvider extends ChangeNotifier {
   bool loading = false;
@@ -46,6 +50,21 @@ class OrderProvider extends ChangeNotifier {
       }
     } catch (e) {
       setError("Error occured while creating the order");
+    }
+    setLoading(false);
+  }
+
+  // get list of orders
+  getAllOrders() async {
+    try {
+      setLoading(true);
+      // get current user id
+      final userId = await Helper.getData(Constants.user);
+      // print('user data goes here');
+      // print(userId);
+      final respone = await OrderService.getListOfOrders();
+    } catch (e) {
+      setError("Error occured while fetching all orders");
     }
     setLoading(false);
   }

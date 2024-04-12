@@ -99,4 +99,36 @@ class Helper {
     }
     throw Exception("Unable to convert to currency format");
   }
+
+  // get token
+  static Future<String> getToken() async {
+    try {
+      final userDataResponse = await getData<String>(Constants.user);
+      if (userDataResponse?.isEmpty == false) {
+        Map<String, dynamic> userData = json.decode(userDataResponse!);
+        UserInfo userInfo = UserInfo.fromJson(userData);
+        return "Bearer ${userInfo.token}";
+      } else {
+        throw Exception("Unable to retrieve user data");
+      }
+    } catch (e) {
+      throw Exception("Unable to get user token");
+    }
+  }
+
+  // get current user id
+  static Future<String> getUserId() async {
+    try {
+      final userDataResponse = await getData<String>(Constants.user);
+      if (userDataResponse?.isEmpty == false) {
+        Map<String, dynamic> userData = json.decode(userDataResponse!);
+        UserInfo userInfo = UserInfo.fromJson(userData);
+        return userInfo.id;
+      } else {
+        throw Exception("Unable to retrieve user data");
+      }
+    } catch (e) {
+      throw Exception("Unable to get current user Id");
+    }
+  }
 }
