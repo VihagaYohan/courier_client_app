@@ -16,8 +16,6 @@ class Status {
 
   // create status object from JSON
   factory Status.fromJson(Map<String, dynamic> json) {
-    print('json goes here');
-
     return Status(
         id: json['_id'], name: json['name'], createdAt: json['createdAt']);
   }

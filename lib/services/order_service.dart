@@ -46,6 +46,7 @@ class OrderService {
         for (var item in items) {
           final orderItem = OrderResponse(
               id: item['_id'],
+              trackingId: item['trackingId'],
               status: Status.fromJson(item['status']),
               courierType: CourierType.fromJson(item['courierType']),
               packageType: PackageType.fromJson(item['packageType']),
