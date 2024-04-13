@@ -3,21 +3,21 @@ import 'package:courier_client_app/models/models.dart';
 
 class OrderResponse {
   final String id;
-  final String statusId;
-  final String courierTypeId;
-  final String packageTypeId;
+  final Status status;
+  final CourierType courierType;
+  final PackageType packageType;
   final String packageSize;
   final SenderDetailsResponse senderDetails;
   final ReceiverDetailsResponse receiverDetails;
   final double orderTotal;
-  final String paymentType;
+  final PaymentTypes paymentType;
   final String createdOn;
 
   OrderResponse(
       {required this.id,
-      required this.statusId,
-      required this.courierTypeId,
-      required this.packageTypeId,
+      required this.status,
+      required this.courierType,
+      required this.packageType,
       required this.packageSize,
       required this.senderDetails,
       required this.receiverDetails,
@@ -29,9 +29,9 @@ class OrderResponse {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'statusId': statusId,
-      'courierTypeId': courierTypeId,
-      'packageTypeId': packageTypeId,
+      'status': status,
+      'courierType': courierType,
+      'packageType': packageType,
       'packageSize': packageSize,
       'senderDetails': senderDetails,
       'receiverDetails': receiverDetails,
@@ -45,9 +45,9 @@ class OrderResponse {
   factory OrderResponse.fromJson(Map<String, dynamic> json) {
     return OrderResponse(
         id: json['id'],
-        statusId: json['statusId'],
-        courierTypeId: json['courierTypeId'],
-        packageTypeId: json['packageTypeId'],
+        status: json['status'],
+        courierType: json['courierType'],
+        packageType: json['packageType'],
         packageSize: json['packageSize'],
         senderDetails: json['senderDetails'],
         receiverDetails: json['receiverDetails'],

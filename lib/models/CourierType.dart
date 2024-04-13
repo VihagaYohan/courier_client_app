@@ -1,9 +1,9 @@
 class CourierType {
   final String id;
   final String name;
-  final String createdAt;
+  final String? createdAt;
 
-  CourierType({required this.id, required this.name, required this.createdAt});
+  CourierType({required this.id, required this.name, this.createdAt});
 
   // serialize CourierType object to JSON
   Map<String, dynamic> toJson() {
@@ -11,6 +11,6 @@ class CourierType {
   }
 
   // deserialize CourierType object from Map
-  factory CourierType.fromJson(Map<String, dynamic> json) =>
-      CourierType(id: json['id'], name: json['name'], createdAt: '[createdAt]');
+  factory CourierType.fromJson(Map<String, dynamic> json) => CourierType(
+      id: json['_id'], name: json['name'], createdAt: '[createdAt]');
 }

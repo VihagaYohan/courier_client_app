@@ -4,6 +4,9 @@ class Constants {
   static const double mediumSpace = 20.0;
   static const double largeSpace = 30.0;
 
+  // border radius
+  static const double borderRadius = 10.0;
+
   // keys
   static const String user = 'User';
   static const String isLoggedIn = 'IsLoggedIn';
@@ -24,6 +27,6 @@ class Constants {
   static const String fragile = "fragile";
 
   // baseURLs
-  static const String development_URL = "http://192.168.1.3:8000/api/v1";
-  static const String production_URL = "http://192.168.1.3:8000/api/v1";
+  static const String development_URL = "http://192.168.1.5:8000/api/v1";
+  static const String production_URL = "http://192.168.1.5:8000/api/v1";
 }

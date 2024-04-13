@@ -46,16 +46,16 @@ class OrderService {
         for (var item in items) {
           final orderItem = OrderResponse(
               id: item['_id'],
-              statusId: item['statusId'],
-              courierTypeId: item['courierTypeId'],
-              packageTypeId: item['packageTypeId'],
+              status: Status.fromJson(item['status']),
+              courierType: CourierType.fromJson(item['courierType']),
+              packageType: PackageType.fromJson(item['packageType']),
               packageSize: item['packageSize'],
               senderDetails:
                   SenderDetailsResponse.fromJson(item['senderDetails']),
               receiverDetails:
                   ReceiverDetailsResponse.fromJson(item['receiverDetails']),
               orderTotal: item['orderTotal'].toDouble(),
-              paymentType: item['paymentType'],
+              paymentType: PaymentTypes.fromJson(item['paymentType']),
               createdOn: item['createdOn']);
           orders.add(orderItem);
         }
