@@ -11,6 +11,6 @@ class PaymentTypes {
 
   // create payment types object from Json
   factory PaymentTypes.fromJson(Map<String, dynamic> json) {
-    return PaymentTypes(id: json['id'], name: json['name']);
+    return PaymentTypes(id: json['_id'], name: json['name']);
   }
 }

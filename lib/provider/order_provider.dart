@@ -15,9 +15,11 @@ class OrderProvider extends ChangeNotifier {
   bool loading = false;
   String error = "";
   OrderRequest? order;
+  List<OrderResponse> orders = [];
 
   bool get isLoading => loading;
   String get errorMessage => error;
+  List<OrderResponse> get orderList => orders;
 
   void setLoading(bool value) {
     loading = value;
@@ -58,13 +60,16 @@ class OrderProvider extends ChangeNotifier {
   getAllOrders() async {
     try {
       setLoading(true);
-      // get current user id
-      final userId = await Helper.getData(Constants.user);
-      // print('user data goes here');
-      // print(userId);
-      final respone = await OrderService.getListOfOrders();
+      List<OrderResponse> response = await OrderService.getListOfOrders();
+      if (response.isNotEmpty) {
+        onSuccess();
+        orders = response;
+      } else {
+        setError('There are no orders to show');
+      }
     } catch (e) {
-      setError("Error occured while fetching all orders");
+      print(e);
+      setError("Error occured\nPlease try again");
     }
     setLoading(false);
   }

@@ -4,6 +4,9 @@ class Constants {
   static const double mediumSpace = 20.0;
   static const double largeSpace = 30.0;
 
+  // border radius
+  static const double borderRadius = 10.0;
+
   // keys
   static const String user = 'User';
   static const String isLoggedIn = 'IsLoggedIn';
@@ -23,7 +26,22 @@ class Constants {
   static const String electronics = "electronics";
   static const String fragile = "fragile";
 
+  // payment types
+  static const String cash = 'Cash';
+  static const String card = "Card payment";
+
+  // order status
+  static const String orderPlaced = "Order placed";
+  static const String orderPickedUp = "Order picked-up";
+  static const String processing = "Processing";
+  static const String atBranch = "At branch";
+  static const String atStorage = "At store";
+  static const String outForDelivery = "Out for delivery";
+  static const String delivered = "Delivered";
+  static const String returnInProcess = "Return in-process";
+  static const String refunded = "Refunded";
+
   // baseURLs
-  static const String development_URL = "http://192.168.1.3:8000/api/v1";
-  static const String production_URL = "http://192.168.1.3:8000/api/v1";
+  static const String development_URL = "http://192.168.1.5:8000/api/v1";
+  static const String production_URL = "http://192.168.1.5:8000/api/v1";
 }
