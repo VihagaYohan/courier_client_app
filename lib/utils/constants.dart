@@ -44,4 +44,5 @@ class Constants {
   // baseURLs
   static const String development_URL = "http://192.168.1.5:8000/api/v1";
   static const String production_URL = "http://192.168.1.5:8000/api/v1";
+  static const String server_URL = "http://192.168.1.5:8000";
 }
