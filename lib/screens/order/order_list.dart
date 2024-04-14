@@ -16,6 +16,9 @@ import 'package:courier_client_app/provider/providers.dart';
 // utils
 import 'package:courier_client_app/utils/utils.dart';
 
+// screen
+import 'package:courier_client_app/screens/screens.dart';
+
 class OrderListScreen extends StatefulWidget {
   const OrderListScreen({super.key});
 
@@ -65,6 +68,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
         : AppColors.white;
 
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OrderDetailsScreen(
+                      orderDetail: item,
+                    )));
+      },
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(

@@ -9,3 +9,4 @@ export "profile/profile_screen.dart";
 export 'order/create_order.dart';
 export 'order/order_list.dart';
 export 'order/checkout_order.dart';
+export 'order/order_details.dart';

@@ -13,4 +13,6 @@ class Routes {
   static const String bottomNavigation = '/bottomNavigation';
   static const String createOrder = '/createOrder';
   static const String checkoutScreen = "/checkoutScreen";
+  static const String orderListScreen = "/orderListScreen";
+  static const String orderDetailsScreen = "/orderDetailsScreen";
 }
