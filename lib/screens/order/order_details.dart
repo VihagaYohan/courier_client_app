@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -23,6 +25,7 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  int index = 0;
   late IO.Socket socket;
   /*  final channel = WebSocketChannel.connect(
     Uri.parse(''),
@@ -32,6 +35,20 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   void initState() {
     super.initState();
     connect();
+  }
+
+  continueStep() {
+    if (index < 2) {
+      setState(() {
+        index += 1;
+      });
+    }
+  }
+
+  onStepTapped(int value) {
+    setState(() {
+      index = value;
+    });
   }
 
   void connect() {
@@ -52,25 +69,89 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const UIContainer(
+    return UIContainer(
         showAppBar: true,
-        appbar: UIAppBar(title: "Order Details"),
+        appbar: const UIAppBar(title: ""),
         children: Column(
-          children: [
-            UITextView(text: "Order details screen"),
-            // UITextView(text: orderde)
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // tracking number
+            UITextView(
+              text: 'Tracking # - ${widget.orderDetail.trackingId}',
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
 
-            /* StreamBuilder(
-            stream: channel.stream,
-            builder: (context, snapshot) {
-              return Column(
-                children: <Widget>[
-                  UITextView(
-                      text:
-                          snapshot.hasData ? '${snapshot.data}' : 'No data yet')
-                ],
-              );
-            }) */
+            const UISpacer(
+              space: Constants.mediumSpace,
+            ),
+
+            // courier type, date and time
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // courier type
+                    UITextView(
+                      text: "${widget.orderDetail.courierType.name} delievery",
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+
+                    // status
+                    UITextView(
+                      text: "Type : ${widget.orderDetail.packageType.name}",
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+
+                // date and time
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    UITextView(
+                      text: AppFormatter.formatDate(DateTime.parse(
+                          widget.orderDetail.senderDetails.pickUpDate)),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+                    UITextView(
+                      text: widget.orderDetail.senderDetails.pickUpTime,
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
+                    )
+                  ],
+                )
+              ],
+            ),
+
+            const UISpacer(
+              space: Constants.mediumSpace,
+            ),
+
+            const UIHeader(
+              title: "Order Details",
+            ),
+
+            // from and to address
+            UILocation(
+                from: widget.orderDetail.senderDetails.address,
+                to: widget.orderDetail.receiverDetails.address)
           ],
         ));
   }

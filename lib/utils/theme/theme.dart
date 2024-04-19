@@ -18,25 +18,25 @@ class TAppTheme {
   TAppTheme();
 
   static ThemeData lightTheme = ThemeData(
-      useMaterial3: true,
-      fontFamily: 'Poppins',
-      brightness: Brightness.light,
-      primaryColor: AppColors.primary,
-      scaffoldBackgroundColor: Colors.white,
-      textTheme: TTextTheme.lightTextTheme,
-      elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
-      appBarTheme: TAppBarTheme.lightAppBarTheme,
-      bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
-      checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
-      chipTheme: TChipTheme.lightChipTheme,
-      outlinedButtonTheme: TOutlineButtonTheme.lightOutlinedButtonTheme,
-      inputDecorationTheme: TTextFieldTheme.lightInputDecorationTheme,
-      navigationBarTheme:
-          TBottomNavigatorBarTheme.lightBottomNavigationBarTheme,
-      textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
-      textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
-      datePickerTheme: TDatePickerTheme.lightDatePickerTheme,
-      timePickerTheme: TTimePickerTheme.lightTimePickerTheme);
+    useMaterial3: true,
+    fontFamily: 'Poppins',
+    brightness: Brightness.light,
+    primaryColor: AppColors.primary,
+    scaffoldBackgroundColor: Colors.white,
+    textTheme: TTextTheme.lightTextTheme,
+    elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
+    appBarTheme: TAppBarTheme.lightAppBarTheme,
+    bottomSheetTheme: TBottomSheetTheme.lightBottomSheetTheme,
+    checkboxTheme: TCheckBoxTheme.lightCheckboxTheme,
+    chipTheme: TChipTheme.lightChipTheme,
+    outlinedButtonTheme: TOutlineButtonTheme.lightOutlinedButtonTheme,
+    inputDecorationTheme: TTextFieldTheme.lightInputDecorationTheme,
+    navigationBarTheme: TBottomNavigatorBarTheme.lightBottomNavigationBarTheme,
+    textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
+    textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
+    datePickerTheme: TDatePickerTheme.lightDatePickerTheme,
+    timePickerTheme: TTimePickerTheme.lightTimePickerTheme,
+  );
 
   static ThemeData darkTheme = ThemeData(
       useMaterial3: true,

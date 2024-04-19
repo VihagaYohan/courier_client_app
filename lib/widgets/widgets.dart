@@ -41,3 +41,9 @@ export 'UI_ProgressIndicator.dart';
 
 // horizontal divider
 export 'UI_Divider.dart';
+
+// stepper
+export 'UI_stepper.dart';
+
+// location stepper
+export 'UI_location.dart';
