@@ -47,6 +47,9 @@ dependencies:
   http: ^1.2.1
   get: ^4.6.6
   provider: ^6.1.2
+  web_socket_channel: ^2.4.5
+  socket_io_client: ^2.0.3+1
+  easy_stepper: ^0.8.3
 
 dev_dependencies:
   flutter_test:
