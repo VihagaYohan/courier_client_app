@@ -151,7 +151,45 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             // from and to address
             UILocation(
                 from: widget.orderDetail.senderDetails.address,
-                to: widget.orderDetail.receiverDetails.address)
+                to: widget.orderDetail.receiverDetails.address),
+
+            const UISpacer(
+              space: Constants.mediumSpace,
+            ),
+
+            const UIHeader(title: "Cost"),
+            // total cost
+            Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const UITextView(text: "Estimated cost"),
+                    UITextView(
+                        text: Helper.currencyFormat(
+                            widget.orderDetail.orderTotal))
+                  ],
+                )
+              ],
+            ),
+
+            const UISpacer(
+              space: Constants.mediumSpace,
+            ),
+
+            // track order
+            if (widget.orderDetail.status.name == Constants.outForDelivery)
+              UIElevatedButton(
+                label: 'Track',
+                onPress: () {},
+                isPrimary: false,
+                showSuffixIcon: true,
+                suffixIcon: const UIIcon(
+                  iconData: Icons.track_changes,
+                  iconColor: AppColors.primary,
+                ),
+              )
           ],
         ));
   }

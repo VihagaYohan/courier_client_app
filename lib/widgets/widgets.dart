@@ -3,6 +3,7 @@ export 'UI_container.dart';
 // buttons
 export 'buttons/UI_ElevatedButton.dart';
 export 'buttons/UI_TextButton.dart';
+export 'buttons/UI_FabButton.dart';
 
 export 'UI_TextView.dart';
 
@@ -47,3 +48,6 @@ export 'UI_stepper.dart';
 
 // location stepper
 export 'UI_location.dart';
+
+// user profile avatar
+export 'UI_avatar.dart';

@@ -1,12 +1,15 @@
 import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // model
 import 'package:courier_client_app/models/models.dart';
 
 // utils
 import 'package:courier_client_app/utils/utils.dart';
-import 'package:flutter/widgets.dart';
+
+// providers
+import 'package:courier_client_app/provider/providers.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    Provider.of<ProfileProvider>(context, listen: false).getCurrentUser();
   }
 
   // fetch profile data
@@ -27,7 +30,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const UIContainer(
-        children: Center(child: UITextView(text: "Profile screen")));
+    return Consumer<ProfileProvider>(
+      builder: (context, profileProvider, child) {
+        if (profileProvider.isLoading == true) {
+          return const UIProgressIndicator();
+        } else if (profileProvider.isLoading == false &&
+            profileProvider.errorMessage.isNotEmpty) {
+          return Center(
+            child: UITextView(text: profileProvider.errorMessage),
+          );
+        } else {
+          return UIContainer(
+            isShowFab: true,
+            Fab: UIFabButton(
+              child: const UIIcon(
+                iconData: Icons.exit_to_app,
+                iconColor: AppColors.white,
+              ),
+              onClick: () {
+                print('exit button clicked');
+              },
+            ),
+            children: ListView(
+              children: <Widget>[
+                const UISpacer(
+                  space: Constants.largeSpace,
+                ),
+
+                // avatar
+                UIAvatar(name: profileProvider.currentUser.name),
+                const UISpacer(
+                  space: Constants.mediumSpace,
+                ),
+
+                // name
+                UITextView(
+                  text: profileProvider.currentUser.name,
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const UISpacer(
+                  space: Constants.smallSpace,
+                ),
+
+                // email
+                UITextView(
+                    text: "Email : ${profileProvider.currentUser.email}"),
+
+                const UISpacer(
+                  space: Constants.smallSpace,
+                ),
+
+                // phone number
+                UITextView(
+                    text: "Tel : ${profileProvider.currentUser.phoneNumber}"),
+              ],
+            ),
+          );
+        }
+      },
+    );
   }
 }
