@@ -12,6 +12,7 @@ import 'package:courier_client_app/utils/theme/custom_themes/text_theme.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/bottom_navigation_bar_theme.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/date_picker_theme.dart';
 import 'package:courier_client_app/utils/theme/custom_themes/time_picker_theme.dart';
+import 'package:courier_client_app/utils/theme/custom_themes/fab_theme.dart';
 import 'package:flutter/material.dart';
 
 class TAppTheme {
@@ -36,6 +37,7 @@ class TAppTheme {
     textSelectionTheme: TTextSelectionTheme.lightTextSelectionTheme,
     datePickerTheme: TDatePickerTheme.lightDatePickerTheme,
     timePickerTheme: TTimePickerTheme.lightTimePickerTheme,
+    floatingActionButtonTheme: TFabButtonTheme.lightFabButtonTheme,
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -56,5 +58,6 @@ class TAppTheme {
       textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
       textSelectionTheme: TTextSelectionTheme.darkTextSelectionTheme,
       datePickerTheme: TDatePickerTheme.darkDatePickerTheme,
-      timePickerTheme: TTimePickerTheme.darkTimePickerTheme);
+      timePickerTheme: TTimePickerTheme.darkTimePickerTheme,
+      floatingActionButtonTheme: TFabButtonTheme.darkFabButtonTheme);
 }

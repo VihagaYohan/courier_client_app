@@ -100,6 +100,22 @@ class Helper {
     throw Exception("Unable to convert to currency format");
   }
 
+  // get current user
+  static Future<UserInfo> getCurrentUser() async {
+    try {
+      final userResponse = await getData<String>(Constants.user);
+      if (userResponse?.isEmpty == false) {
+        Map<String, dynamic> userData = json.decode(userResponse!);
+        UserInfo userInfo = UserInfo.fromJson(userData);
+        return userInfo;
+      } else {
+        throw Exception('Unable to retrieve user data');
+      }
+    } catch (e) {
+      throw Exception("Unable to get current user");
+    }
+  }
+
   // get token
   static Future<String> getToken() async {
     try {
