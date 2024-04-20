@@ -46,7 +46,7 @@ class Helper {
     }
   }
 
-  void deleteData(String key) async {
+  static void deleteData(String key) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove(key);
