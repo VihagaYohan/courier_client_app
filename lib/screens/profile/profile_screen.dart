@@ -1,7 +1,5 @@
 import 'package:courier_client_app/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 // model
@@ -34,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, profileProvider, child) {
-        print(1);
         if (profileProvider.isLoading == true) {
           return const UIProgressIndicator();
         } else if (profileProvider.isLoading == false &&
@@ -43,39 +40,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: UITextView(text: profileProvider.errorMessage),
           );
         } else {
-          return ListView(
-            children: <Widget>[
-              const UISpacer(
-                space: Constants.largeSpace,
+          return UIContainer(
+            isShowFab: true,
+            Fab: UIFabButton(
+              child: const UIIcon(
+                iconData: Icons.exit_to_app,
+                iconColor: AppColors.white,
               ),
-              UIAvatar(name: profileProvider.currentUser.name),
-              const UISpacer(
-                space: Constants.mediumSpace,
-              ),
-              UITextView(text: profileProvider.currentUser.name)
-            ],
+              onClick: () {
+                print('exit button clicked');
+              },
+            ),
+            children: ListView(
+              children: <Widget>[
+                const UISpacer(
+                  space: Constants.largeSpace,
+                ),
+
+                // avatar
+                UIAvatar(name: profileProvider.currentUser.name),
+                const UISpacer(
+                  space: Constants.mediumSpace,
+                ),
+
+                // name
+                UITextView(
+                  text: profileProvider.currentUser.name,
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const UISpacer(
+                  space: Constants.smallSpace,
+                ),
+
+                // email
+                UITextView(
+                    text: "Email : ${profileProvider.currentUser.email}"),
+
+                const UISpacer(
+                  space: Constants.smallSpace,
+                ),
+
+                // phone number
+                UITextView(
+                    text: "Tel : ${profileProvider.currentUser.phoneNumber}"),
+              ],
+            ),
           );
         }
       },
     );
-
-    /* final provider = Provider.of<ProfileProvider>(context);
-
-    if (provider.isLoading) {
-      return const UIProgressIndicator();
-    } else if (provider.isLoading == false &&
-        provider.errorMessage.isNotEmpty) {
-      return Center(child: UITextView(text: provider.errorMessage));
-    } else {
-      return UIContainer(
-          children: ListView(
-        children: <Widget>[
-          const UISpacer(
-            space: Constants.mediumSpace,
-          ),
-          UITextView(text: "")
-        ],
-      ));
-    } */
   }
 }
