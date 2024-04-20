@@ -47,3 +47,6 @@ export 'UI_stepper.dart';
 
 // location stepper
 export 'UI_location.dart';
+
+// user profile avatar
+export 'UI_avatar.dart';

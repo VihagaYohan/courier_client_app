@@ -48,6 +48,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const UISpacer(
                 space: Constants.largeSpace,
               ),
+              UIAvatar(name: profileProvider.currentUser.name),
+              const UISpacer(
+                space: Constants.mediumSpace,
+              ),
               UITextView(text: profileProvider.currentUser.name)
             ],
           );
