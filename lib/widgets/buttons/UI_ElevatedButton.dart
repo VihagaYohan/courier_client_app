@@ -35,18 +35,13 @@ class UIElevatedButton extends StatelessWidget {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor:
-                isPrimary == true ? AppColors.primary : AppColors.white,
+                isPrimary == true ? AppColors.primary : AppColors.dark,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              showSuffixIcon == true
-                  ? const Image(
-                      image: Svg('assets/images/icons/google.svg'),
-                      width: 20,
-                      height: 20)
-                  : const SizedBox.shrink(),
+              showSuffixIcon == true ? suffixIcon! : const SizedBox.shrink(),
               const SizedBox(
                 width: 10,
               ),
