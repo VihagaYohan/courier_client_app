@@ -81,7 +81,9 @@ class ContactDataScreenState extends State<ContactDataScreen> {
             "Your profile data have been update successfully",
             "Go To Home", () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AppBottomNavigation()));
         }, Icons.check, iconSize: 30);
       }
     } catch (e) {

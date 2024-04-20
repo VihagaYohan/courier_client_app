@@ -1,3 +1,4 @@
+import 'package:courier_client_app/screens/screens.dart';
 import 'package:courier_client_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,9 @@ import 'package:courier_client_app/utils/utils.dart';
 
 // providers
 import 'package:courier_client_app/provider/providers.dart';
+
+// navigator
+import 'package:courier_client_app/routes/routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -26,7 +30,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   // fetch profile data
-  Future<void> getCurrentUser() async {}
+  void handleUserLogout() async {
+    try {
+      Helper.deleteData(Constants.user);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
+    } catch (e) {
+      print("Error at logging out");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 iconColor: AppColors.white,
               ),
               onClick: () {
-                print('exit button clicked');
+                handleUserLogout();
               },
             ),
             children: ListView(
