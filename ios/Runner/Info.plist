@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<string>NSLocationWhenInUseUsageDescription</string>
+	<key>Courier apps need to access your location in order to work properly</key>
 </dict>
 </plist>
