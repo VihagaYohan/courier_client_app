@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:courier_client_app/screens/order/order_tracking.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -179,10 +180,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             ),
 
             // track order
-            if (widget.orderDetail.status.name == Constants.outForDelivery)
+            if (widget.orderDetail.status.name != Constants.outForDelivery)
               UIElevatedButton(
                 label: 'Track',
-                onPress: () {},
+                onPress: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              OrderTracking(orderDetail: widget.orderDetail)));
+                },
                 isPrimary: false,
                 showSuffixIcon: true,
                 suffixIcon: const UIIcon(
