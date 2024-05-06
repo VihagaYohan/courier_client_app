@@ -145,6 +145,33 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               space: Constants.mediumSpace,
             ),
 
+            // order status
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // courier type
+                UITextView(
+                  text: "Order Status",
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+
+                // date
+                UITextView(
+                  text: widget.orderDetail.status.name,
+                  textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w500, color: AppColors.primary),
+                )
+              ],
+            ),
+
+            const UISpacer(
+              space: Constants.mediumSpace,
+            ),
+
             const UIHeader(
               title: "Order Details",
             ),
