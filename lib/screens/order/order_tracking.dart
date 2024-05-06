@@ -31,18 +31,12 @@ class _OrderTrackingState extends State<OrderTracking> {
   final Completer<GoogleMapController> controller =
       Completer<GoogleMapController>();
   static const CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(6.918125761213582, 79.85610673556513),
     zoom: 13,
   );
   static const mountainView = LatLng(37.3861, -122.0839);
   LatLng? currentPosition;
   Map<PolylineId, Polyline> polylines = {};
-
-  static const CameraPosition kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
 
   @override
   void initState() {
@@ -116,7 +110,6 @@ class _OrderTrackingState extends State<OrderTracking> {
           currentPosition =
               LatLng(currentLocation.latitude!, currentLocation.longitude!);
         });
-        print(currentPosition);
       }
     });
   }
@@ -124,16 +117,11 @@ class _OrderTrackingState extends State<OrderTracking> {
   @override
   Widget build(BuildContext context) {
     return UIContainer(
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingBottom: 0,
       showAppBar: true,
       appbar: const UIAppBar(title: "Order Tracking"),
-      isShowFab: false,
-      Fab: FloatingActionButton.extended(
-        onPressed: () {
-          print('google maps');
-        },
-        label: const UITextView(text: 'To the lake'),
-        icon: const Icon(Icons.directions_boat),
-      ),
       children: GoogleMap(
         initialCameraPosition: kGooglePlex,
         mapType: MapType.terrain,
