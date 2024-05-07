@@ -28,9 +28,6 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int index = 0;
   late IO.Socket socket;
-  /*  final channel = WebSocketChannel.connect(
-    Uri.parse(''),
-  ); */
 
   @override
   void initState() {
@@ -38,33 +35,32 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     connect();
   }
 
-  continueStep() {
-    if (index < 2) {
-      setState(() {
-        index += 1;
-      });
-    }
-  }
-
-  onStepTapped(int value) {
-    setState(() {
-      index = value;
-    });
-  }
-
   void connect() {
-    socket = IO.io(Constants.server_URL, <String, dynamic>{
+    /* socket = IO.io(Constants.server_URL, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
     try {
-      socket.connect();
-      socket.onConnect((data) => {print('connected')});
+
+        socket.onConnect((data) => {print('connected')});
       // send data to socket server
       // socket.emit('/test', 'hello, world');
-      socket.on('message', (data) => print(data));
+      socket.on('message', (data) => print(data)); 
     } catch (e) {
-      print(e);
+      print('errors goes here $e');
+    }*/
+    socket = IO.io(Constants.server_URL, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': true
+    });
+    try {
+      socket.connect();
+      socket.onConnect((data) => print("connected"));
+
+      // send data to server
+      socket.emit("/orderId", "order id goes here");
+    } catch (e) {
+      print('errors goes here $e');
     }
   }
 
