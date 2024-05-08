@@ -54,7 +54,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       'autoConnect': true
     });
     try {
-      socket.connect();
+      socket.connect(); // connect to socket server
+      // run when connect to socket server
       socket.onConnect((data) => print("connected"));
 
       // send data to server
