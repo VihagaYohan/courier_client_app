@@ -59,7 +59,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       socket.onConnect((data) => print("connected"));
 
       // send data to server
-      socket.emit("/orderId", "order id goes here");
+      socket.emit("orderId", widget.orderDetail.id);
     } catch (e) {
       print('errors goes here $e');
     }
